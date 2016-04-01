@@ -26,26 +26,184 @@ Mirror1R = PhotoImage(file = 'Mirror1R.png')
 Mirror2R = PhotoImage(file = 'Mirror2R.png')
 Mirror3R = PhotoImage(file = 'Mirror3R.png')
 Mirror4R = PhotoImage(file = 'Mirror4R.png')
+B0 = PhotoImage(file = 'B0.png')
+B0B45 = PhotoImage(file = 'B0B45.png')
+B0B45B90 = PhotoImage(file = 'B0B45B90.png')
+B0B45B90B135 = PhotoImage(file = 'B0B45B90B135.png')
+B0B45B90R135 = PhotoImage(file = 'B0B45B90R135.png')
+B0B45B135 = PhotoImage(file = 'B0B45B135.png')
+B0B45R90 = PhotoImage(file = 'B0B45R90.png')
+B0B45R90B135 = PhotoImage(file = 'B0B45R90B135.png')
+B0B45R90R135 = PhotoImage(file = 'B0B45R90R135.png')
+B0B45R135 = PhotoImage(file = 'B0B45R135.png')
+B0B90 = PhotoImage(file = 'B0B90.png')
+B0B90B135 = PhotoImage(file = 'B0B90B135.png')
+B0B90R135 = PhotoImage(file = 'B0B90R135.png')
+B0B135 = PhotoImage(file = 'B0B135.png')
+B0R45 = PhotoImage(file = 'B0R45.png')
+B0R45B90 = PhotoImage(file = 'B0R45B90.png')
+B0R45B90B135 = PhotoImage(file = 'B0R45B90B135.png')
+B0R45B90R135 = PhotoImage(file = 'B0R45B90R135.png')
+B0R45B135 = PhotoImage(file = 'B0R45B135.png')
+B0R45R90 = PhotoImage(file = 'B0R45R90.png')
+B0R45R90B135 = PhotoImage(file = 'B0R45R90B135.png')
+B0R45R90R135 = PhotoImage(file = 'B0R45R90R135.png')
+B0R45R135 = PhotoImage(file = 'B0R45R135.png')
+B0R90 = PhotoImage(file = 'B0R90.png')
+B0R90B135 = PhotoImage(file = 'B0R90B135.png')
+B0R90R135 = PhotoImage(file = 'B0R90R135.png')
+B0R135 = PhotoImage(file = 'B0R135.png')
+B45 = PhotoImage(file = 'B45.png')
+B45B90B135 = PhotoImage(file = 'B45B90B135.png')
+B45B90R135 = PhotoImage(file = 'B45B90R135.png')
+B45B135 = PhotoImage(file = 'B45B135.png')
+B45R90 = PhotoImage(file = 'B45R90.png')
+B45R90B135 = PhotoImage(file = 'B45R90B135.png')
+B45R90R135 = PhotoImage(file = 'B45R90R135.png')
+B45R135 = PhotoImage(file = 'B45R135.png')
+B90 = PhotoImage(file = 'B90.png')
+B90B45 = PhotoImage(file = 'B90B45.png')
+B90B135 = PhotoImage(file = 'B90B135.png')
+B90R135 = PhotoImage(file = 'B90R135.png')
+B135 = PhotoImage(file = 'B135.png')
+R0 = PhotoImage(file = 'R0.png')
+R0R45 = PhotoImage(file = 'R0R45.png')
+R0R45R90 = PhotoImage(file = 'R0R45R90.png')
+R90 = PhotoImage(file = 'R90.png')
+R90B135 = PhotoImage(file = 'R90B135.png')
+R90R135 = PhotoImage(file = 'R90R135.png')
+R135 = PhotoImage(file = 'R135.png')
+R0B45 = PhotoImage(file = 'R0B45.png')
+R0B45B90B135 = PhotoImage(file = 'R0B45B90B135.png')
+R0B45B90R135 = PhotoImage(file = 'R0B45B90R135.png')
+R0B45B135 = PhotoImage(file = 'R0B45B135.png')
+R0B45R90 = PhotoImage(file = 'R0B45R90.png')
+R0B45R90B135 = PhotoImage(file = 'R0B45R90B135.png')
+R0B45R90R135 = PhotoImage(file = 'R0B45R90R135.png')
+R0B45R135 = PhotoImage(file = 'R0B45R135.png')
+R0B90 = PhotoImage(file = 'R0B90.png')
+R0B90B135 = PhotoImage(file = 'R0B90B135.png')
+R0B90R135 = PhotoImage(file = 'R0B90R135.png')
+R0B135 = PhotoImage(file = 'R0B135.png')
+R0R45B90 = PhotoImage(file = 'R0R45B90.png')
+R0R45B90B135 = PhotoImage(file = 'R0R45B90B135.png')
+R0R45B90R135 = PhotoImage(file = 'R0R45B90R135.png')
+R0R45B135 = PhotoImage(file = 'R0R45B135.png')
+R0R45R90B135 = PhotoImage(file = 'R0R45R90B135.png')
+R0R45R90R135 = PhotoImage(file = 'R0R45R90R135.png')
+R0R45R135 = PhotoImage(file = 'R0R45R135.png')
+R0R90 = PhotoImage(file = 'R0R90.png')
+R0R90B135 = PhotoImage(file = 'R0R90B135.png')
+R0R90R135 = PhotoImage(file = 'R0R90R135.png')
+R0R135 = PhotoImage(file = 'R0R135.png')
+R45 = PhotoImage(file = 'R45.png')
+R45B90 = PhotoImage(file = 'R45B90.png')
+R45B90B135 = PhotoImage(file = 'R45B90B135.png')
+R45B90R135 = PhotoImage(file = 'R45B90R135.png')
+R45B135 = PhotoImage(file = 'R45B135.png')
+R45R90 = PhotoImage(file = 'R45R90.png')
+R45R90B135 = PhotoImage(file = 'R45R90B135.png')
+R45R90R135 = PhotoImage(file = 'R45R90R135.png')
+R45R135 = PhotoImage(file = 'R45R135.png')
 
+images.append(bg)               #0
+images.append(LaserOne)         #1
+images.append(LaserTwo)         #2
+images.append(LensX)            #3
+images.append(LensY)            #4
+images.append(Mirror1)          #5
+images.append(Mirror2)          #6
+images.append(Mirror3)          #7
+images.append(Mirror4)          #8
+images.append(block)            #9
+images.append(Mirror1B)         #10
+images.append(Mirror2B)         #11
+images.append(Mirror3B)         #12
+images.append(Mirror4B)         #13
+images.append(Mirror1R)         #14
+images.append(Mirror2R)         #15
+images.append(Mirror3R)         #16
+images.append(Mirror4R)         #17
+images.append(B0) 	            #18
+images.append(B0B45) 	        #19
+images.append(B0B45B90) 	    #20
+images.append(B0B45B90B135)     #21
+images.append(B0B45B90R135) 	#22
+images.append(B0B45B135) 	    #23
+images.append(B0B45R90) 	    #24
+images.append(B0B45R90B135) 	#25
+images.append(B0B45R90R135) 	#26
+images.append(B0B45R135) 	    #27
+images.append(B0B90) 	        #28
+images.append(B0B90B135) 	    #29
+images.append(B0B90R135) 	    #30
+images.append(B0B135) 	        #31
+images.append(B0R45) 	        #32
+images.append(B0R45B90) 	    #33
+images.append(B0R45B90B135) 	#34
+images.append(B0R45B90R135) 	#35
+images.append(B0R45B135) 	    #36
+images.append(B0R45R90) 	    #37
+images.append(B0R45R90B135) 	#38
+images.append(B0R45R90R135) 	#39
+images.append(B0R45R135) 	    #40
+images.append(B0R90) 	        #41
+images.append(B0R90B135) 	    #42
+images.append(B0R90R135) 	    #43
+images.append(B0R135) 	        #44
+images.append(B45) 	            #45
+images.append(B45B90B135) 	    #46
+images.append(B45B90R135) 	    #47
+images.append(B45B135) 	        #48
+images.append(B45R90) 	        #49
+images.append(B45R90B135) 	    #50
+images.append(B45R90R135) 	    #51
+images.append(B45R135) 	        #52
+images.append(B90)          	#53
+images.append(B90B45) 	        #54
+images.append(B90B135) 	        #55
+images.append(B90R135) 	        #56
+images.append(B135) 	        #57
+images.append(R0) 	            #58
+images.append(R0R45) 	        #59
+images.append(R0R45R90) 	    #60
+images.append(R90) 	            #61
+images.append(R90B135) 	        #62
+images.append(R90R135) 	        #63
+images.append(R135) 	        #64
+images.append(R0B45) 	        #65
+images.append(R0B45B90B135) 	#66
+images.append(R0B45B90R135) 	#67
+images.append(R0B45B135) 	    #68
+images.append(R0B45R90) 	    #69
+images.append(R0B45R90B135)     #70
+images.append(R0B45R90R135) 	#71
+images.append(R0B45R135) 	    #72
+images.append(R0B90) 	        #73
+images.append(R0B90B135) 	    #74
+images.append(R0B90R135) 	    #75
+images.append(R0B135) 	        #76
+images.append(R0R45B90) 	    #77
+images.append(R0R45B90B135) 	#78
+images.append(R0R45B90R135) 	#79
+images.append(R0R45B135) 	    #80
+images.append(R0R45R90B135) 	#81
+images.append(R0R45R90R135) 	#82
+images.append(R0R45R135) 	    #83
+images.append(R0R90) 	        #84
+images.append(R0R90B135)     	#85
+images.append(R0R90R135) 	    #86
+images.append(R0R135) 	        #87
+images.append(R45) 	            #88
+images.append(R45B90) 	        #89
+images.append(R45B90B135) 	    #90
+images.append(R45B90R135) 	    #91
+images.append(R45B135) 	        #92
+images.append(R45R90) 	        #93
+images.append(R45R90B135) 	    #94
+images.append(R45R90R135) 	    #95
+images.append(R45R135) 	        #96
 
-images.append(bg)       #0
-images.append(LaserOne) #1
-images.append(LaserTwo) #2
-images.append(LensX)    #3
-images.append(LensY)    #4
-images.append(Mirror1)  #5
-images.append(Mirror2)  #6
-images.append(Mirror3)  #7
-images.append(Mirror4)  #8
-images.append(block)    #9
-images.append(Mirror1B)  #10
-images.append(Mirror2B)  #11
-images.append(Mirror3B)  #12
-images.append(Mirror4B)  #13
-images.append(Mirror1R)  #14
-images.append(Mirror2R)  #15
-images.append(Mirror3R)  #16
-images.append(Mirror4R)  #17
 
 class Application(Frame):
     def closeWindow():
