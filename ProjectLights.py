@@ -2,6 +2,7 @@ from tkinter import*
 from gameboard import*
 from AI import*
 import sys
+import time
 
 root = Tk()
 root.title("Project Lights")
@@ -9,6 +10,11 @@ root.geometry("900x700")
 bgImage = PhotoImage(file = 'background.png')
 
 images = list()
+RedTurn = PhotoImage(file = 'RedTurn.png')
+BlueTurn = PhotoImage(file = 'BlueTurn.png')
+titlescreen = PhotoImage(file = 'TitleScreen.png')
+SPImage = PhotoImage(file = 'SinglePlayerButton.png')
+MPImage = PhotoImage(file = 'MultiPlayerButton.png')
 bg = PhotoImage(file = 'bg.png')
 block = PhotoImage(file = 'block.png')
 LaserOne = PhotoImage(file = 'LaserOne.png')
@@ -220,6 +226,16 @@ class Application(Frame):
         self.buttons = list()
         self.selected = None
 
+        tsLabel = Label(root, image = titlescreen)
+        tsLabel.place(x = 0, y = 0)
+        self.bgLabel = Label(master, image = bgImage)
+        self.singlePlayerButton = Button(master, image = SPImage)
+        self.twoPlayerButton = Button(master, image = MPImage)
+        self.singlePlayerButton.place(x = 600, y = 450, width = 250, height = 60)
+        self.twoPlayerButton.place(x = 600, y = 550, width = 250, height = 60)
+        self.singlePlayerButton['command'] = self.singleMode
+        self.twoPlayerButton['command'] = self.multiMode
+
         self.mirror1Button = Button(master, image = Mirror1)
         self.mirror2Button = Button(master, image = Mirror2)
         self.mirror3Button = Button(master, image = Mirror3)
@@ -227,6 +243,7 @@ class Application(Frame):
         self.lensXButton = Button(master, image = LensX)
         self.lensYButton = Button(master, image = LensY)
         self.blockButton = Button(master, image = block)
+        self.currentPlayerButton = Label(master, image = RedTurn)
 
         self.buttonA1 = Button(master, image = bg, relief = SUNKEN, bd = 0)
         self.buttonA2 = Button(master, image = bg, relief = SUNKEN, bd = 0)
@@ -373,6 +390,30 @@ class Application(Frame):
         self.buttonL11 = Button(master, image = bg, relief = SUNKEN, bd = 0)
         self.buttonL12 = Button(master, image = bg, relief = SUNKEN, bd = 0)
 
+
+    def singleMode(self):
+        self.AI = True
+        print('single')
+        self.singlePlayerButton.destroy()
+        self.twoPlayerButton.destroy()
+        self.startGame()
+
+    def multiMode(self):
+        self.AI = False
+        print('multi')
+        self.twoPlayerButton.destroy()
+        self.singlePlayerButton.destroy()
+        self.startGame()
+
+
+
+    def startGame(self):
+
+        self.bgLabel.place(x = 0, y = 0)
+        self.buttons = list()
+        self.selected = None
+
+        self.currentPlayerButton.place(x = 720, y = 430, width = 150, height = 250)
         self.mirror1Button.place(x = 820, y = 150, width = 50, height = 50)
         self.mirror2Button.place(x = 720, y = 150, width = 50, height = 50)
         self.mirror3Button.place(x = 720, y = 50, width = 50, height = 50)
@@ -671,6 +712,7 @@ class Application(Frame):
         self.buttons.append(self.buttonL11)
         self.buttons.append(self.buttonL12)
 
+
         self.mirror1Button['command'] = self.mirror1
         self.mirror2Button['command'] = self.mirror2
         self.mirror3Button['command'] = self.mirror3
@@ -836,11 +878,18 @@ class Application(Frame):
             board.tiles[atile].setimg()
             self.buttons[atile]['image'] = images[board.tiles[atile].img]
         self.selected = None
-        board.redTurn = not board.redTurn
+        if board.redTurn:
+            self.currentPlayerButton['image'] = RedTurn
+        else:
+            self.currentPlayerButton['image'] = BlueTurn
 
+        if board.tiles[87].red:
+            if board.tiles[51].blue:
+                self.tie()
+            else:
+                self.redwins()
 
-
-        if not board.redTurn:
+        if self.AI and not board.redTurn:
             blueAI(board)
             board.LaserRed()
             board.LaserBlue()
@@ -848,13 +897,12 @@ class Application(Frame):
                 board.tiles[atile].setimg()
                 self.buttons[atile]['image'] = images[board.tiles[atile].img]
             board.redTurn = True
-        print(board.redTurn)
-        for atile in range(144):
-            if board.tiles[atile].blue:
-                print(atile)
-                print(board.tiles[atile].used)
-
-
+            self.currentPlayerButton['image'] = RedTurn
+        if board.tiles[51].blue:
+            if board.tiles[87].red:
+                self.tie()
+            else:
+                self.bluewins()
 
     def mirror1(self):
         self.selected = 1
@@ -870,7 +918,6 @@ class Application(Frame):
         self.selected = 6
     def block(self):
         self.selected = 7
-
 
     def clickA1(self):
         if self.selected == 1:
@@ -3176,6 +3223,19 @@ class Application(Frame):
         if self.selected == 7:
             board.tiles[143].block(board)
         self.update_images(board)
+
+    def redwins(self):
+        print('Red Wins')
+        time.sleep(4)
+        exit()
+    def bluewins(self):
+        print('Blue Wins')
+        time.sleep(4)
+        exit()
+    def tie(self):
+        print('Tie Game')
+        time.sleep(4)
+        exit()
 
 
 board = GameBoard()

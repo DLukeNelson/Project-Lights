@@ -2,7 +2,7 @@
 
 class GameBoard:
     def __init__(self):
-        self.redTurn = False
+        self.redTurn = True
         self.tiles = list()
         for i in range(12):
             for j in range(12):
@@ -91,7 +91,7 @@ class Tile:
                 self.paths[(self.row-1, self.col)] = (self.row, self.col-1)
                 self.paths[(self.row, self.col-1)] = (self.row-1, self.col)
             self.used = True
-            #board.redTurn = not board.redTurn
+            board.redTurn = not board.redTurn
 
     def mirror2(self, board):
         print(str((self.row, self.col)) + ' mirror2')
@@ -107,7 +107,7 @@ class Tile:
                 self.paths[(self.row-1, self.col)] = (self.row, self.col+1)
                 self.paths[(self.row, self.col+1)] = (self.row-1, self.col)
             self.used = True
-            #board.redTurn = not board.redTurn
+            board.redTurn = not board.redTurn
 
     def mirror3(self, board):
         print(str((self.row, self.col)) + ' mirror3')
@@ -123,7 +123,7 @@ class Tile:
                 self.paths[(self.row+1, self.col)] = (self.row, self.col+1)
                 self.paths[(self.row, self.col+1)] = (self.row+1, self.col)
             self.used = True
-            #board.redTurn = not board.redTurn
+            board.redTurn = not board.redTurn
 
     def mirror4(self, board):
         print(str((self.row, self.col)) + ' mirror4')
@@ -139,7 +139,7 @@ class Tile:
                 self.paths[(self.row+1, self.col)] = (self.row, self.col-1)
                 self.paths[(self.row, self.col-1)] = (self.row+1, self.col)
             self.used = True
-            #board.redTurn = not board.redTurn
+            board.redTurn = not board.redTurn
 
     def lensX(self, board):
         print(str((self.row, self.col)) + ' lensX')
@@ -164,7 +164,7 @@ class Tile:
                 self.paths[(self.row+1, self.col)] = (self.row-1, self.col+1)
                 self.paths[(self.row+1, self.col+1)] = (self.row-1, self.col)
             self.used = True
-            #board.redTurn = not board.redTurn
+            board.redTurn = not board.redTurn
 
     def lensY(self, board):
         print(str((self.row, self.col)) + ' lensY')
@@ -189,7 +189,7 @@ class Tile:
                 self.paths[(self.row-1, self.col)] = (self.row+1, self.col+1)
                 self.paths[(self.row-1, self.col+1)] = (self.row+1, self.col)
             self.used = True
-            #board.redTurn = not board.redTurn
+            board.redTurn = not board.redTurn
 
     def block(self, board):
         if not self.used:
@@ -200,7 +200,7 @@ class Tile:
             self.id = -1
             self.img = 9
             self.used = True
-            #board.redTurn = not board.redTurn
+            board.redTurn = not board.redTurn
 
     def redlaser(self, inpair):
         out = self.paths[inpair]

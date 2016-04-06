@@ -200,6 +200,7 @@ def blueAI(board):
                 atile.paths[(atile.row-1, atile.col-1)] = None
             board.LaserRed()
             board.LaserBlue()
+            board.redTurn = False
     print('Best Move is:')
     print(bestmove)
     bestmove[1](board)
