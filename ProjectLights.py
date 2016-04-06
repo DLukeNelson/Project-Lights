@@ -8,6 +8,11 @@ root.geometry("900x700")
 bgImage = PhotoImage(file = 'background.png')
 
 images = list()
+RedTurn = PhotoImage(file = 'RedTurn.png')
+BlueTurn = PhotoImage(file = 'BlueTurn.png')
+titlescreen = PhotoImage(file = 'TitleScreen.png')
+SPImage = PhotoImage(file = 'SinglePlayerButton.png')
+MPImage = PhotoImage(file = 'MultiPlayerButton.png')
 bg = PhotoImage(file = 'bg.png')
 block = PhotoImage(file = 'block.png')
 LaserOne = PhotoImage(file = 'LaserOne.png')
@@ -170,7 +175,7 @@ images.append(R0R45) 	        #59
 images.append(R0R45R90) 	    #60
 images.append(R90) 	            #61
 images.append(R90B135) 	        #62
-images.append(R90R135) 	        #63 
+images.append(R90R135) 	        #63
 images.append(R135) 	        #64
 images.append(R0B45) 	        #65
 images.append(R0B45B90B135) 	#66
@@ -214,18 +219,24 @@ class Application(Frame):
         """ Initialize the Frame """
         Frame.__init__(self,master)
 
-        bgLabel = Label(root, image = bgImage)
-        bgLabel.pack()
-        self.buttons = list()
-        self.selected = None
-
-        self.mirror1Button = Button(master, image = Mirror1, state = ACTIVE)
-        self.mirror2Button = Button(master, image = Mirror2, state = ACTIVE)
+        tsLabel = Label(root, image = titlescreen)
+        tsLabel.place(x = 0, y = 0)
+        self.bgLabel = Label(master, image = bgImage)
+        self.singlePlayerButton = Button(master, image = SPImage)
+        self.twoPlayerButton = Button(master, image = MPImage)
+        self.singlePlayerButton.place(x = 600, y = 450, width = 250, height = 60)
+        self.twoPlayerButton.place(x = 600, y = 550, width = 250, height = 60)
+        self.singlePlayerButton['command'] = self.singleMode
+        self.twoPlayerButton['command'] = self.multiMode
+        self.mirror1Button = Button(master, image = Mirror1)
+        self.mirror2Button = Button(master, image = Mirror2)
         self.mirror3Button = Button(master, image = Mirror3)
         self.mirror4Button = Button(master, image = Mirror4)
         self.lensXButton = Button(master, image = LensX)
         self.lensYButton = Button(master, image = LensY)
         self.blockButton = Button(master, image = block)
+        self.currentPlayerButton = Label(master, image = RedTurn)
+        self.cPlayer = 'b'
 
         self.buttonA1 = Button(master, image = bg, relief = SUNKEN, bd = 0)
         self.buttonA2 = Button(master, image = bg, relief = SUNKEN, bd = 0)
@@ -372,6 +383,30 @@ class Application(Frame):
         self.buttonL11 = Button(master, image = bg, relief = SUNKEN, bd = 0)
         self.buttonL12 = Button(master, image = bg, relief = SUNKEN, bd = 0)
 
+
+    def singleMode(self):
+            self.AI = True
+            print('single')
+            self.singlePlayerButton['state']
+            self.singlePlayerButton.destroy()
+            self.twoPlayerButton.destroy()
+            self.startGame()
+
+    def multiMode(self):
+            print('multi')
+            self.twoPlayerButton.destroy()
+            self.singlePlayerButton.destroy()
+            self.startGame()
+
+
+
+    def startGame(self):
+
+        self.bgLabel.place(x = 0, y = 0)
+        self.buttons = list()
+        self.selected = None
+
+        self.currentPlayerButton.place(x = 720, y = 430, width = 150, height = 250)
         self.mirror1Button.place(x = 820, y = 150, width = 50, height = 50)
         self.mirror2Button.place(x = 720, y = 150, width = 50, height = 50)
         self.mirror3Button.place(x = 720, y = 50, width = 50, height = 50)
@@ -670,6 +705,7 @@ class Application(Frame):
         self.buttons.append(self.buttonL11)
         self.buttons.append(self.buttonL12)
 
+
         self.mirror1Button['command'] = self.mirror1
         self.mirror2Button['command'] = self.mirror2
         self.mirror3Button['command'] = self.mirror3
@@ -823,6 +859,8 @@ class Application(Frame):
         self.buttonL11['command'] = self.clickL11
         self.buttonL12['command'] = self.clickL12
 
+        self.update_images(board)
+
 
 
     def update_images(self, board):
@@ -848,6 +886,13 @@ class Application(Frame):
             self.buttons[atile]['image'] = images[board.tiles[atile].img]
         self.selected = None
 
+        if self.cPlayer == 'r':
+            self.currentPlayerButton['image'] = BlueTurn
+            self.cPlayer = 'b'
+        elif self.cPlayer == 'b':
+            self.currentPlayerButton['image'] = RedTurn
+            self.cPlayer = 'r'
+
 
 
     def mirror1(self):
@@ -864,7 +909,6 @@ class Application(Frame):
         self.selected = 'lensY'
     def block(self):
         self.selected = 'block'
-
 
     def clickA1(self):
         if self.selected == 'm1':
