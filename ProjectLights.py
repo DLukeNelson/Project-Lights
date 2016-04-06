@@ -62,7 +62,7 @@ B45R90B135 = PhotoImage(file = 'B45R90B135.png')
 B45R90R135 = PhotoImage(file = 'B45R90R135.png')
 B45R135 = PhotoImage(file = 'B45R135.png')
 B90 = PhotoImage(file = 'B90.png')
-B90B45 = PhotoImage(file = 'B90B45.png')
+B45B90 = PhotoImage(file = 'B45B90.png')
 B90B135 = PhotoImage(file = 'B90B135.png')
 B90R135 = PhotoImage(file = 'B90R135.png')
 B135 = PhotoImage(file = 'B135.png')
@@ -105,6 +105,7 @@ R45R90 = PhotoImage(file = 'R45R90.png')
 R45R90B135 = PhotoImage(file = 'R45R90B135.png')
 R45R90R135 = PhotoImage(file = 'R45R90R135.png')
 R45R135 = PhotoImage(file = 'R45R135.png')
+R0B45B90 = PhotoImage(file = 'R0B45B90.png')
 
 images.append(bg)               #0
 images.append(LaserOne)         #1
@@ -160,7 +161,7 @@ images.append(B45R90B135) 	    #50
 images.append(B45R90R135) 	    #51
 images.append(B45R135) 	        #52
 images.append(B90)          	#53
-images.append(B90B45) 	        #54
+images.append(B45B90) 	        #54
 images.append(B90B135) 	        #55
 images.append(B90R135) 	        #56
 images.append(B135) 	        #57
@@ -169,7 +170,7 @@ images.append(R0R45) 	        #59
 images.append(R0R45R90) 	    #60
 images.append(R90) 	            #61
 images.append(R90B135) 	        #62
-images.append(R90R135) 	        #63
+images.append(R90R135) 	        #63 
 images.append(R135) 	        #64
 images.append(R0B45) 	        #65
 images.append(R0B45B90B135) 	#66
@@ -203,7 +204,7 @@ images.append(R45R90) 	        #93
 images.append(R45R90B135) 	    #94
 images.append(R45R90R135) 	    #95
 images.append(R45R135) 	        #96
-
+images.append(R0B45B90)         #97
 
 class Application(Frame):
     def closeWindow():
@@ -825,20 +826,27 @@ class Application(Frame):
 
 
     def update_images(self, board):
+        for atile in range(144):
+            board.tiles[atile].red = set()
+            board.tiles[atile].blue = set()
         red = (4,3)
         redtile = (4,4)
         while redtile:
-            rednext = board.tiles[ redtile[0]*12 + redtile[1] ].laser(red)
+            rednext = board.tiles[ redtile[0]*12 + redtile[1] ].redlaser(red)
             red = redtile
             redtile = rednext
         blue = (7,3)
         bluetile = (7,4)
         while bluetile:
-            bluenext = board.tiles[ bluetile[0]*12 + bluetile[1] ].laser(blue)
+            bluenext = board.tiles[ bluetile[0]*12 + bluetile[1] ].bluelaser(blue)
             blue = bluetile
             bluetile = bluenext
+
+
         for atile in range(144):
-                self.buttons[atile]['image'] = images[board.tiles[atile].img]
+            board.tiles[atile].setimg()
+            self.buttons[atile]['image'] = images[board.tiles[atile].img]
+        self.selected = None
 
 
 
