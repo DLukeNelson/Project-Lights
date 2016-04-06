@@ -1,5 +1,6 @@
 from tkinter import*
 from gameboard import*
+from AI import*
 import sys
 
 root = Tk()
@@ -170,7 +171,7 @@ images.append(R0R45) 	        #59
 images.append(R0R45R90) 	    #60
 images.append(R90) 	            #61
 images.append(R90B135) 	        #62
-images.append(R90R135) 	        #63 
+images.append(R90R135) 	        #63
 images.append(R135) 	        #64
 images.append(R0B45) 	        #65
 images.append(R0B45B90B135) 	#66
@@ -219,8 +220,8 @@ class Application(Frame):
         self.buttons = list()
         self.selected = None
 
-        self.mirror1Button = Button(master, image = Mirror1, state = ACTIVE)
-        self.mirror2Button = Button(master, image = Mirror2, state = ACTIVE)
+        self.mirror1Button = Button(master, image = Mirror1)
+        self.mirror2Button = Button(master, image = Mirror2)
         self.mirror3Button = Button(master, image = Mirror3)
         self.mirror4Button = Button(master, image = Mirror4)
         self.lensXButton = Button(master, image = LensX)
@@ -823,2352 +824,2357 @@ class Application(Frame):
         self.buttonL11['command'] = self.clickL11
         self.buttonL12['command'] = self.clickL12
 
+        self.update_images(board)
+
 
 
     def update_images(self, board):
-        for atile in range(144):
-            board.tiles[atile].red = set()
-            board.tiles[atile].blue = set()
-        red = (4,3)
-        redtile = (4,4)
-        while redtile:
-            rednext = board.tiles[ redtile[0]*12 + redtile[1] ].redlaser(red)
-            red = redtile
-            redtile = rednext
-        blue = (7,3)
-        bluetile = (7,4)
-        while bluetile:
-            bluenext = board.tiles[ bluetile[0]*12 + bluetile[1] ].bluelaser(blue)
-            blue = bluetile
-            bluetile = bluenext
-
+        board.LaserRed()
+        board.LaserBlue()
 
         for atile in range(144):
             board.tiles[atile].setimg()
             self.buttons[atile]['image'] = images[board.tiles[atile].img]
         self.selected = None
+        board.redTurn = not board.redTurn
+
+
+
+        if not board.redTurn:
+            blueAI(board)
+            board.LaserRed()
+            board.LaserBlue()
+            for atile in range(144):
+                board.tiles[atile].setimg()
+                self.buttons[atile]['image'] = images[board.tiles[atile].img]
+            board.redTurn = True
+        print(board.redTurn)
+        for atile in range(144):
+            if board.tiles[atile].blue:
+                print(atile)
+                print(board.tiles[atile].used)
 
 
 
     def mirror1(self):
-        self.selected = 'm1'
+        self.selected = 1
     def mirror2(self):
-        self.selected = 'm2'
+        self.selected = 2
     def mirror3(self):
-        self.selected = 'm3'
+        self.selected = 3
     def mirror4(self):
-        self.selected = 'm4'
+        self.selected = 4
     def lensX(self):
-        self.selected = 'lensX'
+        self.selected = 5
     def lensY(self):
-        self.selected = 'lensY'
+        self.selected = 6
     def block(self):
-        self.selected = 'block'
+        self.selected = 7
 
 
     def clickA1(self):
-        if self.selected == 'm1':
-            board.tiles[0].mirror1()
-        if self.selected == 'm2':
-            board.tiles[0].mirror2()
-        if self.selected == 'm3':
-            board.tiles[0].mirror3()
-        if self.selected == 'm4':
-            board.tiles[0].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[0].lensX()
-        if self.selected == 'lensY':
-            board.tiles[0].lensY()
-        if self.selected == 'block':
-            board.tiles[0].block()
+        if self.selected == 1:
+            board.tiles[0].mirror1(board)
+        if self.selected == 2:
+            board.tiles[0].mirror2(board)
+        if self.selected == 3:
+            board.tiles[0].mirror3(board)
+        if self.selected == 4:
+            board.tiles[0].mirror4(board)
+        if self.selected == 5:
+            board.tiles[0].lensX(board)
+        if self.selected == 6:
+            board.tiles[0].lensY(board)
+        if self.selected == 7:
+            board.tiles[0].block(board)
         self.update_images(board)
     def clickA2(self):
-        if self.selected == 'm1':
-            board.tiles[1].mirror1()
-        if self.selected == 'm2':
-            board.tiles[1].mirror2()
-        if self.selected == 'm3':
-            board.tiles[1].mirror3()
-        if self.selected == 'm4':
-            board.tiles[1].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[1].lensX()
-        if self.selected == 'lensY':
-            board.tiles[1].lensY()
-        if self.selected == 'block':
-            board.tiles[1].block()
+        if self.selected == 1:
+            board.tiles[1].mirror1(board)
+        if self.selected == 2:
+            board.tiles[1].mirror2(board)
+        if self.selected == 3:
+            board.tiles[1].mirror3(board)
+        if self.selected == 4:
+            board.tiles[1].mirror4(board)
+        if self.selected == 5:
+            board.tiles[1].lensX(board)
+        if self.selected == 6:
+            board.tiles[1].lensY(board)
+        if self.selected == 7:
+            board.tiles[1].block(board)
         self.update_images(board)
     def clickA3(self):
-        if self.selected == 'm1':
-            board.tiles[2].mirror1()
-        if self.selected == 'm2':
-            board.tiles[2].mirror2()
-        if self.selected == 'm3':
-            board.tiles[2].mirror3()
-        if self.selected == 'm4':
-            board.tiles[2].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[2].lensX()
-        if self.selected == 'lensY':
-            board.tiles[2].lensY()
-        if self.selected == 'block':
-            board.tiles[2].block()
+        if self.selected == 1:
+            board.tiles[2].mirror1(board)
+        if self.selected == 2:
+            board.tiles[2].mirror2(board)
+        if self.selected == 3:
+            board.tiles[2].mirror3(board)
+        if self.selected == 4:
+            board.tiles[2].mirror4(board)
+        if self.selected == 5:
+            board.tiles[2].lensX(board)
+        if self.selected == 6:
+            board.tiles[2].lensY(board)
+        if self.selected == 7:
+            board.tiles[2].block(board)
         self.update_images(board)
     def clickA4(self):
-        if self.selected == 'm1':
-            board.tiles[3].mirror1()
-        if self.selected == 'm2':
-            board.tiles[3].mirror2()
-        if self.selected == 'm3':
-            board.tiles[3].mirror3()
-        if self.selected == 'm4':
-            board.tiles[3].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[3].lensX()
-        if self.selected == 'lensY':
-            board.tiles[3].lensY()
-        if self.selected == 'block':
-            board.tiles[3].block()
+        if self.selected == 1:
+            board.tiles[3].mirror1(board)
+        if self.selected == 2:
+            board.tiles[3].mirror2(board)
+        if self.selected == 3:
+            board.tiles[3].mirror3(board)
+        if self.selected == 4:
+            board.tiles[3].mirror4(board)
+        if self.selected == 5:
+            board.tiles[3].lensX(board)
+        if self.selected == 6:
+            board.tiles[3].lensY(board)
+        if self.selected == 7:
+            board.tiles[3].block(board)
         self.update_images(board)
     def clickA5(self):
-        if self.selected == 'm1':
-            board.tiles[4].mirror1()
-        if self.selected == 'm2':
-            board.tiles[4].mirror2()
-        if self.selected == 'm3':
-            board.tiles[4].mirror3()
-        if self.selected == 'm4':
-            board.tiles[4].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[4].lensX()
-        if self.selected == 'lensY':
-            board.tiles[4].lensY()
-        if self.selected == 'block':
-            board.tiles[4].block()
+        if self.selected == 1:
+            board.tiles[4].mirror1(board)
+        if self.selected == 2:
+            board.tiles[4].mirror2(board)
+        if self.selected == 3:
+            board.tiles[4].mirror3(board)
+        if self.selected == 4:
+            board.tiles[4].mirror4(board)
+        if self.selected == 5:
+            board.tiles[4].lensX(board)
+        if self.selected == 6:
+            board.tiles[4].lensY(board)
+        if self.selected == 7:
+            board.tiles[4].block(board)
         self.update_images(board)
     def clickA6(self):
-        if self.selected == 'm1':
-            board.tiles[5].mirror1()
-        if self.selected == 'm2':
-            board.tiles[5].mirror2()
-        if self.selected == 'm3':
-            board.tiles[5].mirror3()
-        if self.selected == 'm4':
-            board.tiles[5].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[5].lensX()
-        if self.selected == 'lensY':
-            board.tiles[5].lensY()
-        if self.selected == 'block':
-            board.tiles[5].block()
+        if self.selected == 1:
+            board.tiles[5].mirror1(board)
+        if self.selected == 2:
+            board.tiles[5].mirror2(board)
+        if self.selected == 3:
+            board.tiles[5].mirror3(board)
+        if self.selected == 4:
+            board.tiles[5].mirror4(board)
+        if self.selected == 5:
+            board.tiles[5].lensX(board)
+        if self.selected == 6:
+            board.tiles[5].lensY(board)
+        if self.selected == 7:
+            board.tiles[5].block(board)
         self.update_images(board)
     def clickA7(self):
-        if self.selected == 'm1':
-            board.tiles[6].mirror1()
-        if self.selected == 'm2':
-            board.tiles[6].mirror2()
-        if self.selected == 'm3':
-            board.tiles[6].mirror3()
-        if self.selected == 'm4':
-            board.tiles[6].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[6].lensX()
-        if self.selected == 'lensY':
-            board.tiles[6].lensY()
-        if self.selected == 'block':
-            board.tiles[6].block()
+        if self.selected == 1:
+            board.tiles[6].mirror1(board)
+        if self.selected == 2:
+            board.tiles[6].mirror2(board)
+        if self.selected == 3:
+            board.tiles[6].mirror3(board)
+        if self.selected == 4:
+            board.tiles[6].mirror4(board)
+        if self.selected == 5:
+            board.tiles[6].lensX(board)
+        if self.selected == 6:
+            board.tiles[6].lensY(board)
+        if self.selected == 7:
+            board.tiles[6].block(board)
         self.update_images(board)
     def clickA8(self):
-        if self.selected == 'm1':
-            board.tiles[7].mirror1()
-        if self.selected == 'm2':
-            board.tiles[7].mirror2()
-        if self.selected == 'm3':
-            board.tiles[7].mirror3()
-        if self.selected == 'm4':
-            board.tiles[7].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[7].lensX()
-        if self.selected == 'lensY':
-            board.tiles[7].lensY()
-        if self.selected == 'block':
-            board.tiles[7].block()
+        if self.selected == 1:
+            board.tiles[7].mirror1(board)
+        if self.selected == 2:
+            board.tiles[7].mirror2(board)
+        if self.selected == 3:
+            board.tiles[7].mirror3(board)
+        if self.selected == 4:
+            board.tiles[7].mirror4(board)
+        if self.selected == 5:
+            board.tiles[7].lensX(board)
+        if self.selected == 6:
+            board.tiles[7].lensY(board)
+        if self.selected == 7:
+            board.tiles[7].block(board)
         self.update_images(board)
     def clickA9(self):
-        if self.selected == 'm1':
-            board.tiles[8].mirror1()
-        if self.selected == 'm2':
-            board.tiles[8].mirror2()
-        if self.selected == 'm3':
-            board.tiles[8].mirror3()
-        if self.selected == 'm4':
-            board.tiles[8].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[8].lensX()
-        if self.selected == 'lensY':
-            board.tiles[8].lensY()
-        if self.selected == 'block':
-            board.tiles[8].block()
+        if self.selected == 1:
+            board.tiles[8].mirror1(board)
+        if self.selected == 2:
+            board.tiles[8].mirror2(board)
+        if self.selected == 3:
+            board.tiles[8].mirror3(board)
+        if self.selected == 4:
+            board.tiles[8].mirror4(board)
+        if self.selected == 5:
+            board.tiles[8].lensX(board)
+        if self.selected == 6:
+            board.tiles[8].lensY(board)
+        if self.selected == 7:
+            board.tiles[8].block(board)
         self.update_images(board)
     def clickA10(self):
-        if self.selected == 'm1':
-            board.tiles[9].mirror1()
-        if self.selected == 'm2':
-            board.tiles[9].mirror2()
-        if self.selected == 'm3':
-            board.tiles[9].mirror3()
-        if self.selected == 'm4':
-            board.tiles[9].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[9].lensX()
-        if self.selected == 'lensY':
-            board.tiles[9].lensY()
-        if self.selected == 'block':
-            board.tiles[9].block()
+        if self.selected == 1:
+            board.tiles[9].mirror1(board)
+        if self.selected == 2:
+            board.tiles[9].mirror2(board)
+        if self.selected == 3:
+            board.tiles[9].mirror3(board)
+        if self.selected == 4:
+            board.tiles[9].mirror4(board)
+        if self.selected == 5:
+            board.tiles[9].lensX(board)
+        if self.selected == 6:
+            board.tiles[9].lensY(board)
+        if self.selected == 7:
+            board.tiles[9].block(board)
         self.update_images(board)
     def clickA11(self):
-        if self.selected == 'm1':
-            board.tiles[10].mirror1()
-        if self.selected == 'm2':
-            board.tiles[10].mirror2()
-        if self.selected == 'm3':
-            board.tiles[10].mirror3()
-        if self.selected == 'm4':
-            board.tiles[10].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[10].lensX()
-        if self.selected == 'lensY':
-            board.tiles[10].lensY()
-        if self.selected == 'block':
-            board.tiles[10].block()
+        if self.selected == 1:
+            board.tiles[10].mirror1(board)
+        if self.selected == 2:
+            board.tiles[10].mirror2(board)
+        if self.selected == 3:
+            board.tiles[10].mirror3(board)
+        if self.selected == 4:
+            board.tiles[10].mirror4(board)
+        if self.selected == 5:
+            board.tiles[10].lensX(board)
+        if self.selected == 6:
+            board.tiles[10].lensY(board)
+        if self.selected == 7:
+            board.tiles[10].block(board)
         self.update_images(board)
     def clickA12(self):
-        if self.selected == 'm1':
-            board.tiles[11].mirror1()
-        if self.selected == 'm2':
-            board.tiles[11].mirror2()
-        if self.selected == 'm3':
-            board.tiles[11].mirror3()
-        if self.selected == 'm4':
-            board.tiles[11].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[11].lensX()
-        if self.selected == 'lensY':
-            board.tiles[11].lensY()
-        if self.selected == 'block':
-            board.tiles[11].block()
+        if self.selected == 1:
+            board.tiles[11].mirror1(board)
+        if self.selected == 2:
+            board.tiles[11].mirror2(board)
+        if self.selected == 3:
+            board.tiles[11].mirror3(board)
+        if self.selected == 4:
+            board.tiles[11].mirror4(board)
+        if self.selected == 5:
+            board.tiles[11].lensX(board)
+        if self.selected == 6:
+            board.tiles[11].lensY(board)
+        if self.selected == 7:
+            board.tiles[11].block(board)
         self.update_images(board)
     def clickB1(self):
-        if self.selected == 'm1':
-            board.tiles[12].mirror1()
-        if self.selected == 'm2':
-            board.tiles[12].mirror2()
-        if self.selected == 'm3':
-            board.tiles[12].mirror3()
-        if self.selected == 'm4':
-            board.tiles[12].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[12].lensX()
-        if self.selected == 'lensY':
-            board.tiles[12].lensY()
-        if self.selected == 'block':
-            board.tiles[12].block()
+        if self.selected == 1:
+            board.tiles[12].mirror1(board)
+        if self.selected == 2:
+            board.tiles[12].mirror2(board)
+        if self.selected == 3:
+            board.tiles[12].mirror3(board)
+        if self.selected == 4:
+            board.tiles[12].mirror4(board)
+        if self.selected == 5:
+            board.tiles[12].lensX(board)
+        if self.selected == 6:
+            board.tiles[12].lensY(board)
+        if self.selected == 7:
+            board.tiles[12].block(board)
         self.update_images(board)
     def clickB2(self):
-        if self.selected == 'm1':
-            board.tiles[13].mirror1()
-        if self.selected == 'm2':
-            board.tiles[13].mirror2()
-        if self.selected == 'm3':
-            board.tiles[13].mirror3()
-        if self.selected == 'm4':
-            board.tiles[13].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[13].lensX()
-        if self.selected == 'lensY':
-            board.tiles[13].lensY()
-        if self.selected == 'block':
-            board.tiles[13].block()
+        if self.selected == 1:
+            board.tiles[13].mirror1(board)
+        if self.selected == 2:
+            board.tiles[13].mirror2(board)
+        if self.selected == 3:
+            board.tiles[13].mirror3(board)
+        if self.selected == 4:
+            board.tiles[13].mirror4(board)
+        if self.selected == 5:
+            board.tiles[13].lensX(board)
+        if self.selected == 6:
+            board.tiles[13].lensY(board)
+        if self.selected == 7:
+            board.tiles[13].block(board)
         self.update_images(board)
     def clickB3(self):
-        if self.selected == 'm1':
-            board.tiles[14].mirror1()
-        if self.selected == 'm2':
-            board.tiles[14].mirror2()
-        if self.selected == 'm3':
-            board.tiles[14].mirror3()
-        if self.selected == 'm4':
-            board.tiles[14].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[14].lensX()
-        if self.selected == 'lensY':
-            board.tiles[14].lensY()
-        if self.selected == 'block':
-            board.tiles[14].block()
+        if self.selected == 1:
+            board.tiles[14].mirror1(board)
+        if self.selected == 2:
+            board.tiles[14].mirror2(board)
+        if self.selected == 3:
+            board.tiles[14].mirror3(board)
+        if self.selected == 4:
+            board.tiles[14].mirror4(board)
+        if self.selected == 5:
+            board.tiles[14].lensX(board)
+        if self.selected == 6:
+            board.tiles[14].lensY(board)
+        if self.selected == 7:
+            board.tiles[14].block(board)
         self.update_images(board)
     def clickB4(self):
-        if self.selected == 'm1':
-            board.tiles[15].mirror1()
-        if self.selected == 'm2':
-            board.tiles[15].mirror2()
-        if self.selected == 'm3':
-            board.tiles[15].mirror3()
-        if self.selected == 'm4':
-            board.tiles[15].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[15].lensX()
-        if self.selected == 'lensY':
-            board.tiles[15].lensY()
-        if self.selected == 'block':
-            board.tiles[15].block()
+        if self.selected == 1:
+            board.tiles[15].mirror1(board)
+        if self.selected == 2:
+            board.tiles[15].mirror2(board)
+        if self.selected == 3:
+            board.tiles[15].mirror3(board)
+        if self.selected == 4:
+            board.tiles[15].mirror4(board)
+        if self.selected == 5:
+            board.tiles[15].lensX(board)
+        if self.selected == 6:
+            board.tiles[15].lensY(board)
+        if self.selected == 7:
+            board.tiles[15].block(board)
         self.update_images(board)
     def clickB5(self):
-        if self.selected == 'm1':
-            board.tiles[16].mirror1()
-        if self.selected == 'm2':
-            board.tiles[16].mirror2()
-        if self.selected == 'm3':
-            board.tiles[16].mirror3()
-        if self.selected == 'm4':
-            board.tiles[16].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[16].lensX()
-        if self.selected == 'lensY':
-            board.tiles[16].lensY()
-        if self.selected == 'block':
-            board.tiles[16].block()
+        if self.selected == 1:
+            board.tiles[16].mirror1(board)
+        if self.selected == 2:
+            board.tiles[16].mirror2(board)
+        if self.selected == 3:
+            board.tiles[16].mirror3(board)
+        if self.selected == 4:
+            board.tiles[16].mirror4(board)
+        if self.selected == 5:
+            board.tiles[16].lensX(board)
+        if self.selected == 6:
+            board.tiles[16].lensY(board)
+        if self.selected == 7:
+            board.tiles[16].block(board)
         self.update_images(board)
     def clickB6(self):
-        if self.selected == 'm1':
-            board.tiles[17].mirror1()
-        if self.selected == 'm2':
-            board.tiles[17].mirror2()
-        if self.selected == 'm3':
-            board.tiles[17].mirror3()
-        if self.selected == 'm4':
-            board.tiles[17].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[17].lensX()
-        if self.selected == 'lensY':
-            board.tiles[17].lensY()
-        if self.selected == 'block':
-            board.tiles[17].block()
+        if self.selected == 1:
+            board.tiles[17].mirror1(board)
+        if self.selected == 2:
+            board.tiles[17].mirror2(board)
+        if self.selected == 3:
+            board.tiles[17].mirror3(board)
+        if self.selected == 4:
+            board.tiles[17].mirror4(board)
+        if self.selected == 5:
+            board.tiles[17].lensX(board)
+        if self.selected == 6:
+            board.tiles[17].lensY(board)
+        if self.selected == 7:
+            board.tiles[17].block(board)
         self.update_images(board)
     def clickB7(self):
-        if self.selected == 'm1':
-            board.tiles[18].mirror1()
-        if self.selected == 'm2':
-            board.tiles[18].mirror2()
-        if self.selected == 'm3':
-            board.tiles[18].mirror3()
-        if self.selected == 'm4':
-            board.tiles[18].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[18].lensX()
-        if self.selected == 'lensY':
-            board.tiles[18].lensY()
-        if self.selected == 'block':
-            board.tiles[18].block()
+        if self.selected == 1:
+            board.tiles[18].mirror1(board)
+        if self.selected == 2:
+            board.tiles[18].mirror2(board)
+        if self.selected == 3:
+            board.tiles[18].mirror3(board)
+        if self.selected == 4:
+            board.tiles[18].mirror4(board)
+        if self.selected == 5:
+            board.tiles[18].lensX(board)
+        if self.selected == 6:
+            board.tiles[18].lensY(board)
+        if self.selected == 7:
+            board.tiles[18].block(board)
         self.update_images(board)
     def clickB8(self):
-        if self.selected == 'm1':
-            board.tiles[19].mirror1()
-        if self.selected == 'm2':
-            board.tiles[19].mirror2()
-        if self.selected == 'm3':
-            board.tiles[19].mirror3()
-        if self.selected == 'm4':
-            board.tiles[19].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[19].lensX()
-        if self.selected == 'lensY':
-            board.tiles[19].lensY()
-        if self.selected == 'block':
-            board.tiles[19].block()
+        if self.selected == 1:
+            board.tiles[19].mirror1(board)
+        if self.selected == 2:
+            board.tiles[19].mirror2(board)
+        if self.selected == 3:
+            board.tiles[19].mirror3(board)
+        if self.selected == 4:
+            board.tiles[19].mirror4(board)
+        if self.selected == 5:
+            board.tiles[19].lensX(board)
+        if self.selected == 6:
+            board.tiles[19].lensY(board)
+        if self.selected == 7:
+            board.tiles[19].block(board)
         self.update_images(board)
     def clickB9(self):
-        if self.selected == 'm1':
-            board.tiles[20].mirror1()
-        if self.selected == 'm2':
-            board.tiles[20].mirror2()
-        if self.selected == 'm3':
-            board.tiles[20].mirror3()
-        if self.selected == 'm4':
-            board.tiles[20].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[20].lensX()
-        if self.selected == 'lensY':
-            board.tiles[20].lensY()
-        if self.selected == 'block':
-            board.tiles[20].block()
+        if self.selected == 1:
+            board.tiles[20].mirror1(board)
+        if self.selected == 2:
+            board.tiles[20].mirror2(board)
+        if self.selected == 3:
+            board.tiles[20].mirror3(board)
+        if self.selected == 4:
+            board.tiles[20].mirror4(board)
+        if self.selected == 5:
+            board.tiles[20].lensX(board)
+        if self.selected == 6:
+            board.tiles[20].lensY(board)
+        if self.selected == 7:
+            board.tiles[20].block(board)
         self.update_images(board)
     def clickB10(self):
-        if self.selected == 'm1':
-            board.tiles[21].mirror1()
-        if self.selected == 'm2':
-            board.tiles[21].mirror2()
-        if self.selected == 'm3':
-            board.tiles[21].mirror3()
-        if self.selected == 'm4':
-            board.tiles[21].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[21].lensX()
-        if self.selected == 'lensY':
-            board.tiles[21].lensY()
-        if self.selected == 'block':
-            board.tiles[21].block()
+        if self.selected == 1:
+            board.tiles[21].mirror1(board)
+        if self.selected == 2:
+            board.tiles[21].mirror2(board)
+        if self.selected == 3:
+            board.tiles[21].mirror3(board)
+        if self.selected == 4:
+            board.tiles[21].mirror4(board)
+        if self.selected == 5:
+            board.tiles[21].lensX(board)
+        if self.selected == 6:
+            board.tiles[21].lensY(board)
+        if self.selected == 7:
+            board.tiles[21].block(board)
         self.update_images(board)
     def clickB11(self):
-        if self.selected == 'm1':
-            board.tiles[22].mirror1()
-        if self.selected == 'm2':
-            board.tiles[22].mirror2()
-        if self.selected == 'm3':
-            board.tiles[22].mirror3()
-        if self.selected == 'm4':
-            board.tiles[22].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[22].lensX()
-        if self.selected == 'lensY':
-            board.tiles[22].lensY()
-        if self.selected == 'block':
-            board.tiles[22].block()
+        if self.selected == 1:
+            board.tiles[22].mirror1(board)
+        if self.selected == 2:
+            board.tiles[22].mirror2(board)
+        if self.selected == 3:
+            board.tiles[22].mirror3(board)
+        if self.selected == 4:
+            board.tiles[22].mirror4(board)
+        if self.selected == 5:
+            board.tiles[22].lensX(board)
+        if self.selected == 6:
+            board.tiles[22].lensY(board)
+        if self.selected == 7:
+            board.tiles[22].block(board)
         self.update_images(board)
     def clickB12(self):
-        if self.selected == 'm1':
-            board.tiles[23].mirror1()
-        if self.selected == 'm2':
-            board.tiles[23].mirror2()
-        if self.selected == 'm3':
-            board.tiles[23].mirror3()
-        if self.selected == 'm4':
-            board.tiles[23].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[23].lensX()
-        if self.selected == 'lensY':
-            board.tiles[23].lensY()
-        if self.selected == 'block':
-            board.tiles[23].block()
+        if self.selected == 1:
+            board.tiles[23].mirror1(board)
+        if self.selected == 2:
+            board.tiles[23].mirror2(board)
+        if self.selected == 3:
+            board.tiles[23].mirror3(board)
+        if self.selected == 4:
+            board.tiles[23].mirror4(board)
+        if self.selected == 5:
+            board.tiles[23].lensX(board)
+        if self.selected == 6:
+            board.tiles[23].lensY(board)
+        if self.selected == 7:
+            board.tiles[23].block(board)
         self.update_images(board)
     def clickC1(self):
-        if self.selected == 'm1':
-            board.tiles[24].mirror1()
-        if self.selected == 'm2':
-            board.tiles[24].mirror2()
-        if self.selected == 'm3':
-            board.tiles[24].mirror3()
-        if self.selected == 'm4':
-            board.tiles[24].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[24].lensX()
-        if self.selected == 'lensY':
-            board.tiles[24].lensY()
-        if self.selected == 'block':
-            board.tiles[24].block()
+        if self.selected == 1:
+            board.tiles[24].mirror1(board)
+        if self.selected == 2:
+            board.tiles[24].mirror2(board)
+        if self.selected == 3:
+            board.tiles[24].mirror3(board)
+        if self.selected == 4:
+            board.tiles[24].mirror4(board)
+        if self.selected == 5:
+            board.tiles[24].lensX(board)
+        if self.selected == 6:
+            board.tiles[24].lensY(board)
+        if self.selected == 7:
+            board.tiles[24].block(board)
         self.update_images(board)
     def clickC2(self):
-        if self.selected == 'm1':
-            board.tiles[25].mirror1()
-        if self.selected == 'm2':
-            board.tiles[25].mirror2()
-        if self.selected == 'm3':
-            board.tiles[25].mirror3()
-        if self.selected == 'm4':
-            board.tiles[25].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[25].lensX()
-        if self.selected == 'lensY':
-            board.tiles[25].lensY()
-        if self.selected == 'block':
-            board.tiles[25].block()
+        if self.selected == 1:
+            board.tiles[25].mirror1(board)
+        if self.selected == 2:
+            board.tiles[25].mirror2(board)
+        if self.selected == 3:
+            board.tiles[25].mirror3(board)
+        if self.selected == 4:
+            board.tiles[25].mirror4(board)
+        if self.selected == 5:
+            board.tiles[25].lensX(board)
+        if self.selected == 6:
+            board.tiles[25].lensY(board)
+        if self.selected == 7:
+            board.tiles[25].block(board)
         self.update_images(board)
     def clickC3(self):
-        if self.selected == 'm1':
-            board.tiles[26].mirror1()
-        if self.selected == 'm2':
-            board.tiles[26].mirror2()
-        if self.selected == 'm3':
-            board.tiles[26].mirror3()
-        if self.selected == 'm4':
-            board.tiles[26].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[26].lensX()
-        if self.selected == 'lensY':
-            board.tiles[26].lensY()
-        if self.selected == 'block':
-            board.tiles[26].block()
+        if self.selected == 1:
+            board.tiles[26].mirror1(board)
+        if self.selected == 2:
+            board.tiles[26].mirror2(board)
+        if self.selected == 3:
+            board.tiles[26].mirror3(board)
+        if self.selected == 4:
+            board.tiles[26].mirror4(board)
+        if self.selected == 5:
+            board.tiles[26].lensX(board)
+        if self.selected == 6:
+            board.tiles[26].lensY(board)
+        if self.selected == 7:
+            board.tiles[26].block(board)
         self.update_images(board)
     def clickC4(self):
-        if self.selected == 'm1':
-            board.tiles[27].mirror1()
-        if self.selected == 'm2':
-            board.tiles[27].mirror2()
-        if self.selected == 'm3':
-            board.tiles[27].mirror3()
-        if self.selected == 'm4':
-            board.tiles[27].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[27].lensX()
-        if self.selected == 'lensY':
-            board.tiles[27].lensY()
-        if self.selected == 'block':
-            board.tiles[27].block()
+        if self.selected == 1:
+            board.tiles[27].mirror1(board)
+        if self.selected == 2:
+            board.tiles[27].mirror2(board)
+        if self.selected == 3:
+            board.tiles[27].mirror3(board)
+        if self.selected == 4:
+            board.tiles[27].mirror4(board)
+        if self.selected == 5:
+            board.tiles[27].lensX(board)
+        if self.selected == 6:
+            board.tiles[27].lensY(board)
+        if self.selected == 7:
+            board.tiles[27].block(board)
         self.update_images(board)
     def clickC5(self):
-        if self.selected == 'm1':
-            board.tiles[28].mirror1()
-        if self.selected == 'm2':
-            board.tiles[28].mirror2()
-        if self.selected == 'm3':
-            board.tiles[28].mirror3()
-        if self.selected == 'm4':
-            board.tiles[28].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[28].lensX()
-        if self.selected == 'lensY':
-            board.tiles[28].lensY()
-        if self.selected == 'block':
-            board.tiles[28].block()
+        if self.selected == 1:
+            board.tiles[28].mirror1(board)
+        if self.selected == 2:
+            board.tiles[28].mirror2(board)
+        if self.selected == 3:
+            board.tiles[28].mirror3(board)
+        if self.selected == 4:
+            board.tiles[28].mirror4(board)
+        if self.selected == 5:
+            board.tiles[28].lensX(board)
+        if self.selected == 6:
+            board.tiles[28].lensY(board)
+        if self.selected == 7:
+            board.tiles[28].block(board)
         self.update_images(board)
     def clickC6(self):
-        if self.selected == 'm1':
-            board.tiles[29].mirror1()
-        if self.selected == 'm2':
-            board.tiles[29].mirror2()
-        if self.selected == 'm3':
-            board.tiles[29].mirror3()
-        if self.selected == 'm4':
-            board.tiles[29].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[29].lensX()
-        if self.selected == 'lensY':
-            board.tiles[29].lensY()
-        if self.selected == 'block':
-            board.tiles[29].block()
+        if self.selected == 1:
+            board.tiles[29].mirror1(board)
+        if self.selected == 2:
+            board.tiles[29].mirror2(board)
+        if self.selected == 3:
+            board.tiles[29].mirror3(board)
+        if self.selected == 4:
+            board.tiles[29].mirror4(board)
+        if self.selected == 5:
+            board.tiles[29].lensX(board)
+        if self.selected == 6:
+            board.tiles[29].lensY(board)
+        if self.selected == 7:
+            board.tiles[29].block(board)
         self.update_images(board)
     def clickC7(self):
-        if self.selected == 'm1':
-            board.tiles[30].mirror1()
-        if self.selected == 'm2':
-            board.tiles[30].mirror2()
-        if self.selected == 'm3':
-            board.tiles[30].mirror3()
-        if self.selected == 'm4':
-            board.tiles[30].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[30].lensX()
-        if self.selected == 'lensY':
-            board.tiles[30].lensY()
-        if self.selected == 'block':
-            board.tiles[30].block()
+        if self.selected == 1:
+            board.tiles[30].mirror1(board)
+        if self.selected == 2:
+            board.tiles[30].mirror2(board)
+        if self.selected == 3:
+            board.tiles[30].mirror3(board)
+        if self.selected == 4:
+            board.tiles[30].mirror4(board)
+        if self.selected == 5:
+            board.tiles[30].lensX(board)
+        if self.selected == 6:
+            board.tiles[30].lensY(board)
+        if self.selected == 7:
+            board.tiles[30].block(board)
         self.update_images(board)
     def clickC8(self):
-        if self.selected == 'm1':
-            board.tiles[31].mirror1()
-        if self.selected == 'm2':
-            board.tiles[31].mirror2()
-        if self.selected == 'm3':
-            board.tiles[31].mirror3()
-        if self.selected == 'm4':
-            board.tiles[31].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[31].lensX()
-        if self.selected == 'lensY':
-            board.tiles[31].lensY()
-        if self.selected == 'block':
-            board.tiles[31].block()
+        if self.selected == 1:
+            board.tiles[31].mirror1(board)
+        if self.selected == 2:
+            board.tiles[31].mirror2(board)
+        if self.selected == 3:
+            board.tiles[31].mirror3(board)
+        if self.selected == 4:
+            board.tiles[31].mirror4(board)
+        if self.selected == 5:
+            board.tiles[31].lensX(board)
+        if self.selected == 6:
+            board.tiles[31].lensY(board)
+        if self.selected == 7:
+            board.tiles[31].block(board)
         self.update_images(board)
     def clickC9(self):
-        if self.selected == 'm1':
-            board.tiles[32].mirror1()
-        if self.selected == 'm2':
-            board.tiles[32].mirror2()
-        if self.selected == 'm3':
-            board.tiles[32].mirror3()
-        if self.selected == 'm4':
-            board.tiles[32].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[32].lensX()
-        if self.selected == 'lensY':
-            board.tiles[32].lensY()
-        if self.selected == 'block':
-            board.tiles[32].block()
+        if self.selected == 1:
+            board.tiles[32].mirror1(board)
+        if self.selected == 2:
+            board.tiles[32].mirror2(board)
+        if self.selected == 3:
+            board.tiles[32].mirror3(board)
+        if self.selected == 4:
+            board.tiles[32].mirror4(board)
+        if self.selected == 5:
+            board.tiles[32].lensX(board)
+        if self.selected == 6:
+            board.tiles[32].lensY(board)
+        if self.selected == 7:
+            board.tiles[32].block(board)
         self.update_images(board)
     def clickC10(self):
-        if self.selected == 'm1':
-            board.tiles[33].mirror1()
-        if self.selected == 'm2':
-            board.tiles[33].mirror2()
-        if self.selected == 'm3':
-            board.tiles[33].mirror3()
-        if self.selected == 'm4':
-            board.tiles[33].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[33].lensX()
-        if self.selected == 'lensY':
-            board.tiles[33].lensY()
-        if self.selected == 'block':
-            board.tiles[33].block()
+        if self.selected == 1:
+            board.tiles[33].mirror1(board)
+        if self.selected == 2:
+            board.tiles[33].mirror2(board)
+        if self.selected == 3:
+            board.tiles[33].mirror3(board)
+        if self.selected == 4:
+            board.tiles[33].mirror4(board)
+        if self.selected == 5:
+            board.tiles[33].lensX(board)
+        if self.selected == 6:
+            board.tiles[33].lensY(board)
+        if self.selected == 7:
+            board.tiles[33].block(board)
         self.update_images(board)
     def clickC11(self):
-        if self.selected == 'm1':
-            board.tiles[34].mirror1()
-        if self.selected == 'm2':
-            board.tiles[34].mirror2()
-        if self.selected == 'm3':
-            board.tiles[34].mirror3()
-        if self.selected == 'm4':
-            board.tiles[34].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[34].lensX()
-        if self.selected == 'lensY':
-            board.tiles[34].lensY()
-        if self.selected == 'block':
-            board.tiles[34].block()
+        if self.selected == 1:
+            board.tiles[34].mirror1(board)
+        if self.selected == 2:
+            board.tiles[34].mirror2(board)
+        if self.selected == 3:
+            board.tiles[34].mirror3(board)
+        if self.selected == 4:
+            board.tiles[34].mirror4(board)
+        if self.selected == 5:
+            board.tiles[34].lensX(board)
+        if self.selected == 6:
+            board.tiles[34].lensY(board)
+        if self.selected == 7:
+            board.tiles[34].block(board)
         self.update_images(board)
     def clickC12(self):
-        if self.selected == 'm1':
-            board.tiles[35].mirror1()
-        if self.selected == 'm2':
-            board.tiles[35].mirror2()
-        if self.selected == 'm3':
-            board.tiles[35].mirror3()
-        if self.selected == 'm4':
-            board.tiles[35].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[35].lensX()
-        if self.selected == 'lensY':
-            board.tiles[35].lensY()
-        if self.selected == 'block':
-            board.tiles[35].block()
+        if self.selected == 1:
+            board.tiles[35].mirror1(board)
+        if self.selected == 2:
+            board.tiles[35].mirror2(board)
+        if self.selected == 3:
+            board.tiles[35].mirror3(board)
+        if self.selected == 4:
+            board.tiles[35].mirror4(board)
+        if self.selected == 5:
+            board.tiles[35].lensX(board)
+        if self.selected == 6:
+            board.tiles[35].lensY(board)
+        if self.selected == 7:
+            board.tiles[35].block(board)
         self.update_images(board)
     def clickD1(self):
-        if self.selected == 'm1':
-            board.tiles[36].mirror1()
-        if self.selected == 'm2':
-            board.tiles[36].mirror2()
-        if self.selected == 'm3':
-            board.tiles[36].mirror3()
-        if self.selected == 'm4':
-            board.tiles[36].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[36].lensX()
-        if self.selected == 'lensY':
-            board.tiles[36].lensY()
-        if self.selected == 'block':
-            board.tiles[36].block()
+        if self.selected == 1:
+            board.tiles[36].mirror1(board)
+        if self.selected == 2:
+            board.tiles[36].mirror2(board)
+        if self.selected == 3:
+            board.tiles[36].mirror3(board)
+        if self.selected == 4:
+            board.tiles[36].mirror4(board)
+        if self.selected == 5:
+            board.tiles[36].lensX(board)
+        if self.selected == 6:
+            board.tiles[36].lensY(board)
+        if self.selected == 7:
+            board.tiles[36].block(board)
         self.update_images(board)
     def clickD2(self):
-        if self.selected == 'm1':
-            board.tiles[37].mirror1()
-        if self.selected == 'm2':
-            board.tiles[37].mirror2()
-        if self.selected == 'm3':
-            board.tiles[37].mirror3()
-        if self.selected == 'm4':
-            board.tiles[37].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[37].lensX()
-        if self.selected == 'lensY':
-            board.tiles[37].lensY()
-        if self.selected == 'block':
-            board.tiles[37].block()
+        if self.selected == 1:
+            board.tiles[37].mirror1(board)
+        if self.selected == 2:
+            board.tiles[37].mirror2(board)
+        if self.selected == 3:
+            board.tiles[37].mirror3(board)
+        if self.selected == 4:
+            board.tiles[37].mirror4(board)
+        if self.selected == 5:
+            board.tiles[37].lensX(board)
+        if self.selected == 6:
+            board.tiles[37].lensY(board)
+        if self.selected == 7:
+            board.tiles[37].block(board)
         self.update_images(board)
     def clickD3(self):
-        if self.selected == 'm1':
-            board.tiles[38].mirror1()
-        if self.selected == 'm2':
-            board.tiles[38].mirror2()
-        if self.selected == 'm3':
-            board.tiles[38].mirror3()
-        if self.selected == 'm4':
-            board.tiles[38].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[38].lensX()
-        if self.selected == 'lensY':
-            board.tiles[38].lensY()
-        if self.selected == 'block':
-            board.tiles[38].block()
+        if self.selected == 1:
+            board.tiles[38].mirror1(board)
+        if self.selected == 2:
+            board.tiles[38].mirror2(board)
+        if self.selected == 3:
+            board.tiles[38].mirror3(board)
+        if self.selected == 4:
+            board.tiles[38].mirror4(board)
+        if self.selected == 5:
+            board.tiles[38].lensX(board)
+        if self.selected == 6:
+            board.tiles[38].lensY(board)
+        if self.selected == 7:
+            board.tiles[38].block(board)
         self.update_images(board)
     def clickD4(self):
-        if self.selected == 'm1':
-            board.tiles[39].mirror1()
-        if self.selected == 'm2':
-            board.tiles[39].mirror2()
-        if self.selected == 'm3':
-            board.tiles[39].mirror3()
-        if self.selected == 'm4':
-            board.tiles[39].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[39].lensX()
-        if self.selected == 'lensY':
-            board.tiles[39].lensY()
-        if self.selected == 'block':
-            board.tiles[39].block()
+        if self.selected == 1:
+            board.tiles[39].mirror1(board)
+        if self.selected == 2:
+            board.tiles[39].mirror2(board)
+        if self.selected == 3:
+            board.tiles[39].mirror3(board)
+        if self.selected == 4:
+            board.tiles[39].mirror4(board)
+        if self.selected == 5:
+            board.tiles[39].lensX(board)
+        if self.selected == 6:
+            board.tiles[39].lensY(board)
+        if self.selected == 7:
+            board.tiles[39].block(board)
         self.update_images(board)
     def clickD5(self):
-        if self.selected == 'm1':
-            board.tiles[40].mirror1()
-        if self.selected == 'm2':
-            board.tiles[40].mirror2()
-        if self.selected == 'm3':
-            board.tiles[40].mirror3()
-        if self.selected == 'm4':
-            board.tiles[40].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[40].lensX()
-        if self.selected == 'lensY':
-            board.tiles[40].lensY()
-        if self.selected == 'block':
-            board.tiles[40].block()
+        if self.selected == 1:
+            board.tiles[40].mirror1(board)
+        if self.selected == 2:
+            board.tiles[40].mirror2(board)
+        if self.selected == 3:
+            board.tiles[40].mirror3(board)
+        if self.selected == 4:
+            board.tiles[40].mirror4(board)
+        if self.selected == 5:
+            board.tiles[40].lensX(board)
+        if self.selected == 6:
+            board.tiles[40].lensY(board)
+        if self.selected == 7:
+            board.tiles[40].block(board)
         self.update_images(board)
     def clickD6(self):
-        if self.selected == 'm1':
-            board.tiles[41].mirror1()
-        if self.selected == 'm2':
-            board.tiles[41].mirror2()
-        if self.selected == 'm3':
-            board.tiles[41].mirror3()
-        if self.selected == 'm4':
-            board.tiles[41].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[41].lensX()
-        if self.selected == 'lensY':
-            board.tiles[41].lensY()
-        if self.selected == 'block':
-            board.tiles[41].block()
+        if self.selected == 1:
+            board.tiles[41].mirror1(board)
+        if self.selected == 2:
+            board.tiles[41].mirror2(board)
+        if self.selected == 3:
+            board.tiles[41].mirror3(board)
+        if self.selected == 4:
+            board.tiles[41].mirror4(board)
+        if self.selected == 5:
+            board.tiles[41].lensX(board)
+        if self.selected == 6:
+            board.tiles[41].lensY(board)
+        if self.selected == 7:
+            board.tiles[41].block(board)
         self.update_images(board)
     def clickD7(self):
-        if self.selected == 'm1':
-            board.tiles[42].mirror1()
-        if self.selected == 'm2':
-            board.tiles[42].mirror2()
-        if self.selected == 'm3':
-            board.tiles[42].mirror3()
-        if self.selected == 'm4':
-            board.tiles[42].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[42].lensX()
-        if self.selected == 'lensY':
-            board.tiles[42].lensY()
-        if self.selected == 'block':
-            board.tiles[42].block()
+        if self.selected == 1:
+            board.tiles[42].mirror1(board)
+        if self.selected == 2:
+            board.tiles[42].mirror2(board)
+        if self.selected == 3:
+            board.tiles[42].mirror3(board)
+        if self.selected == 4:
+            board.tiles[42].mirror4(board)
+        if self.selected == 5:
+            board.tiles[42].lensX(board)
+        if self.selected == 6:
+            board.tiles[42].lensY(board)
+        if self.selected == 7:
+            board.tiles[42].block(board)
         self.update_images(board)
     def clickD8(self):
-        if self.selected == 'm1':
-            board.tiles[43].mirror1()
-        if self.selected == 'm2':
-            board.tiles[43].mirror2()
-        if self.selected == 'm3':
-            board.tiles[43].mirror3()
-        if self.selected == 'm4':
-            board.tiles[43].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[43].lensX()
-        if self.selected == 'lensY':
-            board.tiles[43].lensY()
-        if self.selected == 'block':
-            board.tiles[43].block()
+        if self.selected == 1:
+            board.tiles[43].mirror1(board)
+        if self.selected == 2:
+            board.tiles[43].mirror2(board)
+        if self.selected == 3:
+            board.tiles[43].mirror3(board)
+        if self.selected == 4:
+            board.tiles[43].mirror4(board)
+        if self.selected == 5:
+            board.tiles[43].lensX(board)
+        if self.selected == 6:
+            board.tiles[43].lensY(board)
+        if self.selected == 7:
+            board.tiles[43].block(board)
         self.update_images(board)
     def clickD9(self):
-        if self.selected == 'm1':
-            board.tiles[44].mirror1()
-        if self.selected == 'm2':
-            board.tiles[44].mirror2()
-        if self.selected == 'm3':
-            board.tiles[44].mirror3()
-        if self.selected == 'm4':
-            board.tiles[44].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[44].lensX()
-        if self.selected == 'lensY':
-            board.tiles[44].lensY()
-        if self.selected == 'block':
-            board.tiles[44].block()
+        if self.selected == 1:
+            board.tiles[44].mirror1(board)
+        if self.selected == 2:
+            board.tiles[44].mirror2(board)
+        if self.selected == 3:
+            board.tiles[44].mirror3(board)
+        if self.selected == 4:
+            board.tiles[44].mirror4(board)
+        if self.selected == 5:
+            board.tiles[44].lensX(board)
+        if self.selected == 6:
+            board.tiles[44].lensY(board)
+        if self.selected == 7:
+            board.tiles[44].block(board)
         self.update_images(board)
     def clickD10(self):
-        if self.selected == 'm1':
-            board.tiles[45].mirror1()
-        if self.selected == 'm2':
-            board.tiles[45].mirror2()
-        if self.selected == 'm3':
-            board.tiles[45].mirror3()
-        if self.selected == 'm4':
-            board.tiles[45].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[45].lensX()
-        if self.selected == 'lensY':
-            board.tiles[45].lensY()
-        if self.selected == 'block':
-            board.tiles[45].block()
+        if self.selected == 1:
+            board.tiles[45].mirror1(board)
+        if self.selected == 2:
+            board.tiles[45].mirror2(board)
+        if self.selected == 3:
+            board.tiles[45].mirror3(board)
+        if self.selected == 4:
+            board.tiles[45].mirror4(board)
+        if self.selected == 5:
+            board.tiles[45].lensX(board)
+        if self.selected == 6:
+            board.tiles[45].lensY(board)
+        if self.selected == 7:
+            board.tiles[45].block(board)
         self.update_images(board)
     def clickD11(self):
-        if self.selected == 'm1':
-            board.tiles[46].mirror1()
-        if self.selected == 'm2':
-            board.tiles[46].mirror2()
-        if self.selected == 'm3':
-            board.tiles[46].mirror3()
-        if self.selected == 'm4':
-            board.tiles[46].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[46].lensX()
-        if self.selected == 'lensY':
-            board.tiles[46].lensY()
-        if self.selected == 'block':
-            board.tiles[46].block()
+        if self.selected == 1:
+            board.tiles[46].mirror1(board)
+        if self.selected == 2:
+            board.tiles[46].mirror2(board)
+        if self.selected == 3:
+            board.tiles[46].mirror3(board)
+        if self.selected == 4:
+            board.tiles[46].mirror4(board)
+        if self.selected == 5:
+            board.tiles[46].lensX(board)
+        if self.selected == 6:
+            board.tiles[46].lensY(board)
+        if self.selected == 7:
+            board.tiles[46].block(board)
         self.update_images(board)
     def clickD12(self):
-        if self.selected == 'm1':
-            board.tiles[47].mirror1()
-        if self.selected == 'm2':
-            board.tiles[47].mirror2()
-        if self.selected == 'm3':
-            board.tiles[47].mirror3()
-        if self.selected == 'm4':
-            board.tiles[47].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[47].lensX()
-        if self.selected == 'lensY':
-            board.tiles[47].lensY()
-        if self.selected == 'block':
-            board.tiles[47].block()
+        if self.selected == 1:
+            board.tiles[47].mirror1(board)
+        if self.selected == 2:
+            board.tiles[47].mirror2(board)
+        if self.selected == 3:
+            board.tiles[47].mirror3(board)
+        if self.selected == 4:
+            board.tiles[47].mirror4(board)
+        if self.selected == 5:
+            board.tiles[47].lensX(board)
+        if self.selected == 6:
+            board.tiles[47].lensY(board)
+        if self.selected == 7:
+            board.tiles[47].block(board)
         self.update_images(board)
     def clickE1(self):
-        if self.selected == 'm1':
-            board.tiles[48].mirror1()
-        if self.selected == 'm2':
-            board.tiles[48].mirror2()
-        if self.selected == 'm3':
-            board.tiles[48].mirror3()
-        if self.selected == 'm4':
-            board.tiles[48].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[48].lensX()
-        if self.selected == 'lensY':
-            board.tiles[48].lensY()
-        if self.selected == 'block':
-            board.tiles[48].block()
+        if self.selected == 1:
+            board.tiles[48].mirror1(board)
+        if self.selected == 2:
+            board.tiles[48].mirror2(board)
+        if self.selected == 3:
+            board.tiles[48].mirror3(board)
+        if self.selected == 4:
+            board.tiles[48].mirror4(board)
+        if self.selected == 5:
+            board.tiles[48].lensX(board)
+        if self.selected == 6:
+            board.tiles[48].lensY(board)
+        if self.selected == 7:
+            board.tiles[48].block(board)
         self.update_images(board)
     def clickE2(self):
-        if self.selected == 'm1':
-            board.tiles[49].mirror1()
-        if self.selected == 'm2':
-            board.tiles[49].mirror2()
-        if self.selected == 'm3':
-            board.tiles[49].mirror3()
-        if self.selected == 'm4':
-            board.tiles[49].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[49].lensX()
-        if self.selected == 'lensY':
-            board.tiles[49].lensY()
-        if self.selected == 'block':
-            board.tiles[49].block()
+        if self.selected == 1:
+            board.tiles[49].mirror1(board)
+        if self.selected == 2:
+            board.tiles[49].mirror2(board)
+        if self.selected == 3:
+            board.tiles[49].mirror3(board)
+        if self.selected == 4:
+            board.tiles[49].mirror4(board)
+        if self.selected == 5:
+            board.tiles[49].lensX(board)
+        if self.selected == 6:
+            board.tiles[49].lensY(board)
+        if self.selected == 7:
+            board.tiles[49].block(board)
         self.update_images(board)
     def clickE3(self):
-        if self.selected == 'm1':
-            board.tiles[50].mirror1()
-        if self.selected == 'm2':
-            board.tiles[50].mirror2()
-        if self.selected == 'm3':
-            board.tiles[50].mirror3()
-        if self.selected == 'm4':
-            board.tiles[50].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[50].lensX()
-        if self.selected == 'lensY':
-            board.tiles[50].lensY()
-        if self.selected == 'block':
-            board.tiles[50].block()
+        if self.selected == 1:
+            board.tiles[50].mirror1(board)
+        if self.selected == 2:
+            board.tiles[50].mirror2(board)
+        if self.selected == 3:
+            board.tiles[50].mirror3(board)
+        if self.selected == 4:
+            board.tiles[50].mirror4(board)
+        if self.selected == 5:
+            board.tiles[50].lensX(board)
+        if self.selected == 6:
+            board.tiles[50].lensY(board)
+        if self.selected == 7:
+            board.tiles[50].block(board)
         self.update_images(board)
     def clickE4(self):
-        if self.selected == 'm1':
-            board.tiles[51].mirror1()
-        if self.selected == 'm2':
-            board.tiles[51].mirror2()
-        if self.selected == 'm3':
-            board.tiles[51].mirror3()
-        if self.selected == 'm4':
-            board.tiles[51].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[51].lensX()
-        if self.selected == 'lensY':
-            board.tiles[51].lensY()
-        if self.selected == 'block':
-            board.tiles[51].block()
+        if self.selected == 1:
+            board.tiles[51].mirror1(board)
+        if self.selected == 2:
+            board.tiles[51].mirror2(board)
+        if self.selected == 3:
+            board.tiles[51].mirror3(board)
+        if self.selected == 4:
+            board.tiles[51].mirror4(board)
+        if self.selected == 5:
+            board.tiles[51].lensX(board)
+        if self.selected == 6:
+            board.tiles[51].lensY(board)
+        if self.selected == 7:
+            board.tiles[51].block(board)
         self.update_images(board)
     def clickE5(self):
-        if self.selected == 'm1':
-            board.tiles[52].mirror1()
-        if self.selected == 'm2':
-            board.tiles[52].mirror2()
-        if self.selected == 'm3':
-            board.tiles[52].mirror3()
-        if self.selected == 'm4':
-            board.tiles[52].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[52].lensX()
-        if self.selected == 'lensY':
-            board.tiles[52].lensY()
-        if self.selected == 'block':
-            board.tiles[52].block()
+        if self.selected == 1:
+            board.tiles[52].mirror1(board)
+        if self.selected == 2:
+            board.tiles[52].mirror2(board)
+        if self.selected == 3:
+            board.tiles[52].mirror3(board)
+        if self.selected == 4:
+            board.tiles[52].mirror4(board)
+        if self.selected == 5:
+            board.tiles[52].lensX(board)
+        if self.selected == 6:
+            board.tiles[52].lensY(board)
+        if self.selected == 7:
+            board.tiles[52].block(board)
         self.update_images(board)
     def clickE6(self):
-        if self.selected == 'm1':
-            board.tiles[53].mirror1()
-        if self.selected == 'm2':
-            board.tiles[53].mirror2()
-        if self.selected == 'm3':
-            board.tiles[53].mirror3()
-        if self.selected == 'm4':
-            board.tiles[53].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[53].lensX()
-        if self.selected == 'lensY':
-            board.tiles[53].lensY()
-        if self.selected == 'block':
-            board.tiles[53].block()
+        if self.selected == 1:
+            board.tiles[53].mirror1(board)
+        if self.selected == 2:
+            board.tiles[53].mirror2(board)
+        if self.selected == 3:
+            board.tiles[53].mirror3(board)
+        if self.selected == 4:
+            board.tiles[53].mirror4(board)
+        if self.selected == 5:
+            board.tiles[53].lensX(board)
+        if self.selected == 6:
+            board.tiles[53].lensY(board)
+        if self.selected == 7:
+            board.tiles[53].block(board)
         self.update_images(board)
     def clickE7(self):
-        if self.selected == 'm1':
-            board.tiles[54].mirror1()
-        if self.selected == 'm2':
-            board.tiles[54].mirror2()
-        if self.selected == 'm3':
-            board.tiles[54].mirror3()
-        if self.selected == 'm4':
-            board.tiles[54].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[54].lensX()
-        if self.selected == 'lensY':
-            board.tiles[54].lensY()
-        if self.selected == 'block':
-            board.tiles[54].block()
+        if self.selected == 1:
+            board.tiles[54].mirror1(board)
+        if self.selected == 2:
+            board.tiles[54].mirror2(board)
+        if self.selected == 3:
+            board.tiles[54].mirror3(board)
+        if self.selected == 4:
+            board.tiles[54].mirror4(board)
+        if self.selected == 5:
+            board.tiles[54].lensX(board)
+        if self.selected == 6:
+            board.tiles[54].lensY(board)
+        if self.selected == 7:
+            board.tiles[54].block(board)
         self.update_images(board)
     def clickE8(self):
-        if self.selected == 'm1':
-            board.tiles[55].mirror1()
-        if self.selected == 'm2':
-            board.tiles[55].mirror2()
-        if self.selected == 'm3':
-            board.tiles[55].mirror3()
-        if self.selected == 'm4':
-            board.tiles[55].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[55].lensX()
-        if self.selected == 'lensY':
-            board.tiles[55].lensY()
-        if self.selected == 'block':
-            board.tiles[55].block()
+        if self.selected == 1:
+            board.tiles[55].mirror1(board)
+        if self.selected == 2:
+            board.tiles[55].mirror2(board)
+        if self.selected == 3:
+            board.tiles[55].mirror3(board)
+        if self.selected == 4:
+            board.tiles[55].mirror4(board)
+        if self.selected == 5:
+            board.tiles[55].lensX(board)
+        if self.selected == 6:
+            board.tiles[55].lensY(board)
+        if self.selected == 7:
+            board.tiles[55].block(board)
         self.update_images(board)
     def clickE9(self):
-        if self.selected == 'm1':
-            board.tiles[56].mirror1()
-        if self.selected == 'm2':
-            board.tiles[56].mirror2()
-        if self.selected == 'm3':
-            board.tiles[56].mirror3()
-        if self.selected == 'm4':
-            board.tiles[56].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[56].lensX()
-        if self.selected == 'lensY':
-            board.tiles[56].lensY()
-        if self.selected == 'block':
-            board.tiles[56].block()
+        if self.selected == 1:
+            board.tiles[56].mirror1(board)
+        if self.selected == 2:
+            board.tiles[56].mirror2(board)
+        if self.selected == 3:
+            board.tiles[56].mirror3(board)
+        if self.selected == 4:
+            board.tiles[56].mirror4(board)
+        if self.selected == 5:
+            board.tiles[56].lensX(board)
+        if self.selected == 6:
+            board.tiles[56].lensY(board)
+        if self.selected == 7:
+            board.tiles[56].block(board)
         self.update_images(board)
     def clickE10(self):
-        if self.selected == 'm1':
-            board.tiles[57].mirror1()
-        if self.selected == 'm2':
-            board.tiles[57].mirror2()
-        if self.selected == 'm3':
-            board.tiles[57].mirror3()
-        if self.selected == 'm4':
-            board.tiles[57].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[57].lensX()
-        if self.selected == 'lensY':
-            board.tiles[57].lensY()
-        if self.selected == 'block':
-            board.tiles[57].block()
+        if self.selected == 1:
+            board.tiles[57].mirror1(board)
+        if self.selected == 2:
+            board.tiles[57].mirror2(board)
+        if self.selected == 3:
+            board.tiles[57].mirror3(board)
+        if self.selected == 4:
+            board.tiles[57].mirror4(board)
+        if self.selected == 5:
+            board.tiles[57].lensX(board)
+        if self.selected == 6:
+            board.tiles[57].lensY(board)
+        if self.selected == 7:
+            board.tiles[57].block(board)
         self.update_images(board)
     def clickE11(self):
-        if self.selected == 'm1':
-            board.tiles[58].mirror1()
-        if self.selected == 'm2':
-            board.tiles[58].mirror2()
-        if self.selected == 'm3':
-            board.tiles[58].mirror3()
-        if self.selected == 'm4':
-            board.tiles[58].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[58].lensX()
-        if self.selected == 'lensY':
-            board.tiles[58].lensY()
-        if self.selected == 'block':
-            board.tiles[58].block()
+        if self.selected == 1:
+            board.tiles[58].mirror1(board)
+        if self.selected == 2:
+            board.tiles[58].mirror2(board)
+        if self.selected == 3:
+            board.tiles[58].mirror3(board)
+        if self.selected == 4:
+            board.tiles[58].mirror4(board)
+        if self.selected == 5:
+            board.tiles[58].lensX(board)
+        if self.selected == 6:
+            board.tiles[58].lensY(board)
+        if self.selected == 7:
+            board.tiles[58].block(board)
         self.update_images(board)
     def clickE12(self):
-        if self.selected == 'm1':
-            board.tiles[59].mirror1()
-        if self.selected == 'm2':
-            board.tiles[59].mirror2()
-        if self.selected == 'm3':
-            board.tiles[59].mirror3()
-        if self.selected == 'm4':
-            board.tiles[59].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[59].lensX()
-        if self.selected == 'lensY':
-            board.tiles[59].lensY()
-        if self.selected == 'block':
-            board.tiles[59].block()
+        if self.selected == 1:
+            board.tiles[59].mirror1(board)
+        if self.selected == 2:
+            board.tiles[59].mirror2(board)
+        if self.selected == 3:
+            board.tiles[59].mirror3(board)
+        if self.selected == 4:
+            board.tiles[59].mirror4(board)
+        if self.selected == 5:
+            board.tiles[59].lensX(board)
+        if self.selected == 6:
+            board.tiles[59].lensY(board)
+        if self.selected == 7:
+            board.tiles[59].block(board)
         self.update_images(board)
     def clickF1(self):
-        if self.selected == 'm1':
-            board.tiles[60].mirror1()
-        if self.selected == 'm2':
-            board.tiles[60].mirror2()
-        if self.selected == 'm3':
-            board.tiles[60].mirror3()
-        if self.selected == 'm4':
-            board.tiles[60].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[60].lensX()
-        if self.selected == 'lensY':
-            board.tiles[60].lensY()
-        if self.selected == 'block':
-            board.tiles[60].block()
+        if self.selected == 1:
+            board.tiles[60].mirror1(board)
+        if self.selected == 2:
+            board.tiles[60].mirror2(board)
+        if self.selected == 3:
+            board.tiles[60].mirror3(board)
+        if self.selected == 4:
+            board.tiles[60].mirror4(board)
+        if self.selected == 5:
+            board.tiles[60].lensX(board)
+        if self.selected == 6:
+            board.tiles[60].lensY(board)
+        if self.selected == 7:
+            board.tiles[60].block(board)
         self.update_images(board)
     def clickF2(self):
-        if self.selected == 'm1':
-            board.tiles[61].mirror1()
-        if self.selected == 'm2':
-            board.tiles[61].mirror2()
-        if self.selected == 'm3':
-            board.tiles[61].mirror3()
-        if self.selected == 'm4':
-            board.tiles[61].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[61].lensX()
-        if self.selected == 'lensY':
-            board.tiles[61].lensY()
-        if self.selected == 'block':
-            board.tiles[61].block()
+        if self.selected == 1:
+            board.tiles[61].mirror1(board)
+        if self.selected == 2:
+            board.tiles[61].mirror2(board)
+        if self.selected == 3:
+            board.tiles[61].mirror3(board)
+        if self.selected == 4:
+            board.tiles[61].mirror4(board)
+        if self.selected == 5:
+            board.tiles[61].lensX(board)
+        if self.selected == 6:
+            board.tiles[61].lensY(board)
+        if self.selected == 7:
+            board.tiles[61].block(board)
         self.update_images(board)
     def clickF3(self):
-        if self.selected == 'm1':
-            board.tiles[62].mirror1()
-        if self.selected == 'm2':
-            board.tiles[62].mirror2()
-        if self.selected == 'm3':
-            board.tiles[62].mirror3()
-        if self.selected == 'm4':
-            board.tiles[62].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[62].lensX()
-        if self.selected == 'lensY':
-            board.tiles[62].lensY()
-        if self.selected == 'block':
-            board.tiles[62].block()
+        if self.selected == 1:
+            board.tiles[62].mirror1(board)
+        if self.selected == 2:
+            board.tiles[62].mirror2(board)
+        if self.selected == 3:
+            board.tiles[62].mirror3(board)
+        if self.selected == 4:
+            board.tiles[62].mirror4(board)
+        if self.selected == 5:
+            board.tiles[62].lensX(board)
+        if self.selected == 6:
+            board.tiles[62].lensY(board)
+        if self.selected == 7:
+            board.tiles[62].block(board)
         self.update_images(board)
     def clickF4(self):
-        if self.selected == 'm1':
-            board.tiles[63].mirror1()
-        if self.selected == 'm2':
-            board.tiles[63].mirror2()
-        if self.selected == 'm3':
-            board.tiles[63].mirror3()
-        if self.selected == 'm4':
-            board.tiles[63].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[63].lensX()
-        if self.selected == 'lensY':
-            board.tiles[63].lensY()
-        if self.selected == 'block':
-            board.tiles[63].block()
+        if self.selected == 1:
+            board.tiles[63].mirror1(board)
+        if self.selected == 2:
+            board.tiles[63].mirror2(board)
+        if self.selected == 3:
+            board.tiles[63].mirror3(board)
+        if self.selected == 4:
+            board.tiles[63].mirror4(board)
+        if self.selected == 5:
+            board.tiles[63].lensX(board)
+        if self.selected == 6:
+            board.tiles[63].lensY(board)
+        if self.selected == 7:
+            board.tiles[63].block(board)
         self.update_images(board)
     def clickF5(self):
-        if self.selected == 'm1':
-            board.tiles[64].mirror1()
-        if self.selected == 'm2':
-            board.tiles[64].mirror2()
-        if self.selected == 'm3':
-            board.tiles[64].mirror3()
-        if self.selected == 'm4':
-            board.tiles[64].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[64].lensX()
-        if self.selected == 'lensY':
-            board.tiles[64].lensY()
-        if self.selected == 'block':
-            board.tiles[64].block()
+        if self.selected == 1:
+            board.tiles[64].mirror1(board)
+        if self.selected == 2:
+            board.tiles[64].mirror2(board)
+        if self.selected == 3:
+            board.tiles[64].mirror3(board)
+        if self.selected == 4:
+            board.tiles[64].mirror4(board)
+        if self.selected == 5:
+            board.tiles[64].lensX(board)
+        if self.selected == 6:
+            board.tiles[64].lensY(board)
+        if self.selected == 7:
+            board.tiles[64].block(board)
         self.update_images(board)
     def clickF6(self):
-        if self.selected == 'm1':
-            board.tiles[65].mirror1()
-        if self.selected == 'm2':
-            board.tiles[65].mirror2()
-        if self.selected == 'm3':
-            board.tiles[65].mirror3()
-        if self.selected == 'm4':
-            board.tiles[65].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[65].lensX()
-        if self.selected == 'lensY':
-            board.tiles[65].lensY()
-        if self.selected == 'block':
-            board.tiles[65].block()
+        if self.selected == 1:
+            board.tiles[65].mirror1(board)
+        if self.selected == 2:
+            board.tiles[65].mirror2(board)
+        if self.selected == 3:
+            board.tiles[65].mirror3(board)
+        if self.selected == 4:
+            board.tiles[65].mirror4(board)
+        if self.selected == 5:
+            board.tiles[65].lensX(board)
+        if self.selected == 6:
+            board.tiles[65].lensY(board)
+        if self.selected == 7:
+            board.tiles[65].block(board)
         self.update_images(board)
     def clickF7(self):
-        if self.selected == 'm1':
-            board.tiles[66].mirror1()
-        if self.selected == 'm2':
-            board.tiles[66].mirror2()
-        if self.selected == 'm3':
-            board.tiles[66].mirror3()
-        if self.selected == 'm4':
-            board.tiles[66].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[66].lensX()
-        if self.selected == 'lensY':
-            board.tiles[66].lensY()
-        if self.selected == 'block':
-            board.tiles[66].block()
+        if self.selected == 1:
+            board.tiles[66].mirror1(board)
+        if self.selected == 2:
+            board.tiles[66].mirror2(board)
+        if self.selected == 3:
+            board.tiles[66].mirror3(board)
+        if self.selected == 4:
+            board.tiles[66].mirror4(board)
+        if self.selected == 5:
+            board.tiles[66].lensX(board)
+        if self.selected == 6:
+            board.tiles[66].lensY(board)
+        if self.selected == 7:
+            board.tiles[66].block(board)
         self.update_images(board)
     def clickF8(self):
-        if self.selected == 'm1':
-            board.tiles[67].mirror1()
-        if self.selected == 'm2':
-            board.tiles[67].mirror2()
-        if self.selected == 'm3':
-            board.tiles[67].mirror3()
-        if self.selected == 'm4':
-            board.tiles[67].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[67].lensX()
-        if self.selected == 'lensY':
-            board.tiles[67].lensY()
-        if self.selected == 'block':
-            board.tiles[67].block()
+        if self.selected == 1:
+            board.tiles[67].mirror1(board)
+        if self.selected == 2:
+            board.tiles[67].mirror2(board)
+        if self.selected == 3:
+            board.tiles[67].mirror3(board)
+        if self.selected == 4:
+            board.tiles[67].mirror4(board)
+        if self.selected == 5:
+            board.tiles[67].lensX(board)
+        if self.selected == 6:
+            board.tiles[67].lensY(board)
+        if self.selected == 7:
+            board.tiles[67].block(board)
         self.update_images(board)
     def clickF9(self):
-        if self.selected == 'm1':
-            board.tiles[68].mirror1()
-        if self.selected == 'm2':
-            board.tiles[68].mirror2()
-        if self.selected == 'm3':
-            board.tiles[68].mirror3()
-        if self.selected == 'm4':
-            board.tiles[68].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[68].lensX()
-        if self.selected == 'lensY':
-            board.tiles[68].lensY()
-        if self.selected == 'block':
-            board.tiles[68].block()
+        if self.selected == 1:
+            board.tiles[68].mirror1(board)
+        if self.selected == 2:
+            board.tiles[68].mirror2(board)
+        if self.selected == 3:
+            board.tiles[68].mirror3(board)
+        if self.selected == 4:
+            board.tiles[68].mirror4(board)
+        if self.selected == 5:
+            board.tiles[68].lensX(board)
+        if self.selected == 6:
+            board.tiles[68].lensY(board)
+        if self.selected == 7:
+            board.tiles[68].block(board)
         self.update_images(board)
     def clickF10(self):
-        if self.selected == 'm1':
-            board.tiles[69].mirror1()
-        if self.selected == 'm2':
-            board.tiles[69].mirror2()
-        if self.selected == 'm3':
-            board.tiles[69].mirror3()
-        if self.selected == 'm4':
-            board.tiles[69].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[69].lensX()
-        if self.selected == 'lensY':
-            board.tiles[69].lensY()
-        if self.selected == 'block':
-            board.tiles[69].block()
+        if self.selected == 1:
+            board.tiles[69].mirror1(board)
+        if self.selected == 2:
+            board.tiles[69].mirror2(board)
+        if self.selected == 3:
+            board.tiles[69].mirror3(board)
+        if self.selected == 4:
+            board.tiles[69].mirror4(board)
+        if self.selected == 5:
+            board.tiles[69].lensX(board)
+        if self.selected == 6:
+            board.tiles[69].lensY(board)
+        if self.selected == 7:
+            board.tiles[69].block(board)
         self.update_images(board)
     def clickF11(self):
-        if self.selected == 'm1':
-            board.tiles[70].mirror1()
-        if self.selected == 'm2':
-            board.tiles[70].mirror2()
-        if self.selected == 'm3':
-            board.tiles[70].mirror3()
-        if self.selected == 'm4':
-            board.tiles[70].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[70].lensX()
-        if self.selected == 'lensY':
-            board.tiles[70].lensY()
-        if self.selected == 'block':
-            board.tiles[70].block()
+        if self.selected == 1:
+            board.tiles[70].mirror1(board)
+        if self.selected == 2:
+            board.tiles[70].mirror2(board)
+        if self.selected == 3:
+            board.tiles[70].mirror3(board)
+        if self.selected == 4:
+            board.tiles[70].mirror4(board)
+        if self.selected == 5:
+            board.tiles[70].lensX(board)
+        if self.selected == 6:
+            board.tiles[70].lensY(board)
+        if self.selected == 7:
+            board.tiles[70].block(board)
         self.update_images(board)
     def clickF12(self):
-        if self.selected == 'm1':
-            board.tiles[71].mirror1()
-        if self.selected == 'm2':
-            board.tiles[71].mirror2()
-        if self.selected == 'm3':
-            board.tiles[71].mirror3()
-        if self.selected == 'm4':
-            board.tiles[71].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[71].lensX()
-        if self.selected == 'lensY':
-            board.tiles[71].lensY()
-        if self.selected == 'block':
-            board.tiles[71].block()
+        if self.selected == 1:
+            board.tiles[71].mirror1(board)
+        if self.selected == 2:
+            board.tiles[71].mirror2(board)
+        if self.selected == 3:
+            board.tiles[71].mirror3(board)
+        if self.selected == 4:
+            board.tiles[71].mirror4(board)
+        if self.selected == 5:
+            board.tiles[71].lensX(board)
+        if self.selected == 6:
+            board.tiles[71].lensY(board)
+        if self.selected == 7:
+            board.tiles[71].block(board)
         self.update_images(board)
     def clickG1(self):
-        if self.selected == 'm1':
-            board.tiles[72].mirror1()
-        if self.selected == 'm2':
-            board.tiles[72].mirror2()
-        if self.selected == 'm3':
-            board.tiles[72].mirror3()
-        if self.selected == 'm4':
-            board.tiles[72].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[72].lensX()
-        if self.selected == 'lensY':
-            board.tiles[72].lensY()
-        if self.selected == 'block':
-            board.tiles[72].block()
+        if self.selected == 1:
+            board.tiles[72].mirror1(board)
+        if self.selected == 2:
+            board.tiles[72].mirror2(board)
+        if self.selected == 3:
+            board.tiles[72].mirror3(board)
+        if self.selected == 4:
+            board.tiles[72].mirror4(board)
+        if self.selected == 5:
+            board.tiles[72].lensX(board)
+        if self.selected == 6:
+            board.tiles[72].lensY(board)
+        if self.selected == 7:
+            board.tiles[72].block(board)
         self.update_images(board)
     def clickG2(self):
-        if self.selected == 'm1':
-            board.tiles[73].mirror1()
-        if self.selected == 'm2':
-            board.tiles[73].mirror2()
-        if self.selected == 'm3':
-            board.tiles[73].mirror3()
-        if self.selected == 'm4':
-            board.tiles[73].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[73].lensX()
-        if self.selected == 'lensY':
-            board.tiles[73].lensY()
-        if self.selected == 'block':
-            board.tiles[73].block()
+        if self.selected == 1:
+            board.tiles[73].mirror1(board)
+        if self.selected == 2:
+            board.tiles[73].mirror2(board)
+        if self.selected == 3:
+            board.tiles[73].mirror3(board)
+        if self.selected == 4:
+            board.tiles[73].mirror4(board)
+        if self.selected == 5:
+            board.tiles[73].lensX(board)
+        if self.selected == 6:
+            board.tiles[73].lensY(board)
+        if self.selected == 7:
+            board.tiles[73].block(board)
         self.update_images(board)
     def clickG3(self):
-        if self.selected == 'm1':
-            board.tiles[74].mirror1()
-        if self.selected == 'm2':
-            board.tiles[74].mirror2()
-        if self.selected == 'm3':
-            board.tiles[74].mirror3()
-        if self.selected == 'm4':
-            board.tiles[74].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[74].lensX()
-        if self.selected == 'lensY':
-            board.tiles[74].lensY()
-        if self.selected == 'block':
-            board.tiles[74].block()
+        if self.selected == 1:
+            board.tiles[74].mirror1(board)
+        if self.selected == 2:
+            board.tiles[74].mirror2(board)
+        if self.selected == 3:
+            board.tiles[74].mirror3(board)
+        if self.selected == 4:
+            board.tiles[74].mirror4(board)
+        if self.selected == 5:
+            board.tiles[74].lensX(board)
+        if self.selected == 6:
+            board.tiles[74].lensY(board)
+        if self.selected == 7:
+            board.tiles[74].block(board)
         self.update_images(board)
     def clickG4(self):
-        if self.selected == 'm1':
-            board.tiles[75].mirror1()
-        if self.selected == 'm2':
-            board.tiles[75].mirror2()
-        if self.selected == 'm3':
-            board.tiles[75].mirror3()
-        if self.selected == 'm4':
-            board.tiles[75].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[75].lensX()
-        if self.selected == 'lensY':
-            board.tiles[75].lensY()
-        if self.selected == 'block':
-            board.tiles[75].block()
+        if self.selected == 1:
+            board.tiles[75].mirror1(board)
+        if self.selected == 2:
+            board.tiles[75].mirror2(board)
+        if self.selected == 3:
+            board.tiles[75].mirror3(board)
+        if self.selected == 4:
+            board.tiles[75].mirror4(board)
+        if self.selected == 5:
+            board.tiles[75].lensX(board)
+        if self.selected == 6:
+            board.tiles[75].lensY(board)
+        if self.selected == 7:
+            board.tiles[75].block(board)
         self.update_images(board)
     def clickG5(self):
-        if self.selected == 'm1':
-            board.tiles[76].mirror1()
-        if self.selected == 'm2':
-            board.tiles[76].mirror2()
-        if self.selected == 'm3':
-            board.tiles[76].mirror3()
-        if self.selected == 'm4':
-            board.tiles[76].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[76].lensX()
-        if self.selected == 'lensY':
-            board.tiles[76].lensY()
-        if self.selected == 'block':
-            board.tiles[76].block()
+        if self.selected == 1:
+            board.tiles[76].mirror1(board)
+        if self.selected == 2:
+            board.tiles[76].mirror2(board)
+        if self.selected == 3:
+            board.tiles[76].mirror3(board)
+        if self.selected == 4:
+            board.tiles[76].mirror4(board)
+        if self.selected == 5:
+            board.tiles[76].lensX(board)
+        if self.selected == 6:
+            board.tiles[76].lensY(board)
+        if self.selected == 7:
+            board.tiles[76].block(board)
         self.update_images(board)
     def clickG6(self):
-        if self.selected == 'm1':
-            board.tiles[77].mirror1()
-        if self.selected == 'm2':
-            board.tiles[77].mirror2()
-        if self.selected == 'm3':
-            board.tiles[77].mirror3()
-        if self.selected == 'm4':
-            board.tiles[77].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[77].lensX()
-        if self.selected == 'lensY':
-            board.tiles[77].lensY()
-        if self.selected == 'block':
-            board.tiles[77].block()
+        if self.selected == 1:
+            board.tiles[77].mirror1(board)
+        if self.selected == 2:
+            board.tiles[77].mirror2(board)
+        if self.selected == 3:
+            board.tiles[77].mirror3(board)
+        if self.selected == 4:
+            board.tiles[77].mirror4(board)
+        if self.selected == 5:
+            board.tiles[77].lensX(board)
+        if self.selected == 6:
+            board.tiles[77].lensY(board)
+        if self.selected == 7:
+            board.tiles[77].block(board)
         self.update_images(board)
     def clickG7(self):
-        if self.selected == 'm1':
-            board.tiles[78].mirror1()
-        if self.selected == 'm2':
-            board.tiles[78].mirror2()
-        if self.selected == 'm3':
-            board.tiles[78].mirror3()
-        if self.selected == 'm4':
-            board.tiles[78].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[78].lensX()
-        if self.selected == 'lensY':
-            board.tiles[78].lensY()
-        if self.selected == 'block':
-            board.tiles[78].block()
+        if self.selected == 1:
+            board.tiles[78].mirror1(board)
+        if self.selected == 2:
+            board.tiles[78].mirror2(board)
+        if self.selected == 3:
+            board.tiles[78].mirror3(board)
+        if self.selected == 4:
+            board.tiles[78].mirror4(board)
+        if self.selected == 5:
+            board.tiles[78].lensX(board)
+        if self.selected == 6:
+            board.tiles[78].lensY(board)
+        if self.selected == 7:
+            board.tiles[78].block(board)
         self.update_images(board)
     def clickG8(self):
-        if self.selected == 'm1':
-            board.tiles[79].mirror1()
-        if self.selected == 'm2':
-            board.tiles[79].mirror2()
-        if self.selected == 'm3':
-            board.tiles[79].mirror3()
-        if self.selected == 'm4':
-            board.tiles[79].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[79].lensX()
-        if self.selected == 'lensY':
-            board.tiles[79].lensY()
-        if self.selected == 'block':
-            board.tiles[79].block()
+        if self.selected == 1:
+            board.tiles[79].mirror1(board)
+        if self.selected == 2:
+            board.tiles[79].mirror2(board)
+        if self.selected == 3:
+            board.tiles[79].mirror3(board)
+        if self.selected == 4:
+            board.tiles[79].mirror4(board)
+        if self.selected == 5:
+            board.tiles[79].lensX(board)
+        if self.selected == 6:
+            board.tiles[79].lensY(board)
+        if self.selected == 7:
+            board.tiles[79].block(board)
         self.update_images(board)
     def clickG9(self):
-        if self.selected == 'm1':
-            board.tiles[80].mirror1()
-        if self.selected == 'm2':
-            board.tiles[80].mirror2()
-        if self.selected == 'm3':
-            board.tiles[80].mirror3()
-        if self.selected == 'm4':
-            board.tiles[80].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[80].lensX()
-        if self.selected == 'lensY':
-            board.tiles[80].lensY()
-        if self.selected == 'block':
-            board.tiles[80].block()
+        if self.selected == 1:
+            board.tiles[80].mirror1(board)
+        if self.selected == 2:
+            board.tiles[80].mirror2(board)
+        if self.selected == 3:
+            board.tiles[80].mirror3(board)
+        if self.selected == 4:
+            board.tiles[80].mirror4(board)
+        if self.selected == 5:
+            board.tiles[80].lensX(board)
+        if self.selected == 6:
+            board.tiles[80].lensY(board)
+        if self.selected == 7:
+            board.tiles[80].block(board)
         self.update_images(board)
     def clickG10(self):
-        if self.selected == 'm1':
-            board.tiles[81].mirror1()
-        if self.selected == 'm2':
-            board.tiles[81].mirror2()
-        if self.selected == 'm3':
-            board.tiles[81].mirror3()
-        if self.selected == 'm4':
-            board.tiles[81].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[81].lensX()
-        if self.selected == 'lensY':
-            board.tiles[81].lensY()
-        if self.selected == 'block':
-            board.tiles[81].block()
+        if self.selected == 1:
+            board.tiles[81].mirror1(board)
+        if self.selected == 2:
+            board.tiles[81].mirror2(board)
+        if self.selected == 3:
+            board.tiles[81].mirror3(board)
+        if self.selected == 4:
+            board.tiles[81].mirror4(board)
+        if self.selected == 5:
+            board.tiles[81].lensX(board)
+        if self.selected == 6:
+            board.tiles[81].lensY(board)
+        if self.selected == 7:
+            board.tiles[81].block(board)
         self.update_images(board)
     def clickG11(self):
-        if self.selected == 'm1':
-            board.tiles[82].mirror1()
-        if self.selected == 'm2':
-            board.tiles[82].mirror2()
-        if self.selected == 'm3':
-            board.tiles[82].mirror3()
-        if self.selected == 'm4':
-            board.tiles[82].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[82].lensX()
-        if self.selected == 'lensY':
-            board.tiles[82].lensY()
-        if self.selected == 'block':
-            board.tiles[82].block()
+        if self.selected == 1:
+            board.tiles[82].mirror1(board)
+        if self.selected == 2:
+            board.tiles[82].mirror2(board)
+        if self.selected == 3:
+            board.tiles[82].mirror3(board)
+        if self.selected == 4:
+            board.tiles[82].mirror4(board)
+        if self.selected == 5:
+            board.tiles[82].lensX(board)
+        if self.selected == 6:
+            board.tiles[82].lensY(board)
+        if self.selected == 7:
+            board.tiles[82].block(board)
         self.update_images(board)
     def clickG12(self):
-        if self.selected == 'm1':
-            board.tiles[83].mirror1()
-        if self.selected == 'm2':
-            board.tiles[83].mirror2()
-        if self.selected == 'm3':
-            board.tiles[83].mirror3()
-        if self.selected == 'm4':
-            board.tiles[83].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[83].lensX()
-        if self.selected == 'lensY':
-            board.tiles[83].lensY()
-        if self.selected == 'block':
-            board.tiles[83].block()
+        if self.selected == 1:
+            board.tiles[83].mirror1(board)
+        if self.selected == 2:
+            board.tiles[83].mirror2(board)
+        if self.selected == 3:
+            board.tiles[83].mirror3(board)
+        if self.selected == 4:
+            board.tiles[83].mirror4(board)
+        if self.selected == 5:
+            board.tiles[83].lensX(board)
+        if self.selected == 6:
+            board.tiles[83].lensY(board)
+        if self.selected == 7:
+            board.tiles[83].block(board)
         self.update_images(board)
     def clickH1(self):
-        if self.selected == 'm1':
-            board.tiles[84].mirror1()
-        if self.selected == 'm2':
-            board.tiles[84].mirror2()
-        if self.selected == 'm3':
-            board.tiles[84].mirror3()
-        if self.selected == 'm4':
-            board.tiles[84].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[84].lensX()
-        if self.selected == 'lensY':
-            board.tiles[84].lensY()
-        if self.selected == 'block':
-            board.tiles[84].block()
+        if self.selected == 1:
+            board.tiles[84].mirror1(board)
+        if self.selected == 2:
+            board.tiles[84].mirror2(board)
+        if self.selected == 3:
+            board.tiles[84].mirror3(board)
+        if self.selected == 4:
+            board.tiles[84].mirror4(board)
+        if self.selected == 5:
+            board.tiles[84].lensX(board)
+        if self.selected == 6:
+            board.tiles[84].lensY(board)
+        if self.selected == 7:
+            board.tiles[84].block(board)
         self.update_images(board)
     def clickH2(self):
-        if self.selected == 'm1':
-            board.tiles[85].mirror1()
-        if self.selected == 'm2':
-            board.tiles[85].mirror2()
-        if self.selected == 'm3':
-            board.tiles[85].mirror3()
-        if self.selected == 'm4':
-            board.tiles[85].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[85].lensX()
-        if self.selected == 'lensY':
-            board.tiles[85].lensY()
-        if self.selected == 'block':
-            board.tiles[85].block()
+        if self.selected == 1:
+            board.tiles[85].mirror1(board)
+        if self.selected == 2:
+            board.tiles[85].mirror2(board)
+        if self.selected == 3:
+            board.tiles[85].mirror3(board)
+        if self.selected == 4:
+            board.tiles[85].mirror4(board)
+        if self.selected == 5:
+            board.tiles[85].lensX(board)
+        if self.selected == 6:
+            board.tiles[85].lensY(board)
+        if self.selected == 7:
+            board.tiles[85].block(board)
         self.update_images(board)
     def clickH3(self):
-        if self.selected == 'm1':
-            board.tiles[86].mirror1()
-        if self.selected == 'm2':
-            board.tiles[86].mirror2()
-        if self.selected == 'm3':
-            board.tiles[86].mirror3()
-        if self.selected == 'm4':
-            board.tiles[86].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[86].lensX()
-        if self.selected == 'lensY':
-            board.tiles[86].lensY()
-        if self.selected == 'block':
-            board.tiles[86].block()
+        if self.selected == 1:
+            board.tiles[86].mirror1(board)
+        if self.selected == 2:
+            board.tiles[86].mirror2(board)
+        if self.selected == 3:
+            board.tiles[86].mirror3(board)
+        if self.selected == 4:
+            board.tiles[86].mirror4(board)
+        if self.selected == 5:
+            board.tiles[86].lensX(board)
+        if self.selected == 6:
+            board.tiles[86].lensY(board)
+        if self.selected == 7:
+            board.tiles[86].block(board)
         self.update_images(board)
     def clickH4(self):
-        if self.selected == 'm1':
-            board.tiles[87].mirror1()
-        if self.selected == 'm2':
-            board.tiles[87].mirror2()
-        if self.selected == 'm3':
-            board.tiles[87].mirror3()
-        if self.selected == 'm4':
-            board.tiles[87].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[87].lensX()
-        if self.selected == 'lensY':
-            board.tiles[87].lensY()
-        if self.selected == 'block':
-            board.tiles[87].block()
+        if self.selected == 1:
+            board.tiles[87].mirror1(board)
+        if self.selected == 2:
+            board.tiles[87].mirror2(board)
+        if self.selected == 3:
+            board.tiles[87].mirror3(board)
+        if self.selected == 4:
+            board.tiles[87].mirror4(board)
+        if self.selected == 5:
+            board.tiles[87].lensX(board)
+        if self.selected == 6:
+            board.tiles[87].lensY(board)
+        if self.selected == 7:
+            board.tiles[87].block(board)
         self.update_images(board)
     def clickH5(self):
-        if self.selected == 'm1':
-            board.tiles[88].mirror1()
-        if self.selected == 'm2':
-            board.tiles[88].mirror2()
-        if self.selected == 'm3':
-            board.tiles[88].mirror3()
-        if self.selected == 'm4':
-            board.tiles[88].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[88].lensX()
-        if self.selected == 'lensY':
-            board.tiles[88].lensY()
-        if self.selected == 'block':
-            board.tiles[88].block()
+        if self.selected == 1:
+            board.tiles[88].mirror1(board)
+        if self.selected == 2:
+            board.tiles[88].mirror2(board)
+        if self.selected == 3:
+            board.tiles[88].mirror3(board)
+        if self.selected == 4:
+            board.tiles[88].mirror4(board)
+        if self.selected == 5:
+            board.tiles[88].lensX(board)
+        if self.selected == 6:
+            board.tiles[88].lensY(board)
+        if self.selected == 7:
+            board.tiles[88].block(board)
         self.update_images(board)
     def clickH6(self):
-        if self.selected == 'm1':
-            board.tiles[89].mirror1()
-        if self.selected == 'm2':
-            board.tiles[89].mirror2()
-        if self.selected == 'm3':
-            board.tiles[89].mirror3()
-        if self.selected == 'm4':
-            board.tiles[89].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[89].lensX()
-        if self.selected == 'lensY':
-            board.tiles[89].lensY()
-        if self.selected == 'block':
-            board.tiles[89].block()
+        if self.selected == 1:
+            board.tiles[89].mirror1(board)
+        if self.selected == 2:
+            board.tiles[89].mirror2(board)
+        if self.selected == 3:
+            board.tiles[89].mirror3(board)
+        if self.selected == 4:
+            board.tiles[89].mirror4(board)
+        if self.selected == 5:
+            board.tiles[89].lensX(board)
+        if self.selected == 6:
+            board.tiles[89].lensY(board)
+        if self.selected == 7:
+            board.tiles[89].block(board)
         self.update_images(board)
     def clickH7(self):
-        if self.selected == 'm1':
-            board.tiles[90].mirror1()
-        if self.selected == 'm2':
-            board.tiles[90].mirror2()
-        if self.selected == 'm3':
-            board.tiles[90].mirror3()
-        if self.selected == 'm4':
-            board.tiles[90].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[90].lensX()
-        if self.selected == 'lensY':
-            board.tiles[90].lensY()
-        if self.selected == 'block':
-            board.tiles[90].block()
+        if self.selected == 1:
+            board.tiles[90].mirror1(board)
+        if self.selected == 2:
+            board.tiles[90].mirror2(board)
+        if self.selected == 3:
+            board.tiles[90].mirror3(board)
+        if self.selected == 4:
+            board.tiles[90].mirror4(board)
+        if self.selected == 5:
+            board.tiles[90].lensX(board)
+        if self.selected == 6:
+            board.tiles[90].lensY(board)
+        if self.selected == 7:
+            board.tiles[90].block(board)
         self.update_images(board)
     def clickH8(self):
-        if self.selected == 'm1':
-            board.tiles[91].mirror1()
-        if self.selected == 'm2':
-            board.tiles[91].mirror2()
-        if self.selected == 'm3':
-            board.tiles[91].mirror3()
-        if self.selected == 'm4':
-            board.tiles[91].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[91].lensX()
-        if self.selected == 'lensY':
-            board.tiles[91].lensY()
-        if self.selected == 'block':
-            board.tiles[91].block()
+        if self.selected == 1:
+            board.tiles[91].mirror1(board)
+        if self.selected == 2:
+            board.tiles[91].mirror2(board)
+        if self.selected == 3:
+            board.tiles[91].mirror3(board)
+        if self.selected == 4:
+            board.tiles[91].mirror4(board)
+        if self.selected == 5:
+            board.tiles[91].lensX(board)
+        if self.selected == 6:
+            board.tiles[91].lensY(board)
+        if self.selected == 7:
+            board.tiles[91].block(board)
         self.update_images(board)
     def clickH9(self):
-        if self.selected == 'm1':
-            board.tiles[92].mirror1()
-        if self.selected == 'm2':
-            board.tiles[92].mirror2()
-        if self.selected == 'm3':
-            board.tiles[92].mirror3()
-        if self.selected == 'm4':
-            board.tiles[92].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[92].lensX()
-        if self.selected == 'lensY':
-            board.tiles[92].lensY()
-        if self.selected == 'block':
-            board.tiles[92].block()
+        if self.selected == 1:
+            board.tiles[92].mirror1(board)
+        if self.selected == 2:
+            board.tiles[92].mirror2(board)
+        if self.selected == 3:
+            board.tiles[92].mirror3(board)
+        if self.selected == 4:
+            board.tiles[92].mirror4(board)
+        if self.selected == 5:
+            board.tiles[92].lensX(board)
+        if self.selected == 6:
+            board.tiles[92].lensY(board)
+        if self.selected == 7:
+            board.tiles[92].block(board)
         self.update_images(board)
     def clickH10(self):
-        if self.selected == 'm1':
-            board.tiles[93].mirror1()
-        if self.selected == 'm2':
-            board.tiles[93].mirror2()
-        if self.selected == 'm3':
-            board.tiles[93].mirror3()
-        if self.selected == 'm4':
-            board.tiles[93].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[93].lensX()
-        if self.selected == 'lensY':
-            board.tiles[93].lensY()
-        if self.selected == 'block':
-            board.tiles[93].block()
+        if self.selected == 1:
+            board.tiles[93].mirror1(board)
+        if self.selected == 2:
+            board.tiles[93].mirror2(board)
+        if self.selected == 3:
+            board.tiles[93].mirror3(board)
+        if self.selected == 4:
+            board.tiles[93].mirror4(board)
+        if self.selected == 5:
+            board.tiles[93].lensX(board)
+        if self.selected == 6:
+            board.tiles[93].lensY(board)
+        if self.selected == 7:
+            board.tiles[93].block(board)
         self.update_images(board)
     def clickH11(self):
-        if self.selected == 'm1':
-            board.tiles[94].mirror1()
-        if self.selected == 'm2':
-            board.tiles[94].mirror2()
-        if self.selected == 'm3':
-            board.tiles[94].mirror3()
-        if self.selected == 'm4':
-            board.tiles[94].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[94].lensX()
-        if self.selected == 'lensY':
-            board.tiles[94].lensY()
-        if self.selected == 'block':
-            board.tiles[94].block()
+        if self.selected == 1:
+            board.tiles[94].mirror1(board)
+        if self.selected == 2:
+            board.tiles[94].mirror2(board)
+        if self.selected == 3:
+            board.tiles[94].mirror3(board)
+        if self.selected == 4:
+            board.tiles[94].mirror4(board)
+        if self.selected == 5:
+            board.tiles[94].lensX(board)
+        if self.selected == 6:
+            board.tiles[94].lensY(board)
+        if self.selected == 7:
+            board.tiles[94].block(board)
         self.update_images(board)
     def clickH12(self):
-        if self.selected == 'm1':
-            board.tiles[95].mirror1()
-        if self.selected == 'm2':
-            board.tiles[95].mirror2()
-        if self.selected == 'm3':
-            board.tiles[95].mirror3()
-        if self.selected == 'm4':
-            board.tiles[95].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[95].lensX()
-        if self.selected == 'lensY':
-            board.tiles[95].lensY()
-        if self.selected == 'block':
-            board.tiles[95].block()
+        if self.selected == 1:
+            board.tiles[95].mirror1(board)
+        if self.selected == 2:
+            board.tiles[95].mirror2(board)
+        if self.selected == 3:
+            board.tiles[95].mirror3(board)
+        if self.selected == 4:
+            board.tiles[95].mirror4(board)
+        if self.selected == 5:
+            board.tiles[95].lensX(board)
+        if self.selected == 6:
+            board.tiles[95].lensY(board)
+        if self.selected == 7:
+            board.tiles[95].block(board)
         self.update_images(board)
     def clickI1(self):
-        if self.selected == 'm1':
-            board.tiles[96].mirror1()
-        if self.selected == 'm2':
-            board.tiles[96].mirror2()
-        if self.selected == 'm3':
-            board.tiles[96].mirror3()
-        if self.selected == 'm4':
-            board.tiles[96].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[96].lensX()
-        if self.selected == 'lensY':
-            board.tiles[96].lensY()
-        if self.selected == 'block':
-            board.tiles[96].block()
+        if self.selected == 1:
+            board.tiles[96].mirror1(board)
+        if self.selected == 2:
+            board.tiles[96].mirror2(board)
+        if self.selected == 3:
+            board.tiles[96].mirror3(board)
+        if self.selected == 4:
+            board.tiles[96].mirror4(board)
+        if self.selected == 5:
+            board.tiles[96].lensX(board)
+        if self.selected == 6:
+            board.tiles[96].lensY(board)
+        if self.selected == 7:
+            board.tiles[96].block(board)
         self.update_images(board)
     def clickI2(self):
-        if self.selected == 'm1':
-            board.tiles[97].mirror1()
-        if self.selected == 'm2':
-            board.tiles[97].mirror2()
-        if self.selected == 'm3':
-            board.tiles[97].mirror3()
-        if self.selected == 'm4':
-            board.tiles[97].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[97].lensX()
-        if self.selected == 'lensY':
-            board.tiles[97].lensY()
-        if self.selected == 'block':
-            board.tiles[97].block()
+        if self.selected == 1:
+            board.tiles[97].mirror1(board)
+        if self.selected == 2:
+            board.tiles[97].mirror2(board)
+        if self.selected == 3:
+            board.tiles[97].mirror3(board)
+        if self.selected == 4:
+            board.tiles[97].mirror4(board)
+        if self.selected == 5:
+            board.tiles[97].lensX(board)
+        if self.selected == 6:
+            board.tiles[97].lensY(board)
+        if self.selected == 7:
+            board.tiles[97].block(board)
         self.update_images(board)
     def clickI3(self):
-        if self.selected == 'm1':
-            board.tiles[98].mirror1()
-        if self.selected == 'm2':
-            board.tiles[98].mirror2()
-        if self.selected == 'm3':
-            board.tiles[98].mirror3()
-        if self.selected == 'm4':
-            board.tiles[98].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[98].lensX()
-        if self.selected == 'lensY':
-            board.tiles[98].lensY()
-        if self.selected == 'block':
-            board.tiles[98].block()
+        if self.selected == 1:
+            board.tiles[98].mirror1(board)
+        if self.selected == 2:
+            board.tiles[98].mirror2(board)
+        if self.selected == 3:
+            board.tiles[98].mirror3(board)
+        if self.selected == 4:
+            board.tiles[98].mirror4(board)
+        if self.selected == 5:
+            board.tiles[98].lensX(board)
+        if self.selected == 6:
+            board.tiles[98].lensY(board)
+        if self.selected == 7:
+            board.tiles[98].block(board)
         self.update_images(board)
     def clickI4(self):
-        if self.selected == 'm1':
-            board.tiles[99].mirror1()
-        if self.selected == 'm2':
-            board.tiles[99].mirror2()
-        if self.selected == 'm3':
-            board.tiles[99].mirror3()
-        if self.selected == 'm4':
-            board.tiles[99].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[99].lensX()
-        if self.selected == 'lensY':
-            board.tiles[99].lensY()
-        if self.selected == 'block':
-            board.tiles[99].block()
+        if self.selected == 1:
+            board.tiles[99].mirror1(board)
+        if self.selected == 2:
+            board.tiles[99].mirror2(board)
+        if self.selected == 3:
+            board.tiles[99].mirror3(board)
+        if self.selected == 4:
+            board.tiles[99].mirror4(board)
+        if self.selected == 5:
+            board.tiles[99].lensX(board)
+        if self.selected == 6:
+            board.tiles[99].lensY(board)
+        if self.selected == 7:
+            board.tiles[99].block(board)
         self.update_images(board)
     def clickI5(self):
-        if self.selected == 'm1':
-            board.tiles[100].mirror1()
-        if self.selected == 'm2':
-            board.tiles[100].mirror2()
-        if self.selected == 'm3':
-            board.tiles[100].mirror3()
-        if self.selected == 'm4':
-            board.tiles[100].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[100].lensX()
-        if self.selected == 'lensY':
-            board.tiles[100].lensY()
-        if self.selected == 'block':
-            board.tiles[100].block()
+        if self.selected == 1:
+            board.tiles[100].mirror1(board)
+        if self.selected == 2:
+            board.tiles[100].mirror2(board)
+        if self.selected == 3:
+            board.tiles[100].mirror3(board)
+        if self.selected == 4:
+            board.tiles[100].mirror4(board)
+        if self.selected == 5:
+            board.tiles[100].lensX(board)
+        if self.selected == 6:
+            board.tiles[100].lensY(board)
+        if self.selected == 7:
+            board.tiles[100].block(board)
         self.update_images(board)
     def clickI6(self):
-        if self.selected == 'm1':
-            board.tiles[101].mirror1()
-        if self.selected == 'm2':
-            board.tiles[101].mirror2()
-        if self.selected == 'm3':
-            board.tiles[101].mirror3()
-        if self.selected == 'm4':
-            board.tiles[101].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[101].lensX()
-        if self.selected == 'lensY':
-            board.tiles[101].lensY()
-        if self.selected == 'block':
-            board.tiles[101].block()
+        if self.selected == 1:
+            board.tiles[101].mirror1(board)
+        if self.selected == 2:
+            board.tiles[101].mirror2(board)
+        if self.selected == 3:
+            board.tiles[101].mirror3(board)
+        if self.selected == 4:
+            board.tiles[101].mirror4(board)
+        if self.selected == 5:
+            board.tiles[101].lensX(board)
+        if self.selected == 6:
+            board.tiles[101].lensY(board)
+        if self.selected == 7:
+            board.tiles[101].block(board)
         self.update_images(board)
     def clickI7(self):
-        if self.selected == 'm1':
-            board.tiles[102].mirror1()
-        if self.selected == 'm2':
-            board.tiles[102].mirror2()
-        if self.selected == 'm3':
-            board.tiles[102].mirror3()
-        if self.selected == 'm4':
-            board.tiles[102].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[102].lensX()
-        if self.selected == 'lensY':
-            board.tiles[102].lensY()
-        if self.selected == 'block':
-            board.tiles[102].block()
+        if self.selected == 1:
+            board.tiles[102].mirror1(board)
+        if self.selected == 2:
+            board.tiles[102].mirror2(board)
+        if self.selected == 3:
+            board.tiles[102].mirror3(board)
+        if self.selected == 4:
+            board.tiles[102].mirror4(board)
+        if self.selected == 5:
+            board.tiles[102].lensX(board)
+        if self.selected == 6:
+            board.tiles[102].lensY(board)
+        if self.selected == 7:
+            board.tiles[102].block(board)
         self.update_images(board)
     def clickI8(self):
-        if self.selected == 'm1':
-            board.tiles[103].mirror1()
-        if self.selected == 'm2':
-            board.tiles[103].mirror2()
-        if self.selected == 'm3':
-            board.tiles[103].mirror3()
-        if self.selected == 'm4':
-            board.tiles[103].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[103].lensX()
-        if self.selected == 'lensY':
-            board.tiles[103].lensY()
-        if self.selected == 'block':
-            board.tiles[103].block()
+        if self.selected == 1:
+            board.tiles[103].mirror1(board)
+        if self.selected == 2:
+            board.tiles[103].mirror2(board)
+        if self.selected == 3:
+            board.tiles[103].mirror3(board)
+        if self.selected == 4:
+            board.tiles[103].mirror4(board)
+        if self.selected == 5:
+            board.tiles[103].lensX(board)
+        if self.selected == 6:
+            board.tiles[103].lensY(board)
+        if self.selected == 7:
+            board.tiles[103].block(board)
         self.update_images(board)
     def clickI9(self):
-        if self.selected == 'm1':
-            board.tiles[104].mirror1()
-        if self.selected == 'm2':
-            board.tiles[104].mirror2()
-        if self.selected == 'm3':
-            board.tiles[104].mirror3()
-        if self.selected == 'm4':
-            board.tiles[104].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[104].lensX()
-        if self.selected == 'lensY':
-            board.tiles[104].lensY()
-        if self.selected == 'block':
-            board.tiles[104].block()
+        if self.selected == 1:
+            board.tiles[104].mirror1(board)
+        if self.selected == 2:
+            board.tiles[104].mirror2(board)
+        if self.selected == 3:
+            board.tiles[104].mirror3(board)
+        if self.selected == 4:
+            board.tiles[104].mirror4(board)
+        if self.selected == 5:
+            board.tiles[104].lensX(board)
+        if self.selected == 6:
+            board.tiles[104].lensY(board)
+        if self.selected == 7:
+            board.tiles[104].block(board)
         self.update_images(board)
     def clickI10(self):
-        if self.selected == 'm1':
-            board.tiles[105].mirror1()
-        if self.selected == 'm2':
-            board.tiles[105].mirror2()
-        if self.selected == 'm3':
-            board.tiles[105].mirror3()
-        if self.selected == 'm4':
-            board.tiles[105].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[105].lensX()
-        if self.selected == 'lensY':
-            board.tiles[105].lensY()
-        if self.selected == 'block':
-            board.tiles[105].block()
+        if self.selected == 1:
+            board.tiles[105].mirror1(board)
+        if self.selected == 2:
+            board.tiles[105].mirror2(board)
+        if self.selected == 3:
+            board.tiles[105].mirror3(board)
+        if self.selected == 4:
+            board.tiles[105].mirror4(board)
+        if self.selected == 5:
+            board.tiles[105].lensX(board)
+        if self.selected == 6:
+            board.tiles[105].lensY(board)
+        if self.selected == 7:
+            board.tiles[105].block(board)
         self.update_images(board)
     def clickI11(self):
-        if self.selected == 'm1':
-            board.tiles[106].mirror1()
-        if self.selected == 'm2':
-            board.tiles[106].mirror2()
-        if self.selected == 'm3':
-            board.tiles[106].mirror3()
-        if self.selected == 'm4':
-            board.tiles[106].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[106].lensX()
-        if self.selected == 'lensY':
-            board.tiles[106].lensY()
-        if self.selected == 'block':
-            board.tiles[106].block()
+        if self.selected == 1:
+            board.tiles[106].mirror1(board)
+        if self.selected == 2:
+            board.tiles[106].mirror2(board)
+        if self.selected == 3:
+            board.tiles[106].mirror3(board)
+        if self.selected == 4:
+            board.tiles[106].mirror4(board)
+        if self.selected == 5:
+            board.tiles[106].lensX(board)
+        if self.selected == 6:
+            board.tiles[106].lensY(board)
+        if self.selected == 7:
+            board.tiles[106].block(board)
         self.update_images(board)
     def clickI12(self):
-        if self.selected == 'm1':
-            board.tiles[107].mirror1()
-        if self.selected == 'm2':
-            board.tiles[107].mirror2()
-        if self.selected == 'm3':
-            board.tiles[107].mirror3()
-        if self.selected == 'm4':
-            board.tiles[107].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[107].lensX()
-        if self.selected == 'lensY':
-            board.tiles[107].lensY()
-        if self.selected == 'block':
-            board.tiles[107].block()
+        if self.selected == 1:
+            board.tiles[107].mirror1(board)
+        if self.selected == 2:
+            board.tiles[107].mirror2(board)
+        if self.selected == 3:
+            board.tiles[107].mirror3(board)
+        if self.selected == 4:
+            board.tiles[107].mirror4(board)
+        if self.selected == 5:
+            board.tiles[107].lensX(board)
+        if self.selected == 6:
+            board.tiles[107].lensY(board)
+        if self.selected == 7:
+            board.tiles[107].block(board)
         self.update_images(board)
     def clickJ1(self):
-        if self.selected == 'm1':
-            board.tiles[108].mirror1()
-        if self.selected == 'm2':
-            board.tiles[108].mirror2()
-        if self.selected == 'm3':
-            board.tiles[108].mirror3()
-        if self.selected == 'm4':
-            board.tiles[108].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[108].lensX()
-        if self.selected == 'lensY':
-            board.tiles[108].lensY()
-        if self.selected == 'block':
-            board.tiles[108].block()
+        if self.selected == 1:
+            board.tiles[108].mirror1(board)
+        if self.selected == 2:
+            board.tiles[108].mirror2(board)
+        if self.selected == 3:
+            board.tiles[108].mirror3(board)
+        if self.selected == 4:
+            board.tiles[108].mirror4(board)
+        if self.selected == 5:
+            board.tiles[108].lensX(board)
+        if self.selected == 6:
+            board.tiles[108].lensY(board)
+        if self.selected == 7:
+            board.tiles[108].block(board)
         self.update_images(board)
     def clickJ2(self):
-        if self.selected == 'm1':
-            board.tiles[109].mirror1()
-        if self.selected == 'm2':
-            board.tiles[109].mirror2()
-        if self.selected == 'm3':
-            board.tiles[109].mirror3()
-        if self.selected == 'm4':
-            board.tiles[109].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[109].lensX()
-        if self.selected == 'lensY':
-            board.tiles[109].lensY()
-        if self.selected == 'block':
-            board.tiles[109].block()
+        if self.selected == 1:
+            board.tiles[109].mirror1(board)
+        if self.selected == 2:
+            board.tiles[109].mirror2(board)
+        if self.selected == 3:
+            board.tiles[109].mirror3(board)
+        if self.selected == 4:
+            board.tiles[109].mirror4(board)
+        if self.selected == 5:
+            board.tiles[109].lensX(board)
+        if self.selected == 6:
+            board.tiles[109].lensY(board)
+        if self.selected == 7:
+            board.tiles[109].block(board)
         self.update_images(board)
     def clickJ3(self):
-        if self.selected == 'm1':
-            board.tiles[110].mirror1()
-        if self.selected == 'm2':
-            board.tiles[110].mirror2()
-        if self.selected == 'm3':
-            board.tiles[110].mirror3()
-        if self.selected == 'm4':
-            board.tiles[110].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[110].lensX()
-        if self.selected == 'lensY':
-            board.tiles[110].lensY()
-        if self.selected == 'block':
-            board.tiles[110].block()
+        if self.selected == 1:
+            board.tiles[110].mirror1(board)
+        if self.selected == 2:
+            board.tiles[110].mirror2(board)
+        if self.selected == 3:
+            board.tiles[110].mirror3(board)
+        if self.selected == 4:
+            board.tiles[110].mirror4(board)
+        if self.selected == 5:
+            board.tiles[110].lensX(board)
+        if self.selected == 6:
+            board.tiles[110].lensY(board)
+        if self.selected == 7:
+            board.tiles[110].block(board)
         self.update_images(board)
     def clickJ4(self):
-        if self.selected == 'm1':
-            board.tiles[111].mirror1()
-        if self.selected == 'm2':
-            board.tiles[111].mirror2()
-        if self.selected == 'm3':
-            board.tiles[111].mirror3()
-        if self.selected == 'm4':
-            board.tiles[111].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[111].lensX()
-        if self.selected == 'lensY':
-            board.tiles[111].lensY()
-        if self.selected == 'block':
-            board.tiles[111].block()
+        if self.selected == 1:
+            board.tiles[111].mirror1(board)
+        if self.selected == 2:
+            board.tiles[111].mirror2(board)
+        if self.selected == 3:
+            board.tiles[111].mirror3(board)
+        if self.selected == 4:
+            board.tiles[111].mirror4(board)
+        if self.selected == 5:
+            board.tiles[111].lensX(board)
+        if self.selected == 6:
+            board.tiles[111].lensY(board)
+        if self.selected == 7:
+            board.tiles[111].block(board)
         self.update_images(board)
     def clickJ5(self):
-        if self.selected == 'm1':
-            board.tiles[112].mirror1()
-        if self.selected == 'm2':
-            board.tiles[112].mirror2()
-        if self.selected == 'm3':
-            board.tiles[112].mirror3()
-        if self.selected == 'm4':
-            board.tiles[112].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[112].lensX()
-        if self.selected == 'lensY':
-            board.tiles[112].lensY()
-        if self.selected == 'block':
-            board.tiles[112].block()
+        if self.selected == 1:
+            board.tiles[112].mirror1(board)
+        if self.selected == 2:
+            board.tiles[112].mirror2(board)
+        if self.selected == 3:
+            board.tiles[112].mirror3(board)
+        if self.selected == 4:
+            board.tiles[112].mirror4(board)
+        if self.selected == 5:
+            board.tiles[112].lensX(board)
+        if self.selected == 6:
+            board.tiles[112].lensY(board)
+        if self.selected == 7:
+            board.tiles[112].block(board)
         self.update_images(board)
     def clickJ6(self):
-        if self.selected == 'm1':
-            board.tiles[113].mirror1()
-        if self.selected == 'm2':
-            board.tiles[113].mirror2()
-        if self.selected == 'm3':
-            board.tiles[113].mirror3()
-        if self.selected == 'm4':
-            board.tiles[113].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[113].lensX()
-        if self.selected == 'lensY':
-            board.tiles[113].lensY()
-        if self.selected == 'block':
-            board.tiles[113].block()
+        if self.selected == 1:
+            board.tiles[113].mirror1(board)
+        if self.selected == 2:
+            board.tiles[113].mirror2(board)
+        if self.selected == 3:
+            board.tiles[113].mirror3(board)
+        if self.selected == 4:
+            board.tiles[113].mirror4(board)
+        if self.selected == 5:
+            board.tiles[113].lensX(board)
+        if self.selected == 6:
+            board.tiles[113].lensY(board)
+        if self.selected == 7:
+            board.tiles[113].block(board)
         self.update_images(board)
     def clickJ7(self):
-        if self.selected == 'm1':
-            board.tiles[114].mirror1()
-        if self.selected == 'm2':
-            board.tiles[114].mirror2()
-        if self.selected == 'm3':
-            board.tiles[114].mirror3()
-        if self.selected == 'm4':
-            board.tiles[114].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[114].lensX()
-        if self.selected == 'lensY':
-            board.tiles[114].lensY()
-        if self.selected == 'block':
-            board.tiles[114].block()
+        if self.selected == 1:
+            board.tiles[114].mirror1(board)
+        if self.selected == 2:
+            board.tiles[114].mirror2(board)
+        if self.selected == 3:
+            board.tiles[114].mirror3(board)
+        if self.selected == 4:
+            board.tiles[114].mirror4(board)
+        if self.selected == 5:
+            board.tiles[114].lensX(board)
+        if self.selected == 6:
+            board.tiles[114].lensY(board)
+        if self.selected == 7:
+            board.tiles[114].block(board)
         self.update_images(board)
     def clickJ8(self):
-        if self.selected == 'm1':
-            board.tiles[115].mirror1()
-        if self.selected == 'm2':
-            board.tiles[115].mirror2()
-        if self.selected == 'm3':
-            board.tiles[115].mirror3()
-        if self.selected == 'm4':
-            board.tiles[115].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[115].lensX()
-        if self.selected == 'lensY':
-            board.tiles[115].lensY()
-        if self.selected == 'block':
-            board.tiles[115].block()
+        if self.selected == 1:
+            board.tiles[115].mirror1(board)
+        if self.selected == 2:
+            board.tiles[115].mirror2(board)
+        if self.selected == 3:
+            board.tiles[115].mirror3(board)
+        if self.selected == 4:
+            board.tiles[115].mirror4(board)
+        if self.selected == 5:
+            board.tiles[115].lensX(board)
+        if self.selected == 6:
+            board.tiles[115].lensY(board)
+        if self.selected == 7:
+            board.tiles[115].block(board)
         self.update_images(board)
     def clickJ9(self):
-        if self.selected == 'm1':
-            board.tiles[116].mirror1()
-        if self.selected == 'm2':
-            board.tiles[116].mirror2()
-        if self.selected == 'm3':
-            board.tiles[116].mirror3()
-        if self.selected == 'm4':
-            board.tiles[116].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[116].lensX()
-        if self.selected == 'lensY':
-            board.tiles[116].lensY()
-        if self.selected == 'block':
-            board.tiles[116].block()
+        if self.selected == 1:
+            board.tiles[116].mirror1(board)
+        if self.selected == 2:
+            board.tiles[116].mirror2(board)
+        if self.selected == 3:
+            board.tiles[116].mirror3(board)
+        if self.selected == 4:
+            board.tiles[116].mirror4(board)
+        if self.selected == 5:
+            board.tiles[116].lensX(board)
+        if self.selected == 6:
+            board.tiles[116].lensY(board)
+        if self.selected == 7:
+            board.tiles[116].block(board)
         self.update_images(board)
     def clickJ10(self):
-        if self.selected == 'm1':
-            board.tiles[117].mirror1()
-        if self.selected == 'm2':
-            board.tiles[117].mirror2()
-        if self.selected == 'm3':
-            board.tiles[117].mirror3()
-        if self.selected == 'm4':
-            board.tiles[117].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[117].lensX()
-        if self.selected == 'lensY':
-            board.tiles[117].lensY()
-        if self.selected == 'block':
-            board.tiles[117].block()
+        if self.selected == 1:
+            board.tiles[117].mirror1(board)
+        if self.selected == 2:
+            board.tiles[117].mirror2(board)
+        if self.selected == 3:
+            board.tiles[117].mirror3(board)
+        if self.selected == 4:
+            board.tiles[117].mirror4(board)
+        if self.selected == 5:
+            board.tiles[117].lensX(board)
+        if self.selected == 6:
+            board.tiles[117].lensY(board)
+        if self.selected == 7:
+            board.tiles[117].block(board)
         self.update_images(board)
     def clickJ11(self):
-        if self.selected == 'm1':
-            board.tiles[118].mirror1()
-        if self.selected == 'm2':
-            board.tiles[118].mirror2()
-        if self.selected == 'm3':
-            board.tiles[118].mirror3()
-        if self.selected == 'm4':
-            board.tiles[118].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[118].lensX()
-        if self.selected == 'lensY':
-            board.tiles[118].lensY()
-        if self.selected == 'block':
-            board.tiles[118].block()
+        if self.selected == 1:
+            board.tiles[118].mirror1(board)
+        if self.selected == 2:
+            board.tiles[118].mirror2(board)
+        if self.selected == 3:
+            board.tiles[118].mirror3(board)
+        if self.selected == 4:
+            board.tiles[118].mirror4(board)
+        if self.selected == 5:
+            board.tiles[118].lensX(board)
+        if self.selected == 6:
+            board.tiles[118].lensY(board)
+        if self.selected == 7:
+            board.tiles[118].block(board)
         self.update_images(board)
     def clickJ12(self):
-        if self.selected == 'm1':
-            board.tiles[119].mirror1()
-        if self.selected == 'm2':
-            board.tiles[119].mirror2()
-        if self.selected == 'm3':
-            board.tiles[119].mirror3()
-        if self.selected == 'm4':
-            board.tiles[119].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[119].lensX()
-        if self.selected == 'lensY':
-            board.tiles[119].lensY()
-        if self.selected == 'block':
-            board.tiles[119].block()
+        if self.selected == 1:
+            board.tiles[119].mirror1(board)
+        if self.selected == 2:
+            board.tiles[119].mirror2(board)
+        if self.selected == 3:
+            board.tiles[119].mirror3(board)
+        if self.selected == 4:
+            board.tiles[119].mirror4(board)
+        if self.selected == 5:
+            board.tiles[119].lensX(board)
+        if self.selected == 6:
+            board.tiles[119].lensY(board)
+        if self.selected == 7:
+            board.tiles[119].block(board)
         self.update_images(board)
     def clickK1(self):
-        if self.selected == 'm1':
-            board.tiles[120].mirror1()
-        if self.selected == 'm2':
-            board.tiles[120].mirror2()
-        if self.selected == 'm3':
-            board.tiles[120].mirror3()
-        if self.selected == 'm4':
-            board.tiles[120].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[120].lensX()
-        if self.selected == 'lensY':
-            board.tiles[120].lensY()
-        if self.selected == 'block':
-            board.tiles[120].block()
+        if self.selected == 1:
+            board.tiles[120].mirror1(board)
+        if self.selected == 2:
+            board.tiles[120].mirror2(board)
+        if self.selected == 3:
+            board.tiles[120].mirror3(board)
+        if self.selected == 4:
+            board.tiles[120].mirror4(board)
+        if self.selected == 5:
+            board.tiles[120].lensX(board)
+        if self.selected == 6:
+            board.tiles[120].lensY(board)
+        if self.selected == 7:
+            board.tiles[120].block(board)
         self.update_images(board)
     def clickK2(self):
-        if self.selected == 'm1':
-            board.tiles[121].mirror1()
-        if self.selected == 'm2':
-            board.tiles[121].mirror2()
-        if self.selected == 'm3':
-            board.tiles[121].mirror3()
-        if self.selected == 'm4':
-            board.tiles[121].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[121].lensX()
-        if self.selected == 'lensY':
-            board.tiles[121].lensY()
-        if self.selected == 'block':
-            board.tiles[121].block()
+        if self.selected == 1:
+            board.tiles[121].mirror1(board)
+        if self.selected == 2:
+            board.tiles[121].mirror2(board)
+        if self.selected == 3:
+            board.tiles[121].mirror3(board)
+        if self.selected == 4:
+            board.tiles[121].mirror4(board)
+        if self.selected == 5:
+            board.tiles[121].lensX(board)
+        if self.selected == 6:
+            board.tiles[121].lensY(board)
+        if self.selected == 7:
+            board.tiles[121].block(board)
         self.update_images(board)
     def clickK3(self):
-        if self.selected == 'm1':
-            board.tiles[122].mirror1()
-        if self.selected == 'm2':
-            board.tiles[122].mirror2()
-        if self.selected == 'm3':
-            board.tiles[122].mirror3()
-        if self.selected == 'm4':
-            board.tiles[122].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[122].lensX()
-        if self.selected == 'lensY':
-            board.tiles[122].lensY()
-        if self.selected == 'block':
-            board.tiles[122].block()
+        if self.selected == 1:
+            board.tiles[122].mirror1(board)
+        if self.selected == 2:
+            board.tiles[122].mirror2(board)
+        if self.selected == 3:
+            board.tiles[122].mirror3(board)
+        if self.selected == 4:
+            board.tiles[122].mirror4(board)
+        if self.selected == 5:
+            board.tiles[122].lensX(board)
+        if self.selected == 6:
+            board.tiles[122].lensY(board)
+        if self.selected == 7:
+            board.tiles[122].block(board)
         self.update_images(board)
     def clickK4(self):
-        if self.selected == 'm1':
-            board.tiles[123].mirror1()
-        if self.selected == 'm2':
-            board.tiles[123].mirror2()
-        if self.selected == 'm3':
-            board.tiles[123].mirror3()
-        if self.selected == 'm4':
-            board.tiles[123].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[123].lensX()
-        if self.selected == 'lensY':
-            board.tiles[123].lensY()
-        if self.selected == 'block':
-            board.tiles[123].block()
+        if self.selected == 1:
+            board.tiles[123].mirror1(board)
+        if self.selected == 2:
+            board.tiles[123].mirror2(board)
+        if self.selected == 3:
+            board.tiles[123].mirror3(board)
+        if self.selected == 4:
+            board.tiles[123].mirror4(board)
+        if self.selected == 5:
+            board.tiles[123].lensX(board)
+        if self.selected == 6:
+            board.tiles[123].lensY(board)
+        if self.selected == 7:
+            board.tiles[123].block(board)
         self.update_images(board)
     def clickK5(self):
-        if self.selected == 'm1':
-            board.tiles[124].mirror1()
-        if self.selected == 'm2':
-            board.tiles[124].mirror2()
-        if self.selected == 'm3':
-            board.tiles[124].mirror3()
-        if self.selected == 'm4':
-            board.tiles[124].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[124].lensX()
-        if self.selected == 'lensY':
-            board.tiles[124].lensY()
-        if self.selected == 'block':
-            board.tiles[124].block()
+        if self.selected == 1:
+            board.tiles[124].mirror1(board)
+        if self.selected == 2:
+            board.tiles[124].mirror2(board)
+        if self.selected == 3:
+            board.tiles[124].mirror3(board)
+        if self.selected == 4:
+            board.tiles[124].mirror4(board)
+        if self.selected == 5:
+            board.tiles[124].lensX(board)
+        if self.selected == 6:
+            board.tiles[124].lensY(board)
+        if self.selected == 7:
+            board.tiles[124].block(board)
         self.update_images(board)
     def clickK6(self):
-        if self.selected == 'm1':
-            board.tiles[125].mirror1()
-        if self.selected == 'm2':
-            board.tiles[125].mirror2()
-        if self.selected == 'm3':
-            board.tiles[125].mirror3()
-        if self.selected == 'm4':
-            board.tiles[125].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[125].lensX()
-        if self.selected == 'lensY':
-            board.tiles[125].lensY()
-        if self.selected == 'block':
-            board.tiles[125].block()
+        if self.selected == 1:
+            board.tiles[125].mirror1(board)
+        if self.selected == 2:
+            board.tiles[125].mirror2(board)
+        if self.selected == 3:
+            board.tiles[125].mirror3(board)
+        if self.selected == 4:
+            board.tiles[125].mirror4(board)
+        if self.selected == 5:
+            board.tiles[125].lensX(board)
+        if self.selected == 6:
+            board.tiles[125].lensY(board)
+        if self.selected == 7:
+            board.tiles[125].block(board)
         self.update_images(board)
     def clickK7(self):
-        if self.selected == 'm1':
-            board.tiles[126].mirror1()
-        if self.selected == 'm2':
-            board.tiles[126].mirror2()
-        if self.selected == 'm3':
-            board.tiles[126].mirror3()
-        if self.selected == 'm4':
-            board.tiles[126].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[126].lensX()
-        if self.selected == 'lensY':
-            board.tiles[126].lensY()
-        if self.selected == 'block':
-            board.tiles[126].block()
+        if self.selected == 1:
+            board.tiles[126].mirror1(board)
+        if self.selected == 2:
+            board.tiles[126].mirror2(board)
+        if self.selected == 3:
+            board.tiles[126].mirror3(board)
+        if self.selected == 4:
+            board.tiles[126].mirror4(board)
+        if self.selected == 5:
+            board.tiles[126].lensX(board)
+        if self.selected == 6:
+            board.tiles[126].lensY(board)
+        if self.selected == 7:
+            board.tiles[126].block(board)
         self.update_images(board)
     def clickK8(self):
-        if self.selected == 'm1':
-            board.tiles[127].mirror1()
-        if self.selected == 'm2':
-            board.tiles[127].mirror2()
-        if self.selected == 'm3':
-            board.tiles[127].mirror3()
-        if self.selected == 'm4':
-            board.tiles[127].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[127].lensX()
-        if self.selected == 'lensY':
-            board.tiles[127].lensY()
-        if self.selected == 'block':
-            board.tiles[127].block()
+        if self.selected == 1:
+            board.tiles[127].mirror1(board)
+        if self.selected == 2:
+            board.tiles[127].mirror2(board)
+        if self.selected == 3:
+            board.tiles[127].mirror3(board)
+        if self.selected == 4:
+            board.tiles[127].mirror4(board)
+        if self.selected == 5:
+            board.tiles[127].lensX(board)
+        if self.selected == 6:
+            board.tiles[127].lensY(board)
+        if self.selected == 7:
+            board.tiles[127].block(board)
         self.update_images(board)
     def clickK9(self):
-        if self.selected == 'm1':
-            board.tiles[128].mirror1()
-        if self.selected == 'm2':
-            board.tiles[128].mirror2()
-        if self.selected == 'm3':
-            board.tiles[128].mirror3()
-        if self.selected == 'm4':
-            board.tiles[128].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[128].lensX()
-        if self.selected == 'lensY':
-            board.tiles[128].lensY()
-        if self.selected == 'block':
-            board.tiles[128].block()
+        if self.selected == 1:
+            board.tiles[128].mirror1(board)
+        if self.selected == 2:
+            board.tiles[128].mirror2(board)
+        if self.selected == 3:
+            board.tiles[128].mirror3(board)
+        if self.selected == 4:
+            board.tiles[128].mirror4(board)
+        if self.selected == 5:
+            board.tiles[128].lensX(board)
+        if self.selected == 6:
+            board.tiles[128].lensY(board)
+        if self.selected == 7:
+            board.tiles[128].block(board)
         self.update_images(board)
     def clickK10(self):
-        if self.selected == 'm1':
-            board.tiles[129].mirror1()
-        if self.selected == 'm2':
-            board.tiles[129].mirror2()
-        if self.selected == 'm3':
-            board.tiles[129].mirror3()
-        if self.selected == 'm4':
-            board.tiles[129].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[129].lensX()
-        if self.selected == 'lensY':
-            board.tiles[129].lensY()
-        if self.selected == 'block':
-            board.tiles[129].block()
+        if self.selected == 1:
+            board.tiles[129].mirror1(board)
+        if self.selected == 2:
+            board.tiles[129].mirror2(board)
+        if self.selected == 3:
+            board.tiles[129].mirror3(board)
+        if self.selected == 4:
+            board.tiles[129].mirror4(board)
+        if self.selected == 5:
+            board.tiles[129].lensX(board)
+        if self.selected == 6:
+            board.tiles[129].lensY(board)
+        if self.selected == 7:
+            board.tiles[129].block(board)
         self.update_images(board)
     def clickK11(self):
-        if self.selected == 'm1':
-            board.tiles[130].mirror1()
-        if self.selected == 'm2':
-            board.tiles[130].mirror2()
-        if self.selected == 'm3':
-            board.tiles[130].mirror3()
-        if self.selected == 'm4':
-            board.tiles[130].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[130].lensX()
-        if self.selected == 'lensY':
-            board.tiles[130].lensY()
-        if self.selected == 'block':
-            board.tiles[130].block()
+        if self.selected == 1:
+            board.tiles[130].mirror1(board)
+        if self.selected == 2:
+            board.tiles[130].mirror2(board)
+        if self.selected == 3:
+            board.tiles[130].mirror3(board)
+        if self.selected == 4:
+            board.tiles[130].mirror4(board)
+        if self.selected == 5:
+            board.tiles[130].lensX(board)
+        if self.selected == 6:
+            board.tiles[130].lensY(board)
+        if self.selected == 7:
+            board.tiles[130].block(board)
         self.update_images(board)
     def clickK12(self):
-        if self.selected == 'm1':
-            board.tiles[131].mirror1()
-        if self.selected == 'm2':
-            board.tiles[131].mirror2()
-        if self.selected == 'm3':
-            board.tiles[131].mirror3()
-        if self.selected == 'm4':
-            board.tiles[131].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[131].lensX()
-        if self.selected == 'lensY':
-            board.tiles[131].lensY()
-        if self.selected == 'block':
-            board.tiles[131].block()
+        if self.selected == 1:
+            board.tiles[131].mirror1(board)
+        if self.selected == 2:
+            board.tiles[131].mirror2(board)
+        if self.selected == 3:
+            board.tiles[131].mirror3(board)
+        if self.selected == 4:
+            board.tiles[131].mirror4(board)
+        if self.selected == 5:
+            board.tiles[131].lensX(board)
+        if self.selected == 6:
+            board.tiles[131].lensY(board)
+        if self.selected == 7:
+            board.tiles[131].block(board)
         self.update_images(board)
     def clickL1(self):
-        if self.selected == 'm1':
-            board.tiles[132].mirror1()
-        if self.selected == 'm2':
-            board.tiles[132].mirror2()
-        if self.selected == 'm3':
-            board.tiles[132].mirror3()
-        if self.selected == 'm4':
-            board.tiles[132].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[132].lensX()
-        if self.selected == 'lensY':
-            board.tiles[132].lensY()
-        if self.selected == 'block':
-            board.tiles[132].block()
+        if self.selected == 1:
+            board.tiles[132].mirror1(board)
+        if self.selected == 2:
+            board.tiles[132].mirror2(board)
+        if self.selected == 3:
+            board.tiles[132].mirror3(board)
+        if self.selected == 4:
+            board.tiles[132].mirror4(board)
+        if self.selected == 5:
+            board.tiles[132].lensX(board)
+        if self.selected == 6:
+            board.tiles[132].lensY(board)
+        if self.selected == 7:
+            board.tiles[132].block(board)
         self.update_images(board)
     def clickL2(self):
-        if self.selected == 'm1':
-            board.tiles[133].mirror1()
-        if self.selected == 'm2':
-            board.tiles[133].mirror2()
-        if self.selected == 'm3':
-            board.tiles[133].mirror3()
-        if self.selected == 'm4':
-            board.tiles[133].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[133].lensX()
-        if self.selected == 'lensY':
-            board.tiles[133].lensY()
-        if self.selected == 'block':
-            board.tiles[133].block()
+        if self.selected == 1:
+            board.tiles[133].mirror1(board)
+        if self.selected == 2:
+            board.tiles[133].mirror2(board)
+        if self.selected == 3:
+            board.tiles[133].mirror3(board)
+        if self.selected == 4:
+            board.tiles[133].mirror4(board)
+        if self.selected == 5:
+            board.tiles[133].lensX(board)
+        if self.selected == 6:
+            board.tiles[133].lensY(board)
+        if self.selected == 7:
+            board.tiles[133].block(board)
         self.update_images(board)
     def clickL3(self):
-        if self.selected == 'm1':
-            board.tiles[134].mirror1()
-        if self.selected == 'm2':
-            board.tiles[134].mirror2()
-        if self.selected == 'm3':
-            board.tiles[134].mirror3()
-        if self.selected == 'm4':
-            board.tiles[134].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[134].lensX()
-        if self.selected == 'lensY':
-            board.tiles[134].lensY()
-        if self.selected == 'block':
-            board.tiles[134].block()
+        if self.selected == 1:
+            board.tiles[134].mirror1(board)
+        if self.selected == 2:
+            board.tiles[134].mirror2(board)
+        if self.selected == 3:
+            board.tiles[134].mirror3(board)
+        if self.selected == 4:
+            board.tiles[134].mirror4(board)
+        if self.selected == 5:
+            board.tiles[134].lensX(board)
+        if self.selected == 6:
+            board.tiles[134].lensY(board)
+        if self.selected == 7:
+            board.tiles[134].block(board)
         self.update_images(board)
     def clickL4(self):
-        if self.selected == 'm1':
-            board.tiles[135].mirror1()
-        if self.selected == 'm2':
-            board.tiles[135].mirror2()
-        if self.selected == 'm3':
-            board.tiles[135].mirror3()
-        if self.selected == 'm4':
-            board.tiles[135].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[135].lensX()
-        if self.selected == 'lensY':
-            board.tiles[135].lensY()
-        if self.selected == 'block':
-            board.tiles[135].block()
+        if self.selected == 1:
+            board.tiles[135].mirror1(board)
+        if self.selected == 2:
+            board.tiles[135].mirror2(board)
+        if self.selected == 3:
+            board.tiles[135].mirror3(board)
+        if self.selected == 4:
+            board.tiles[135].mirror4(board)
+        if self.selected == 5:
+            board.tiles[135].lensX(board)
+        if self.selected == 6:
+            board.tiles[135].lensY(board)
+        if self.selected == 7:
+            board.tiles[135].block(board)
         self.update_images(board)
     def clickL5(self):
-        if self.selected == 'm1':
-            board.tiles[136].mirror1()
-        if self.selected == 'm2':
-            board.tiles[136].mirror2()
-        if self.selected == 'm3':
-            board.tiles[136].mirror3()
-        if self.selected == 'm4':
-            board.tiles[136].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[136].lensX()
-        if self.selected == 'lensY':
-            board.tiles[136].lensY()
-        if self.selected == 'block':
-            board.tiles[136].block()
+        if self.selected == 1:
+            board.tiles[136].mirror1(board)
+        if self.selected == 2:
+            board.tiles[136].mirror2(board)
+        if self.selected == 3:
+            board.tiles[136].mirror3(board)
+        if self.selected == 4:
+            board.tiles[136].mirror4(board)
+        if self.selected == 5:
+            board.tiles[136].lensX(board)
+        if self.selected == 6:
+            board.tiles[136].lensY(board)
+        if self.selected == 7:
+            board.tiles[136].block(board)
         self.update_images(board)
     def clickL6(self):
-        if self.selected == 'm1':
-            board.tiles[137].mirror1()
-        if self.selected == 'm2':
-            board.tiles[137].mirror2()
-        if self.selected == 'm3':
-            board.tiles[137].mirror3()
-        if self.selected == 'm4':
-            board.tiles[137].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[137].lensX()
-        if self.selected == 'lensY':
-            board.tiles[137].lensY()
-        if self.selected == 'block':
-            board.tiles[137].block()
+        if self.selected == 1:
+            board.tiles[137].mirror1(board)
+        if self.selected == 2:
+            board.tiles[137].mirror2(board)
+        if self.selected == 3:
+            board.tiles[137].mirror3(board)
+        if self.selected == 4:
+            board.tiles[137].mirror4(board)
+        if self.selected == 5:
+            board.tiles[137].lensX(board)
+        if self.selected == 6:
+            board.tiles[137].lensY(board)
+        if self.selected == 7:
+            board.tiles[137].block(board)
         self.update_images(board)
     def clickL7(self):
-        if self.selected == 'm1':
-            board.tiles[138].mirror1()
-        if self.selected == 'm2':
-            board.tiles[138].mirror2()
-        if self.selected == 'm3':
-            board.tiles[138].mirror3()
-        if self.selected == 'm4':
-            board.tiles[138].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[138].lensX()
-        if self.selected == 'lensY':
-            board.tiles[138].lensY()
-        if self.selected == 'block':
-            board.tiles[138].block()
+        if self.selected == 1:
+            board.tiles[138].mirror1(board)
+        if self.selected == 2:
+            board.tiles[138].mirror2(board)
+        if self.selected == 3:
+            board.tiles[138].mirror3(board)
+        if self.selected == 4:
+            board.tiles[138].mirror4(board)
+        if self.selected == 5:
+            board.tiles[138].lensX(board)
+        if self.selected == 6:
+            board.tiles[138].lensY(board)
+        if self.selected == 7:
+            board.tiles[138].block(board)
         self.update_images(board)
     def clickL8(self):
-        if self.selected == 'm1':
-            board.tiles[139].mirror1()
-        if self.selected == 'm2':
-            board.tiles[139].mirror2()
-        if self.selected == 'm3':
-            board.tiles[139].mirror3()
-        if self.selected == 'm4':
-            board.tiles[139].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[139].lensX()
-        if self.selected == 'lensY':
-            board.tiles[139].lensY()
-        if self.selected == 'block':
-            board.tiles[139].block()
+        if self.selected == 1:
+            board.tiles[139].mirror1(board)
+        if self.selected == 2:
+            board.tiles[139].mirror2(board)
+        if self.selected == 3:
+            board.tiles[139].mirror3(board)
+        if self.selected == 4:
+            board.tiles[139].mirror4(board)
+        if self.selected == 5:
+            board.tiles[139].lensX(board)
+        if self.selected == 6:
+            board.tiles[139].lensY(board)
+        if self.selected == 7:
+            board.tiles[139].block(board)
         self.update_images(board)
     def clickL9(self):
-        if self.selected == 'm1':
-            board.tiles[140].mirror1()
-        if self.selected == 'm2':
-            board.tiles[140].mirror2()
-        if self.selected == 'm3':
-            board.tiles[140].mirror3()
-        if self.selected == 'm4':
-            board.tiles[140].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[140].lensX()
-        if self.selected == 'lensY':
-            board.tiles[140].lensY()
-        if self.selected == 'block':
-            board.tiles[140].block()
+        if self.selected == 1:
+            board.tiles[140].mirror1(board)
+        if self.selected == 2:
+            board.tiles[140].mirror2(board)
+        if self.selected == 3:
+            board.tiles[140].mirror3(board)
+        if self.selected == 4:
+            board.tiles[140].mirror4(board)
+        if self.selected == 5:
+            board.tiles[140].lensX(board)
+        if self.selected == 6:
+            board.tiles[140].lensY(board)
+        if self.selected == 7:
+            board.tiles[140].block(board)
         self.update_images(board)
     def clickL10(self):
-        if self.selected == 'm1':
-            board.tiles[141].mirror1()
-        if self.selected == 'm2':
-            board.tiles[141].mirror2()
-        if self.selected == 'm3':
-            board.tiles[141].mirror3()
-        if self.selected == 'm4':
-            board.tiles[141].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[141].lensX()
-        if self.selected == 'lensY':
-            board.tiles[141].lensY()
-        if self.selected == 'block':
-            board.tiles[141].block()
+        if self.selected == 1:
+            board.tiles[141].mirror1(board)
+        if self.selected == 2:
+            board.tiles[141].mirror2(board)
+        if self.selected == 3:
+            board.tiles[141].mirror3(board)
+        if self.selected == 4:
+            board.tiles[141].mirror4(board)
+        if self.selected == 5:
+            board.tiles[141].lensX(board)
+        if self.selected == 6:
+            board.tiles[141].lensY(board)
+        if self.selected == 7:
+            board.tiles[141].block(board)
         self.update_images(board)
     def clickL11(self):
-        if self.selected == 'm1':
-            board.tiles[142].mirror1()
-        if self.selected == 'm2':
-            board.tiles[142].mirror2()
-        if self.selected == 'm3':
-            board.tiles[142].mirror3()
-        if self.selected == 'm4':
-            board.tiles[142].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[142].lensX()
-        if self.selected == 'lensY':
-            board.tiles[142].lensY()
-        if self.selected == 'block':
-            board.tiles[142].block()
+        if self.selected == 1:
+            board.tiles[142].mirror1(board)
+        if self.selected == 2:
+            board.tiles[142].mirror2(board)
+        if self.selected == 3:
+            board.tiles[142].mirror3(board)
+        if self.selected == 4:
+            board.tiles[142].mirror4(board)
+        if self.selected == 5:
+            board.tiles[142].lensX(board)
+        if self.selected == 6:
+            board.tiles[142].lensY(board)
+        if self.selected == 7:
+            board.tiles[142].block(board)
         self.update_images(board)
     def clickL12(self):
-        if self.selected == 'm1':
-            board.tiles[143].mirror1()
-        if self.selected == 'm2':
-            board.tiles[143].mirror2()
-        if self.selected == 'm3':
-            board.tiles[143].mirror3()
-        if self.selected == 'm4':
-            board.tiles[143].mirror4()
-        if self.selected == 'lensX':
-            board.tiles[143].lensX()
-        if self.selected == 'lensY':
-            board.tiles[143].lensY()
-        if self.selected == 'block':
-            board.tiles[143].block()
+        if self.selected == 1:
+            board.tiles[143].mirror1(board)
+        if self.selected == 2:
+            board.tiles[143].mirror2(board)
+        if self.selected == 3:
+            board.tiles[143].mirror3(board)
+        if self.selected == 4:
+            board.tiles[143].mirror4(board)
+        if self.selected == 5:
+            board.tiles[143].lensX(board)
+        if self.selected == 6:
+            board.tiles[143].lensY(board)
+        if self.selected == 7:
+            board.tiles[143].block(board)
         self.update_images(board)
 
 
