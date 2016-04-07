@@ -4,12 +4,26 @@ from AI import*
 import sys
 import time
 
+# Initialize the GUI
 root = Tk()
 root.title("Project Lights")
 root.geometry("900x700")
-bgImage = PhotoImage(file = 'background.png')
 
-images = list()
+images = list()             # This list hold all the images which can ve placed on tiles.
+
+''' The following lines are responsible for loading variables with
+    their respective images.
+'''
+bgImage = PhotoImage(file = 'background.png')
+RedWin1 = PhotoImage(file = 'RedWin1.png')
+RedWin2 = PhotoImage(file = 'RedWin2.png')
+RedWin3 = PhotoImage(file = 'RedWin3.png')
+BlueWin1 = PhotoImage(file = 'BlueWin1.png')
+BlueWin2 = PhotoImage(file = 'BlueWin2.png')
+BlueWin3 = PhotoImage(file = 'BlueWin3.png')
+TieGame1 = PhotoImage(file = 'TieGame1.png')
+TieGame2 = PhotoImage(file = 'TieGame2.png')
+TieGame3 = PhotoImage(file = 'TieGame3.png')
 RedTurn = PhotoImage(file = 'RedTurn.png')
 BlueTurn = PhotoImage(file = 'BlueTurn.png')
 titlescreen = PhotoImage(file = 'TitleScreen.png')
@@ -114,6 +128,10 @@ R45R90R135 = PhotoImage(file = 'R45R90R135.png')
 R45R135 = PhotoImage(file = 'R45R135.png')
 R0B45B90 = PhotoImage(file = 'R0B45B90.png')
 
+''' Adds each of the images to the images list to be used later.
+    Because they are appended to the list, we use them by obtaining
+    the corresponding index.
+'''
 images.append(bg)               #0
 images.append(LaserOne)         #1
 images.append(LaserTwo)         #2
@@ -214,9 +232,6 @@ images.append(R45R135) 	        #96
 images.append(R0B45B90)         #97
 
 class Application(Frame):
-    def closeWindow():
-        exit()
-
     def __init__(self, master):
         """ Initialize the Frame """
         Frame.__init__(self,master)
@@ -389,6 +404,15 @@ class Application(Frame):
         self.buttonL10 = Button(master, image = bg, relief = SUNKEN, bd = 0)
         self.buttonL11 = Button(master, image = bg, relief = SUNKEN, bd = 0)
         self.buttonL12 = Button(master, image = bg, relief = SUNKEN, bd = 0)
+        self.RW1Lbl = Label(master, image = RedWin1)
+        self.RW2Lbl = Label(master, image = RedWin2)
+        self.RW3Lbl = Label(master, image = RedWin3)
+        self.BW1Lbl = Label(master, image = BlueWin1)
+        self.BW2Lbl = Label(master, image = BlueWin2)
+        self.BW3Lbl = Label(master, image = BlueWin3)
+        self.TG1Lbl = Label(master, image = TieGame1)
+        self.TG2Lbl = Label(master, image = TieGame2)
+        self.TG3Lbl = Label(master, image = TieGame3)
 
 
     def singleMode(self):
@@ -3226,16 +3250,34 @@ class Application(Frame):
 
     def redwins(self):
         print('Red Wins')
-        time.sleep(4)
-        exit()
+        self.RW1Lbl.place(x = 0, y = 0)
     def bluewins(self):
         print('Blue Wins')
-        time.sleep(4)
-        exit()
+        self.BW1Lbl.place(x = 0, y = 0)
     def tie(self):
+        self.update()
+        self.after(1500, self.TG1Lbl.place(x = 0, y = 0))
         print('Tie Game')
-        time.sleep(4)
+        for i in range(30):
+            self.after(20, self.TG1())
+            self.update()
+            self.after(20, self.TG2())
+            self.update()
+            self.after(20, self.TG3())
+            self.update()
         exit()
+
+    def TG1(self):
+        self.TG1Lbl['image'] = TieGame1
+    def TG2(self):
+        self.TG1Lbl['image'] = TieGame2
+    def TG3(self):
+        self.TG1Lbl['image'] = TieGame3
+
+        # self.TG1Lbl.place(x = 0, y = 0)
+
+
+
 
 
 board = GameBoard()
