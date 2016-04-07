@@ -11,7 +11,8 @@ root.geometry("900x700")
 
 images = list()             # This list hold all the images which can ve placed on tiles.
 
-''' The following lines are responsible for loading variables with
+'''
+    The following lines are responsible for loading variables with
     their respective images.
 '''
 bgImage = PhotoImage(file = 'background.png')
@@ -128,7 +129,8 @@ R45R90R135 = PhotoImage(file = 'R45R90R135.png')
 R45R135 = PhotoImage(file = 'R45R135.png')
 R0B45B90 = PhotoImage(file = 'R0B45B90.png')
 
-''' Adds each of the images to the images list to be used later.
+'''
+    Adds each of the images to the images list to be used later.
     Because they are appended to the list, we use them by obtaining
     the corresponding index.
 '''
@@ -238,7 +240,7 @@ class Application(Frame):
 
         bgLabel = Label(root, image = bgImage)
         bgLabel.pack()
-        self.buttons = list()
+        self.buttons = list()               # This list will hold on to all the buttons that are used
         self.selected = None
 
         tsLabel = Label(root, image = titlescreen)
@@ -251,193 +253,200 @@ class Application(Frame):
         self.singlePlayerButton['command'] = self.singleMode
         self.twoPlayerButton['command'] = self.multiMode
 
-        self.mirror1Button = Button(master, image = Mirror1)
-        self.mirror2Button = Button(master, image = Mirror2)
-        self.mirror3Button = Button(master, image = Mirror3)
-        self.mirror4Button = Button(master, image = Mirror4)
-        self.lensXButton = Button(master, image = LensX)
-        self.lensYButton = Button(master, image = LensY)
-        self.blockButton = Button(master, image = block)
-        self.currentPlayerButton = Label(master, image = RedTurn)
+        '''
+            This block is responsible for buttons used to select which item to place
+            on the main board
+        '''
+        self.mirror1Button = Button(master, image = Mirror1, command = self.mirror1)
+        self.mirror2Button = Button(master, image = Mirror2, command = self.mirror2)
+        self.mirror3Button = Button(master, image = Mirror3, command = self.mirror3)
+        self.mirror4Button = Button(master, image = Mirror4, command = self.mirror4)
+        self.lensXButton = Button(master, image = LensX, command = self.lensX)
+        self.lensYButton = Button(master, image = LensY, command = self.lensY)
+        self.blockButton = Button(master, image = block, command = self.block)
 
-        self.buttonA1 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonA2 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonA3 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonA4 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonA5 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonA6 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonA7 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonA8 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonA9 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonA10 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonA11 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonA12 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonB1 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonB2 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonB3 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonB4 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonB5 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonB6 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonB7 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonB8 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonB9 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonB10 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonB11 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonB12 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonC1 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonC2 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonC3 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonC4 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonC5 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonC6 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonC7 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonC8 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonC9 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonC10 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonC11 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonC12 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonD1 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonD2 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonD3 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonD4 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonD5 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonD6 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonD7 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonD8 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonD9 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonD10 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonD11 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonD12 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonE1 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonE2 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonE3 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonE4 = Button(master, image = LaserOne, relief = SUNKEN, bd = 0)
-        self.buttonE5 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonE6 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonE7 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonE8 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonE9 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonE10 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonE11 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonE12 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonF1 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonF2 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonF3 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonF4 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonF5 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonF6 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonF7 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonF8 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonF9 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonF10 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonF11 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonF12 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonG1 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonG2 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonG3 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonG4 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonG5 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonG6 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonG7 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonG8 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonG9 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonG10 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonG11 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonG12 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonH1 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonH2 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonH3 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonH4 = Button(master, image = LaserTwo, relief = SUNKEN, bd = 0)
-        self.buttonH5 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonH6 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonH7 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonH8 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonH9 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonH10 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonH11 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonH12 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonI1 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonI2 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonI3 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonI4 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonI5 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonI6 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonI7 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonI8 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonI9 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonI10 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonI11 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonI12 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonJ1 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonJ2 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonJ3 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonJ4 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonJ5 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonJ6 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonJ7 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonJ8 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonJ9 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonJ10 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonJ11 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonJ12 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonK1 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonK2 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonK3 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonK4 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonK5 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonK6 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonK7 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonK8 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonK9 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonK10 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonK11 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonK12 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonL1 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonL2 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonL3 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonL4 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonL5 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonL6 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonL7 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonL8 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonL9 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonL10 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonL11 = Button(master, image = bg, relief = SUNKEN, bd = 0)
-        self.buttonL12 = Button(master, image = bg, relief = SUNKEN, bd = 0)
+        self.turnIndicator = Label(master, image = RedTurn) # Initialize current player label
+
+        '''
+            The following section of code initializes the buttons which are the tiles
+            of the board itself. They will by default have a standard background image.
+            They will have the appearance of being pressed, and have no border.
+        '''
+        self.buttonA1 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickA1)
+        self.buttonA2 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickA2)
+        self.buttonA3 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickA3)
+        self.buttonA4 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickA4)
+        self.buttonA5 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickA5)
+        self.buttonA6 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickA6)
+        self.buttonA7 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickA7)
+        self.buttonA8 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickA8)
+        self.buttonA9 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickA9)
+        self.buttonA10 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickA10)
+        self.buttonA11 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickA11)
+        self.buttonA12 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickA12)
+        self.buttonB1 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickB1)
+        self.buttonB2 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickB2)
+        self.buttonB3 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickB3)
+        self.buttonB4 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickB4)
+        self.buttonB5 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickB5)
+        self.buttonB6 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickB6)
+        self.buttonB7 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickB7)
+        self.buttonB8 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickB8)
+        self.buttonB9 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickB9)
+        self.buttonB10 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickB10)
+        self.buttonB11 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickB11)
+        self.buttonB12 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickB12)
+        self.buttonC1 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickC1)
+        self.buttonC2 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickC2)
+        self.buttonC3 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickC3)
+        self.buttonC4 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickC4)
+        self.buttonC5 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickC5)
+        self.buttonC6 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickC6)
+        self.buttonC7 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickC7)
+        self.buttonC8 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickC8)
+        self.buttonC9 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickC9)
+        self.buttonC10 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickC10)
+        self.buttonC11 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickC11)
+        self.buttonC12 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickC12)
+        self.buttonD1 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickD1)
+        self.buttonD2 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickD2)
+        self.buttonD3 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickD3)
+        self.buttonD4 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickD4)
+        self.buttonD5 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickD5)
+        self.buttonD6 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickD6)
+        self.buttonD7 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickD7)
+        self.buttonD8 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickD8)
+        self.buttonD9 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickD9)
+        self.buttonD10 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickD10)
+        self.buttonD11 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickD11)
+        self.buttonD12 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickD12)
+        self.buttonE1 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickE1)
+        self.buttonE2 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickE2)
+        self.buttonE3 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickE3)
+        self.buttonE4 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickE4)
+        self.buttonE5 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickE5)
+        self.buttonE6 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickE6)
+        self.buttonE7 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickE7)
+        self.buttonE8 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickE8)
+        self.buttonE9 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickE9)
+        self.buttonE10 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickE10)
+        self.buttonE11 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickE11)
+        self.buttonE12 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickE12)
+        self.buttonF1 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickF1)
+        self.buttonF2 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickF2)
+        self.buttonF3 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickF3)
+        self.buttonF4 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickF4)
+        self.buttonF5 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickF5)
+        self.buttonF6 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickF6)
+        self.buttonF7 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickF7)
+        self.buttonF8 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickF8)
+        self.buttonF9 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickF9)
+        self.buttonF10 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickF10)
+        self.buttonF11 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickF11)
+        self.buttonF12 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickF12)
+        self.buttonG1 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickG1)
+        self.buttonG2 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickG2)
+        self.buttonG3 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickG3)
+        self.buttonG4 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickG4)
+        self.buttonG5 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickG5)
+        self.buttonG6 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickG6)
+        self.buttonG7 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickG7)
+        self.buttonG8 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickG8)
+        self.buttonG9 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickG9)
+        self.buttonG10 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickG10)
+        self.buttonG11 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickG11)
+        self.buttonG12 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickG12)
+        self.buttonH1 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickH1)
+        self.buttonH2 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickH2)
+        self.buttonH3 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickH3)
+        self.buttonH4 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickH4)
+        self.buttonH5 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickH5)
+        self.buttonH6 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickH6)
+        self.buttonH7 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickH7)
+        self.buttonH8 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickH8)
+        self.buttonH9 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickH9)
+        self.buttonH10 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickH10)
+        self.buttonH11 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickH11)
+        self.buttonH12 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickH12)
+        self.buttonI1 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickI1)
+        self.buttonI2 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickI2)
+        self.buttonI3 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickI3)
+        self.buttonI4 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickI4)
+        self.buttonI5 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickI5)
+        self.buttonI6 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickI6)
+        self.buttonI7 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickI7)
+        self.buttonI8 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickI8)
+        self.buttonI9 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickI9)
+        self.buttonI10 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickI10)
+        self.buttonI11 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickI11)
+        self.buttonI12 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickI12)
+        self.buttonJ1 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickJ1)
+        self.buttonJ2 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickJ2)
+        self.buttonJ3 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickJ3)
+        self.buttonJ4 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickJ4)
+        self.buttonJ5 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickJ5)
+        self.buttonJ6 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickJ6)
+        self.buttonJ7 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickJ7)
+        self.buttonJ8 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickJ8)
+        self.buttonJ9 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickJ9)
+        self.buttonJ10 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickJ10)
+        self.buttonJ11 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickJ11)
+        self.buttonJ12 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickJ12)
+        self.buttonK1 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickK1)
+        self.buttonK2 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickK2)
+        self.buttonK3 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickK3)
+        self.buttonK4 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickK4)
+        self.buttonK5 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickK5)
+        self.buttonK6 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickK6)
+        self.buttonK7 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickK7)
+        self.buttonK8 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickK8)
+        self.buttonK9 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickK9)
+        self.buttonK10 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickK10)
+        self.buttonK11 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickK11)
+        self.buttonK12 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickK12)
+        self.buttonL1 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickL1)
+        self.buttonL2 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickL2)
+        self.buttonL3 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickL3)
+        self.buttonL4 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickL4)
+        self.buttonL5 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickL5)
+        self.buttonL6 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickL6)
+        self.buttonL7 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickL7)
+        self.buttonL8 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickL8)
+        self.buttonL9 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickL9)
+        self.buttonL10 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickL10)
+        self.buttonL11 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickL11)
+        self.buttonL12 = Button(master, image = bg, relief = SUNKEN, bd = 0, command = self.clickL12)
+
+
+        ''' These labels are to be used for the end-game screen'''
         self.RW1Lbl = Label(master, image = RedWin1)
-        self.RW2Lbl = Label(master, image = RedWin2)
-        self.RW3Lbl = Label(master, image = RedWin3)
         self.BW1Lbl = Label(master, image = BlueWin1)
-        self.BW2Lbl = Label(master, image = BlueWin2)
-        self.BW3Lbl = Label(master, image = BlueWin3)
         self.TG1Lbl = Label(master, image = TieGame1)
-        self.TG2Lbl = Label(master, image = TieGame2)
-        self.TG3Lbl = Label(master, image = TieGame3)
 
-
+    ''' If the single player button is pressed '''
     def singleMode(self):
         self.AI = True
-        print('single')
         self.singlePlayerButton.destroy()
         self.twoPlayerButton.destroy()
         self.startGame()
 
+    ''' If the multiplayer button is pressed '''
     def multiMode(self):
         self.AI = False
-        print('multi')
         self.twoPlayerButton.destroy()
         self.singlePlayerButton.destroy()
         self.startGame()
 
 
-
+    ''' Starts the main game '''
     def startGame(self):
 
-        self.bgLabel.place(x = 0, y = 0)
-        self.buttons = list()
-        self.selected = None
+        self.bgLabel.place(x = 0, y = 0)    # The main background label replaces the titlescreen
+        self.selected = None    # This variable hold a value corresponding with the current item selected
 
-        self.currentPlayerButton.place(x = 720, y = 430, width = 150, height = 250)
+        self.turnIndicator.place(x = 720, y = 430, width = 150, height = 250)
+
+        ''' Place all the selection buttons '''
         self.mirror1Button.place(x = 820, y = 150, width = 50, height = 50)
         self.mirror2Button.place(x = 720, y = 150, width = 50, height = 50)
         self.mirror3Button.place(x = 720, y = 50, width = 50, height = 50)
@@ -445,7 +454,8 @@ class Application(Frame):
         self.lensXButton.place(x = 720, y = 250, width = 50, height = 50)
         self.lensYButton.place(x = 820, y = 250, width = 50, height = 50)
         self.blockButton.place(x = 720, y = 350, width = 50, height = 50)
-        
+
+        ''' Places all the 'tiles' on the board'''
         self.buttonA1.place(x = 50, y = 50, width = 50, height = 50)
         self.buttonA2.place(x = 100, y = 50, width = 50, height = 50)
         self.buttonA3.place(x = 150, y = 50, width = 50, height = 50)
@@ -591,6 +601,7 @@ class Application(Frame):
         self.buttonL11.place(x = 550, y = 600, width = 50, height = 50)
         self.buttonL12.place(x = 600, y = 600, width = 50, height = 50)
 
+        '''This will add all the tiles into the buttons list'''
         self.buttons.append(self.buttonA1)
         self.buttons.append(self.buttonA2)
         self.buttons.append(self.buttonA3)
@@ -736,162 +747,7 @@ class Application(Frame):
         self.buttons.append(self.buttonL11)
         self.buttons.append(self.buttonL12)
 
-
-        self.mirror1Button['command'] = self.mirror1
-        self.mirror2Button['command'] = self.mirror2
-        self.mirror3Button['command'] = self.mirror3
-        self.mirror4Button['command'] = self.mirror4
-        self.lensXButton['command'] = self.lensX
-        self.lensYButton['command'] = self.lensY
-        self.blockButton['command'] = self.block
-
-        self.buttonA1['command'] = self.clickA1
-        self.buttonA2['command'] = self.clickA2
-        self.buttonA3['command'] = self.clickA3
-        self.buttonA4['command'] = self.clickA4
-        self.buttonA5['command'] = self.clickA5
-        self.buttonA6['command'] = self.clickA6
-        self.buttonA7['command'] = self.clickA7
-        self.buttonA8['command'] = self.clickA8
-        self.buttonA9['command'] = self.clickA9
-        self.buttonA10['command'] = self.clickA10
-        self.buttonA11['command'] = self.clickA11
-        self.buttonA12['command'] = self.clickA12
-        self.buttonB1['command'] = self.clickB1
-        self.buttonB2['command'] = self.clickB2
-        self.buttonB3['command'] = self.clickB3
-        self.buttonB4['command'] = self.clickB4
-        self.buttonB5['command'] = self.clickB5
-        self.buttonB6['command'] = self.clickB6
-        self.buttonB7['command'] = self.clickB7
-        self.buttonB8['command'] = self.clickB8
-        self.buttonB9['command'] = self.clickB9
-        self.buttonB10['command'] = self.clickB10
-        self.buttonB11['command'] = self.clickB11
-        self.buttonB12['command'] = self.clickB12
-        self.buttonC1['command'] = self.clickC1
-        self.buttonC2['command'] = self.clickC2
-        self.buttonC3['command'] = self.clickC3
-        self.buttonC4['command'] = self.clickC4
-        self.buttonC5['command'] = self.clickC5
-        self.buttonC6['command'] = self.clickC6
-        self.buttonC7['command'] = self.clickC7
-        self.buttonC8['command'] = self.clickC8
-        self.buttonC9['command'] = self.clickC9
-        self.buttonC10['command'] = self.clickC10
-        self.buttonC11['command'] = self.clickC11
-        self.buttonC12['command'] = self.clickC12
-        self.buttonD1['command'] = self.clickD1
-        self.buttonD2['command'] = self.clickD2
-        self.buttonD3['command'] = self.clickD3
-        self.buttonD4['command'] = self.clickD4
-        self.buttonD5['command'] = self.clickD5
-        self.buttonD6['command'] = self.clickD6
-        self.buttonD7['command'] = self.clickD7
-        self.buttonD8['command'] = self.clickD8
-        self.buttonD9['command'] = self.clickD9
-        self.buttonD10['command'] = self.clickD10
-        self.buttonD11['command'] = self.clickD11
-        self.buttonD12['command'] = self.clickD12
-        self.buttonE1['command'] = self.clickE1
-        self.buttonE2['command'] = self.clickE2
-        self.buttonE3['command'] = self.clickE3
-        self.buttonE4['command'] = self.clickE4
-        self.buttonE5['command'] = self.clickE5
-        self.buttonE6['command'] = self.clickE6
-        self.buttonE7['command'] = self.clickE7
-        self.buttonE8['command'] = self.clickE8
-        self.buttonE9['command'] = self.clickE9
-        self.buttonE10['command'] = self.clickE10
-        self.buttonE11['command'] = self.clickE11
-        self.buttonE12['command'] = self.clickE12
-        self.buttonF1['command'] = self.clickF1
-        self.buttonF2['command'] = self.clickF2
-        self.buttonF3['command'] = self.clickF3
-        self.buttonF4['command'] = self.clickF4
-        self.buttonF5['command'] = self.clickF5
-        self.buttonF6['command'] = self.clickF6
-        self.buttonF7['command'] = self.clickF7
-        self.buttonF8['command'] = self.clickF8
-        self.buttonF9['command'] = self.clickF9
-        self.buttonF10['command'] = self.clickF10
-        self.buttonF11['command'] = self.clickF11
-        self.buttonF12['command'] = self.clickF12
-        self.buttonG1['command'] = self.clickG1
-        self.buttonG2['command'] = self.clickG2
-        self.buttonG3['command'] = self.clickG3
-        self.buttonG4['command'] = self.clickG4
-        self.buttonG5['command'] = self.clickG5
-        self.buttonG6['command'] = self.clickG6
-        self.buttonG7['command'] = self.clickG7
-        self.buttonG8['command'] = self.clickG8
-        self.buttonG9['command'] = self.clickG9
-        self.buttonG10['command'] = self.clickG10
-        self.buttonG11['command'] = self.clickG11
-        self.buttonG12['command'] = self.clickG12
-        self.buttonH1['command'] = self.clickH1
-        self.buttonH2['command'] = self.clickH2
-        self.buttonH3['command'] = self.clickH3
-        self.buttonH4['command'] = self.clickH4
-        self.buttonH5['command'] = self.clickH5
-        self.buttonH6['command'] = self.clickH6
-        self.buttonH7['command'] = self.clickH7
-        self.buttonH8['command'] = self.clickH8
-        self.buttonH9['command'] = self.clickH9
-        self.buttonH10['command'] = self.clickH10
-        self.buttonH11['command'] = self.clickH11
-        self.buttonH12['command'] = self.clickH12
-        self.buttonI1['command'] = self.clickI1
-        self.buttonI2['command'] = self.clickI2
-        self.buttonI3['command'] = self.clickI3
-        self.buttonI4['command'] = self.clickI4
-        self.buttonI5['command'] = self.clickI5
-        self.buttonI6['command'] = self.clickI6
-        self.buttonI7['command'] = self.clickI7
-        self.buttonI8['command'] = self.clickI8
-        self.buttonI9['command'] = self.clickI9
-        self.buttonI10['command'] = self.clickI10
-        self.buttonI11['command'] = self.clickI11
-        self.buttonI12['command'] = self.clickI12
-        self.buttonJ1['command'] = self.clickJ1
-        self.buttonJ2['command'] = self.clickJ2
-        self.buttonJ3['command'] = self.clickJ3
-        self.buttonJ4['command'] = self.clickJ4
-        self.buttonJ5['command'] = self.clickJ5
-        self.buttonJ6['command'] = self.clickJ6
-        self.buttonJ7['command'] = self.clickJ7
-        self.buttonJ8['command'] = self.clickJ8
-        self.buttonJ9['command'] = self.clickJ9
-        self.buttonJ10['command'] = self.clickJ10
-        self.buttonJ11['command'] = self.clickJ11
-        self.buttonJ12['command'] = self.clickJ12
-        self.buttonK1['command'] = self.clickK1
-        self.buttonK2['command'] = self.clickK2
-        self.buttonK3['command'] = self.clickK3
-        self.buttonK4['command'] = self.clickK4
-        self.buttonK5['command'] = self.clickK5
-        self.buttonK6['command'] = self.clickK6
-        self.buttonK7['command'] = self.clickK7
-        self.buttonK8['command'] = self.clickK8
-        self.buttonK9['command'] = self.clickK9
-        self.buttonK10['command'] = self.clickK10
-        self.buttonK11['command'] = self.clickK11
-        self.buttonK12['command'] = self.clickK12
-        self.buttonL1['command'] = self.clickL1
-        self.buttonL2['command'] = self.clickL2
-        self.buttonL3['command'] = self.clickL3
-        self.buttonL4['command'] = self.clickL4
-        self.buttonL5['command'] = self.clickL5
-        self.buttonL6['command'] = self.clickL6
-        self.buttonL7['command'] = self.clickL7
-        self.buttonL8['command'] = self.clickL8
-        self.buttonL9['command'] = self.clickL9
-        self.buttonL10['command'] = self.clickL10
-        self.buttonL11['command'] = self.clickL11
-        self.buttonL12['command'] = self.clickL12
-
         self.update_images(board)
-
 
 
     def update_images(self, board):
@@ -903,9 +759,9 @@ class Application(Frame):
             self.buttons[atile]['image'] = images[board.tiles[atile].img]
         self.selected = None
         if board.redTurn:
-            self.currentPlayerButton['image'] = RedTurn
+            self.turnIndicator['image'] = RedTurn
         else:
-            self.currentPlayerButton['image'] = BlueTurn
+            self.turnIndicator['image'] = BlueTurn
 
         if board.tiles[87].red:
             if board.tiles[51].blue:
@@ -921,13 +777,17 @@ class Application(Frame):
                 board.tiles[atile].setimg()
                 self.buttons[atile]['image'] = images[board.tiles[atile].img]
             board.redTurn = True
-            self.currentPlayerButton['image'] = RedTurn
+            self.turnIndicator['image'] = RedTurn
         if board.tiles[51].blue:
             if board.tiles[87].red:
                 self.tie()
             else:
                 self.bluewins()
 
+    '''
+        This group of functions set a value to the selection variable depending on the
+        button that was clicked. The mirror1 will make selection equal 1,
+    '''
     def mirror1(self):
         self.selected = 1
     def mirror2(self):
@@ -943,6 +803,11 @@ class Application(Frame):
     def block(self):
         self.selected = 7
 
+    '''
+        The next set of functions deal with the event where a tile on the board is clicked.
+        When a certain tile is clicked we check what value the variable selected has. We then
+        replace that tile on the board with that corresponding selection.
+    '''
     def clickA1(self):
         if self.selected == 1:
             board.tiles[0].mirror1(board)
@@ -3248,16 +3113,40 @@ class Application(Frame):
             board.tiles[143].block(board)
         self.update_images(board)
 
+    '''
+        The following functions are responsible for displaying the correct
+        screen for an end-game situations. It begins by placing the correct label
+        on the screen after 1500ms (to allow for the final screen to be displayed).
+        The update function is to allow the screen to show the final game startGame
+        before showing the end-game screen. Once the correct label has been placed,
+        we run through a loop where the image on the label changes slightly after a
+        20ms delay creating an animating effect. After this the window will exit.
+    '''
     def redwins(self):
-        print('Red Wins')
-        self.RW1Lbl.place(x = 0, y = 0)
+        self.update()
+        self.after(1500, self.RW1Lbl.place(x = 0, y = 0))
+        for i in range(30):
+            self.after(20, self.RW1())
+            self.update()
+            self.after(20, self.RW2())
+            self.update()
+            self.after(20, self.RW3())
+            self.update()
+        exit()
     def bluewins(self):
-        print('Blue Wins')
-        self.BW1Lbl.place(x = 0, y = 0)
+        self.update()
+        self.after(1500, self.BW1Lbl.place(x = 0, y = 0))
+        for i in range(30):
+            self.after(20, self.BW1())
+            self.update()
+            self.after(20, self.BW2())
+            self.update()
+            self.after(20, self.BW3())
+            self.update()
+        exit()
     def tie(self):
         self.update()
         self.after(1500, self.TG1Lbl.place(x = 0, y = 0))
-        print('Tie Game')
         for i in range(30):
             self.after(20, self.TG1())
             self.update()
@@ -3267,13 +3156,28 @@ class Application(Frame):
             self.update()
         exit()
 
+    '''
+        These functions are responsible for changing the image on the
+        correct label for the end-game conditions.
+    '''
     def TG1(self):
         self.TG1Lbl['image'] = TieGame1
     def TG2(self):
         self.TG1Lbl['image'] = TieGame2
     def TG3(self):
         self.TG1Lbl['image'] = TieGame3
-
+    def RW1(self):
+        self.RW1Lbl['image'] = RedWin1
+    def RW2(self):
+        self.RW1Lbl['image'] = RedWin2
+    def RW3(self):
+        self.RW1Lbl['image'] = RedWin3
+    def BW1(self):
+        self.BW1Lbl['image'] = BlueWin1
+    def BW2(self):
+        self.BW1Lbl['image'] = BlueWin2
+    def BW3(self):
+        self.BW1Lbl['image'] = BlueWin3
         # self.TG1Lbl.place(x = 0, y = 0)
 
 
