@@ -2,6 +2,7 @@
 
 class GameBoard:
     def __init__(self):
+        self.redTurn = True
         self.tiles = list()
         for i in range(12):
             for j in range(12):
@@ -30,16 +31,40 @@ class GameBoard:
                 if j == 3 and i == 4:
                     for k in a.paths:
                         a.paths[k] = None
-                    a.used = True
                     a.id = -1
                     a.img = 1
                 elif j == 3 and i == 7:
                     for k in a.paths:
                         a.paths[k] = None
-                    a.used = True
                     a.id = -1
                     a.img = 2
+                if (i == 0 and j == 5) or (i == 1 and j == 3) or (i == 2 and j == 4) or (i == 11 and j == 5) or (i == 10 and j == 3) or (i == 9 and j == 4):
+                    a.block(self)
+                if i > 2 and i < 9 and j > 1 and j < 5:
+                    a.used = True
                 self.tiles.append(a)
+
+
+    def LaserRed(self):
+        for atile in range(144):
+            self.tiles[atile].red = set()
+        red = (4,3)
+        redtile = (4,4)
+        while redtile:
+            rednext = self.tiles[ redtile[0]*12 + redtile[1] ].redlaser(red)
+            red = redtile
+            redtile = rednext
+
+    def LaserBlue(self):
+        for atile in range(144):
+            self.tiles[atile].blue = set()
+        blue = (7,3)
+        bluetile = (7,4)
+        while bluetile:
+            bluenext = self.tiles[ bluetile[0]*12 + bluetile[1] ].bluelaser(blue)
+            blue = bluetile
+            bluetile = bluenext
+
 
 class Tile:
     def __init__(self):
@@ -52,8 +77,12 @@ class Tile:
         self.red = set()
         self.blue = set()
 
-    def mirror1(self):
+    def mirror1(self, board):
+        print(str((self.row, self.col)) + ' mirror1')
         if not self.used:
+            if (board.redTurn and self.blue and not self.red) or (not board.redTurn and self.red and not self.blue):
+                print('a')
+                return
             for k in self.paths:
                 self.paths[k] = None
             self.id = 1
@@ -62,9 +91,14 @@ class Tile:
                 self.paths[(self.row-1, self.col)] = (self.row, self.col-1)
                 self.paths[(self.row, self.col-1)] = (self.row-1, self.col)
             self.used = True
+            board.redTurn = not board.redTurn
 
-    def mirror2(self):
+    def mirror2(self, board):
+        print(str((self.row, self.col)) + ' mirror2')
         if not self.used:
+            if (board.redTurn and self.blue and not self.red) or (not board.redTurn and self.red and not self.blue):
+                print('a')
+                return
             for k in self.paths:
                 self.paths[k] = None
             self.id = 2
@@ -73,9 +107,14 @@ class Tile:
                 self.paths[(self.row-1, self.col)] = (self.row, self.col+1)
                 self.paths[(self.row, self.col+1)] = (self.row-1, self.col)
             self.used = True
+            board.redTurn = not board.redTurn
 
-    def mirror3(self):
+    def mirror3(self, board):
+        print(str((self.row, self.col)) + ' mirror3')
         if not self.used:
+            if (board.redTurn and self.blue and not self.red) or (not board.redTurn and self.red and not self.blue):
+                print('a')
+                return
             for k in self.paths:
                 self.paths[k] = None
             self.id = 3
@@ -84,9 +123,14 @@ class Tile:
                 self.paths[(self.row+1, self.col)] = (self.row, self.col+1)
                 self.paths[(self.row, self.col+1)] = (self.row+1, self.col)
             self.used = True
+            board.redTurn = not board.redTurn
 
-    def mirror4(self):
+    def mirror4(self, board):
+        print(str((self.row, self.col)) + ' mirror4')
         if not self.used:
+            if (board.redTurn and self.blue and not self.red) or (not board.redTurn and self.red and not self.blue):
+                print('a')
+                return
             for k in self.paths:
                 self.paths[k] = None
             self.id = 4
@@ -95,9 +139,14 @@ class Tile:
                 self.paths[(self.row+1, self.col)] = (self.row, self.col-1)
                 self.paths[(self.row, self.col-1)] = (self.row+1, self.col)
             self.used = True
+            board.redTurn = not board.redTurn
 
-    def lensX(self):
+    def lensX(self, board):
+        print(str((self.row, self.col)) + ' lensX')
         if not self.used:
+            if (board.redTurn and self.blue and not self.red) or (not board.redTurn and self.red and not self.blue):
+                print('a')
+                return
             for k in self.paths:
                 self.paths[k] = None
             self.id = 5
@@ -115,9 +164,14 @@ class Tile:
                 self.paths[(self.row+1, self.col)] = (self.row-1, self.col+1)
                 self.paths[(self.row+1, self.col+1)] = (self.row-1, self.col)
             self.used = True
+            board.redTurn = not board.redTurn
 
-    def lensY(self):
+    def lensY(self, board):
+        print(str((self.row, self.col)) + ' lensY')
         if not self.used:
+            if (board.redTurn and self.blue and not self.red) or (not board.redTurn and self.red and not self.blue):
+                print('a')
+                return
             for k in self.paths:
                 self.paths[k] = None
             self.id = 6
@@ -135,29 +189,28 @@ class Tile:
                 self.paths[(self.row-1, self.col)] = (self.row+1, self.col+1)
                 self.paths[(self.row-1, self.col+1)] = (self.row+1, self.col)
             self.used = True
+            board.redTurn = not board.redTurn
 
-    def block(self):
+    def block(self, board):
         if not self.used:
+            if (board.redTurn and self.blue and not self.red) or (not board.redTurn and self.red and not self.blue):
+                return
             for k in self.paths:
                 self.paths[k] = None
             self.id = -1
             self.img = 9
             self.used = True
+            board.redTurn = not board.redTurn
 
     def redlaser(self, inpair):
         out = self.paths[inpair]
         self.red.add(inpair)
-        print(self.red)
         return out
-
 
     def bluelaser(self, inpair):
         out = self.paths[inpair]
         self.blue.add(inpair)
-        print(self.blue)
         return out
-
-
 
     def setimg(self):
         if self.id == 0:
@@ -349,7 +402,7 @@ class Tile:
                         else:
                             self.img = 61
                     elif (self.row-1, self.col) in self.blue or (self.row+1, self.col) in self.blue:
-                        if (self.row+1, self.col+1) in self.red or (self.row+1, self.col-1) in self.red:
+                        if (self.row+1, self.col+1) in self.red or (self.row-1, self.col-1) in self.red:
                             self.img = 56
                         elif (self.row+1, self.col+1) in self.blue or (self.row-1, self.col-1) in self.blue:
                             self.img = 55
