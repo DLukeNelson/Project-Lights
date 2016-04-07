@@ -445,7 +445,7 @@ class Application(Frame):
         self.lensXButton.place(x = 720, y = 250, width = 50, height = 50)
         self.lensYButton.place(x = 820, y = 250, width = 50, height = 50)
         self.blockButton.place(x = 720, y = 350, width = 50, height = 50)
-
+        
         self.buttonA1.place(x = 50, y = 50, width = 50, height = 50)
         self.buttonA2.place(x = 100, y = 50, width = 50, height = 50)
         self.buttonA3.place(x = 150, y = 50, width = 50, height = 50)
