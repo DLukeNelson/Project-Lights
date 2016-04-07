@@ -405,14 +405,8 @@ class Application(Frame):
         self.buttonL11 = Button(master, image = bg, relief = SUNKEN, bd = 0)
         self.buttonL12 = Button(master, image = bg, relief = SUNKEN, bd = 0)
         self.RW1Lbl = Label(master, image = RedWin1)
-        self.RW2Lbl = Label(master, image = RedWin2)
-        self.RW3Lbl = Label(master, image = RedWin3)
         self.BW1Lbl = Label(master, image = BlueWin1)
-        self.BW2Lbl = Label(master, image = BlueWin2)
-        self.BW3Lbl = Label(master, image = BlueWin3)
         self.TG1Lbl = Label(master, image = TieGame1)
-        self.TG2Lbl = Label(master, image = TieGame2)
-        self.TG3Lbl = Label(master, image = TieGame3)
 
 
     def singleMode(self):
@@ -445,7 +439,7 @@ class Application(Frame):
         self.lensXButton.place(x = 720, y = 250, width = 50, height = 50)
         self.lensYButton.place(x = 820, y = 250, width = 50, height = 50)
         self.blockButton.place(x = 720, y = 350, width = 50, height = 50)
-        
+
         self.buttonA1.place(x = 50, y = 50, width = 50, height = 50)
         self.buttonA2.place(x = 100, y = 50, width = 50, height = 50)
         self.buttonA3.place(x = 150, y = 50, width = 50, height = 50)
@@ -3249,15 +3243,30 @@ class Application(Frame):
         self.update_images(board)
 
     def redwins(self):
-        print('Red Wins')
-        self.RW1Lbl.place(x = 0, y = 0)
+        self.update()
+        self.after(1500, self.RW1Lbl.place(x = 0, y = 0))
+        for i in range(30):
+            self.after(20, self.RW1())
+            self.update()
+            self.after(20, self.RW2())
+            self.update()
+            self.after(20, self.RW3())
+            self.update()
+        exit()
     def bluewins(self):
-        print('Blue Wins')
-        self.BW1Lbl.place(x = 0, y = 0)
+        self.update()
+        self.after(1500, self.BW1Lbl.place(x = 0, y = 0))
+        for i in range(30):
+            self.after(20, self.BW1())
+            self.update()
+            self.after(20, self.BW2())
+            self.update()
+            self.after(20, self.BW3())
+            self.update()
+        exit()
     def tie(self):
         self.update()
         self.after(1500, self.TG1Lbl.place(x = 0, y = 0))
-        print('Tie Game')
         for i in range(30):
             self.after(20, self.TG1())
             self.update()
@@ -3273,7 +3282,18 @@ class Application(Frame):
         self.TG1Lbl['image'] = TieGame2
     def TG3(self):
         self.TG1Lbl['image'] = TieGame3
-
+    def RW1(self):
+        self.RW1Lbl['image'] = RedWin1
+    def RW2(self):
+        self.RW1Lbl['image'] = RedWin2
+    def RW3(self):
+        self.RW1Lbl['image'] = RedWin3
+    def BW1(self):
+        self.BW1Lbl['image'] = BlueWin1
+    def BW2(self):
+        self.BW1Lbl['image'] = BlueWin2
+    def BW3(self):
+        self.BW1Lbl['image'] = BlueWin3
         # self.TG1Lbl.place(x = 0, y = 0)
 
 
