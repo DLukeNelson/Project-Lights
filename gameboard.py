@@ -78,10 +78,8 @@ class Tile:
         self.blue = set()
 
     def mirror1(self, board):
-        print(str((self.row, self.col)) + ' mirror1')
         if not self.used:
             if (board.redTurn and self.blue and not self.red) or (not board.redTurn and self.red and not self.blue):
-                print('a')
                 return
             for k in self.paths:
                 self.paths[k] = None
@@ -94,10 +92,8 @@ class Tile:
             board.redTurn = not board.redTurn
 
     def mirror2(self, board):
-        print(str((self.row, self.col)) + ' mirror2')
         if not self.used:
             if (board.redTurn and self.blue and not self.red) or (not board.redTurn and self.red and not self.blue):
-                print('a')
                 return
             for k in self.paths:
                 self.paths[k] = None
@@ -110,10 +106,8 @@ class Tile:
             board.redTurn = not board.redTurn
 
     def mirror3(self, board):
-        print(str((self.row, self.col)) + ' mirror3')
         if not self.used:
             if (board.redTurn and self.blue and not self.red) or (not board.redTurn and self.red and not self.blue):
-                print('a')
                 return
             for k in self.paths:
                 self.paths[k] = None
@@ -126,10 +120,8 @@ class Tile:
             board.redTurn = not board.redTurn
 
     def mirror4(self, board):
-        print(str((self.row, self.col)) + ' mirror4')
         if not self.used:
             if (board.redTurn and self.blue and not self.red) or (not board.redTurn and self.red and not self.blue):
-                print('a')
                 return
             for k in self.paths:
                 self.paths[k] = None
@@ -142,10 +134,8 @@ class Tile:
             board.redTurn = not board.redTurn
 
     def lensX(self, board):
-        print(str((self.row, self.col)) + ' lensX')
         if not self.used:
             if (board.redTurn and self.blue and not self.red) or (not board.redTurn and self.red and not self.blue):
-                print('a')
                 return
             for k in self.paths:
                 self.paths[k] = None
@@ -167,10 +157,8 @@ class Tile:
             board.redTurn = not board.redTurn
 
     def lensY(self, board):
-        print(str((self.row, self.col)) + ' lensY')
         if not self.used:
             if (board.redTurn and self.blue and not self.red) or (not board.redTurn and self.red and not self.blue):
-                print('a')
                 return
             for k in self.paths:
                 self.paths[k] = None

@@ -145,11 +145,6 @@ score = {(0, 0):38,
 (11, 10):1,
 (11, 11):0}
 
-
-
-
-
-
 def blueAI(board):
     tileset = set()
     for atile in board.tiles:
@@ -166,7 +161,6 @@ def blueAI(board):
         moves.add( atile.mirror4 )
         moves.add( atile.lensX )
         moves.add( atile.lensY )
-        print('New Set')
 
         for move in moves:
             if bestmove == None:
@@ -201,22 +195,17 @@ def blueAI(board):
             board.LaserRed()
             board.LaserBlue()
             board.redTurn = False
-    print('Best Move is:')
-    print(bestmove)
     bestmove[1](board)
-
-
-
-
-
 
 def evaluation(board, move):
     move(board)
     board.LaserRed()
     board.LaserBlue()
+    # Check if this move would cause a loss (or a tie) and return 0.
+    if board.tiles[87].red:
+        return 0
     points = 0
     for atile in board.tiles:
         if atile.blue:
             points += score[(atile.row, atile.col)]
-    print(points)
     return points
