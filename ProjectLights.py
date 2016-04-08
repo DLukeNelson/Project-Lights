@@ -240,21 +240,19 @@ class Application(Frame):
 
         bgLabel = Label(root, image = bgImage)
         bgLabel.pack()
-        self.buttons = list()               # This list will hold on to all the buttons that are used
-        self.selected = None
+        self.buttons = list()               # This list will hold on to all the buttons that are used as tiles
+        self.selected = None                # Will keep track of selected item
 
-        tsLabel = Label(root, image = titlescreen)
+        tsLabel = Label(root, image = titlescreen)      # Creates and places the titlescreen
         tsLabel.place(x = 0, y = 0)
         self.bgLabel = Label(master, image = bgImage)
-        self.singlePlayerButton = Button(master, image = SPImage)
-        self.twoPlayerButton = Button(master, image = MPImage)
+        self.singlePlayerButton = Button(master, image = SPImage, command = self.singleMode)
+        self.twoPlayerButton = Button(master, image = MPImage, command = self.multiMode)
         self.singlePlayerButton.place(x = 600, y = 450, width = 250, height = 60)
         self.twoPlayerButton.place(x = 600, y = 550, width = 250, height = 60)
-        self.singlePlayerButton['command'] = self.singleMode
-        self.twoPlayerButton['command'] = self.multiMode
 
         '''
-            This block is responsible for buttons used to select which item to place
+            This block is responsible for buttons used to select an item to place
             on the main board
         '''
         self.mirror1Button = Button(master, image = Mirror1, command = self.mirror1)
@@ -442,8 +440,6 @@ class Application(Frame):
     def startGame(self):
 
         self.bgLabel.place(x = 0, y = 0)    # The main background label replaces the titlescreen
-        self.selected = None    # This variable hold a value corresponding with the current item selected
-
         self.turnIndicator.place(x = 720, y = 430, width = 150, height = 250)
 
         ''' Place all the selection buttons '''
@@ -751,8 +747,7 @@ class Application(Frame):
 
 
     def update_images(self, board):
-        board.LaserRed()
-        board.LaserBlue()
+        board.Lasers()
 
         for atile in range(144):
             board.tiles[atile].setimg()
@@ -763,26 +758,16 @@ class Application(Frame):
         else:
             self.turnIndicator['image'] = BlueTurn
 
-        if board.tiles[87].red:
-            if board.tiles[51].blue:
-                self.tie()
-            else:
-                self.redwins()
+        self.checkVictory(board)
 
         if self.AI and not board.redTurn:
             blueAI(board)
-            board.LaserRed()
-            board.LaserBlue()
             for atile in range(144):
                 board.tiles[atile].setimg()
                 self.buttons[atile]['image'] = images[board.tiles[atile].img]
             board.redTurn = True
             self.turnIndicator['image'] = RedTurn
-        if board.tiles[51].blue:
-            if board.tiles[87].red:
-                self.tie()
-            else:
-                self.bluewins()
+            self.checkVictory(board)
 
     '''
         This group of functions set a value to the selection variable depending on the
@@ -3112,6 +3097,18 @@ class Application(Frame):
         if self.selected == 7:
             board.tiles[143].block(board)
         self.update_images(board)
+
+    def checkVictory(self, board):
+        if board.tiles[51].blue:
+            if board.tiles[87].red:
+                self.tie()
+            else:
+                self.bluewins()
+        elif board.tiles[87].red:
+            if board.tiles[51].blue:
+                self.tie()
+            else:
+                self.redwins()
 
     '''
         The following functions are responsible for displaying the correct

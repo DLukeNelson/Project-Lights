@@ -65,6 +65,10 @@ class GameBoard:
             blue = bluetile
             bluetile = bluenext
 
+    def Lasers(self):
+        self.LaserRed()
+        self.LaserBlue()
+
 
 class Tile:
     def __init__(self):
